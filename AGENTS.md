@@ -2,8 +2,8 @@
 
 ## Purpose
 
-This repository owns public, reusable research-workflow infrastructure. It is
-currently a safety-only clean-history scaffold.
+This repository owns public, reusable research-workflow infrastructure. It has
+an independent clean history and is in a reviewed offline migration phase.
 
 ## Required behavior
 
@@ -14,6 +14,10 @@ currently a safety-only clean-history scaffold.
 - Keep private configuration and external resource bindings outside this
   repository.
 - Validate repository safety and tests before proposing a commit.
+- Treat `manifests/phase6a_transfer_allowlist.yaml` as the deny-by-default
+  source-to-destination boundary for Phase 6A.
+- Apply `shared_core/CORE_AUTONOMOUS_DELIVERY_POLICY.md` together with
+  `Docs/codex_autonomous_work_policy.md` for bounded autonomous delivery.
 
 ## Prohibited content
 
@@ -33,5 +37,10 @@ commit, changes use feature branches and review. Direct pushes to `main`,
 merges, force pushes, history rewriting, branch deletion, and destructive
 recovery require an explicit human-controlled boundary.
 
-The autonomous-delivery manifest remains disabled until a later reviewed
-change explicitly enables it.
+The repository manifest may enable a narrow exception to the normal
+human-controlled Git boundary only after the governance-activation change has
+been committed and merged by a human. A compliant Git Level 4 cycle requires
+an exact task scope, successful validation, Independent Reviewer `APPROVE`,
+exact staging, and final review. Direct push to `main`, merge,
+ready-for-review transition, force push, history rewriting,
+branch deletion, and destructive recovery remain prohibited.

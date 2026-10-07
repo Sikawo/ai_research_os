@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "repository": "example_repository",
+  "origin_url": "https://github.com/example/example_repository.git",
+  "github_repository": "example/example_repository",
+  "enabled": false,
+  "max_git_level": 2,
+  "base_branch": "main",
+  "allowed_branch_prefixes": [
+    "agent/",
+    "codex/"
+  ],
+  "allowed_task_classes": [
+    "documentation",
+    "tests",
+    "workflow"
+  ],
+  "protected_content_mode": "forbidden",
+  "blocked_path_patterns": [
+    ".env",
+    "exports/**",
+    "**/*.pem",
+    "**/raw/**"
+  ],
+  "required_validation_commands": [
+    "python3 Scripts/run_safety_check.py"
+  ],
+  "policy_documents": [
+    "AGENTS.md",
+    "shared_core/CORE_AUTONOMOUS_DELIVERY_POLICY.md"
+  ],
+  "final_review_command": "python3 Scripts/finish_change.py --active-spec",
+  "draft_pr_allowed": true,
+  "merge_allowed": false,
+  "forbid_force_push": true,
+  "forbid_branch_delete": true
+}
