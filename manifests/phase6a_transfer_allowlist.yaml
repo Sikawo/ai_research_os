@@ -25,8 +25,26 @@
     "copy_scheduled_tasks": false,
     "live_cutover": false
   },
-  "expected_transfer_count": 169,
+  "expected_transfer_count": 171,
   "transfers": [
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": ".gitignore",
+      "destination_path": ".gitignore",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": ".agents/plugins/marketplace.json",
+      "destination_path": ".agents/plugins/marketplace.json",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
     {
       "source_id": "legacy_public_framework",
       "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
@@ -923,7 +941,7 @@
       "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
       "source_path": "plugins/paragraph-lock/.codex-plugin/plugin.json",
       "destination_path": "plugins/paragraph-lock/.codex-plugin/plugin.json",
-      "transfer_mode": "exact_copy",
+      "transfer_mode": "adapted_public_copy",
       "phase": "6A.1",
       "status": "planned"
     },

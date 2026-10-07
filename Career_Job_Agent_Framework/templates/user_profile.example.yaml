@@ -1,0 +1,23 @@
+version: 1
+candidate:
+  name: REPLACE_ME
+  degree: REPLACE_ME
+  current_role: REPLACE_ME
+  target_levels: []
+  geography:
+    country: United States
+    regions_of_interest: []
+  work_authorization:
+    current_status: REPLACE_ME
+    employer_sponsorship_required: false
+
+scientific_domains:
+  verified: []
+
+technical_evidence:
+  verified: []
+  examples: {}
+
+must_not_assume: []
+
+source_rule: Every application claim must be traceable to authorized evidence or a direct user answer.

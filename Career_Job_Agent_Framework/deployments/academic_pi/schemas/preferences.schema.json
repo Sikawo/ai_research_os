@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/career-job-agent/academic-pi/preferences.schema.json",
+  "title": "Academic PI Preferences",
+  "description": "Private preferences kept separate from scientific fit and eligibility.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "geography",
+    "institution_types",
+    "role_preferences",
+    "teaching",
+    "compensation",
+    "quality_of_life",
+    "reporting"
+  ],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "geography": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preferred", "acceptable", "avoid"],
+      "properties": {
+        "preferred": {"$ref": "#/$defs/stringArray"},
+        "acceptable": {"$ref": "#/$defs/stringArray"},
+        "avoid": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "institution_types": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preferred", "acceptable"],
+      "properties": {
+        "preferred": {"$ref": "#/$defs/stringArray"},
+        "acceptable": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "role_preferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tenure_track_preferred",
+        "independent_group_leader_allowed",
+        "open_rank_allowed",
+        "research_faculty_requires_independence_review"
+      ],
+      "properties": {
+        "tenure_track_preferred": {"type": "boolean"},
+        "independent_group_leader_allowed": {"type": "boolean"},
+        "open_rank_allowed": {"type": "boolean"},
+        "research_faculty_requires_independence_review": {"type": "boolean"}
+      }
+    },
+    "teaching": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preference", "maximum_load_if_known"],
+      "properties": {
+        "preference": {"$ref": "#/$defs/nullableString"},
+        "maximum_load_if_known": {"$ref": "#/$defs/nullableNumber"}
+      }
+    },
+    "compensation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum_if_explicitly_used", "currency"],
+      "properties": {
+        "minimum_if_explicitly_used": {"$ref": "#/$defs/nullableNumber"},
+        "currency": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "quality_of_life": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "custom_factors"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "custom_factors": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "reporting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["daily_enabled", "weekly_enabled", "deadline_warning_days"],
+      "properties": {
+        "daily_enabled": {"type": "boolean"},
+        "weekly_enabled": {"type": "boolean"},
+        "deadline_warning_days": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "integer", "minimum": 0}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "nullableString": {"type": ["string", "null"]},
+    "nullableNumber": {"type": ["number", "null"]},
+    "stringArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

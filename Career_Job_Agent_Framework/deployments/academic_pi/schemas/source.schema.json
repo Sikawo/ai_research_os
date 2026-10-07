@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/career-job-agent/academic-pi/source.schema.json",
+  "title": "Academic PI Discovery Source",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "class",
+    "base_url",
+    "regions",
+    "enabled_by_default",
+    "priority",
+    "frequency_class",
+    "discovery_method",
+    "supports_email_alerts",
+    "supports_direct_search",
+    "verification_authority",
+    "expected_update_cadence",
+    "parser_version"
+  ],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$"},
+    "name": {"type": "string", "minLength": 1},
+    "class": {
+      "enum": [
+        "GENERAL_ACADEMIC_AGGREGATOR",
+        "SCIENCE_JOB_BOARD",
+        "REGIONAL_ACADEMIC_PORTAL",
+        "SCIENTIFIC_SOCIETY",
+        "INSTITUTION_DIRECT",
+        "EMAIL_ALERT",
+        "SEARCH_ENGINE_DISCOVERY",
+        "MANUAL"
+      ]
+    },
+    "base_url": {
+      "anyOf": [
+        {"type": "string", "format": "uri"},
+        {"type": "null"}
+      ]
+    },
+    "regions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "enabled_by_default": {"type": "boolean"},
+    "priority": {"type": "integer", "minimum": 0, "maximum": 100},
+    "frequency_class": {"enum": ["high", "medium", "low", null]},
+    "discovery_method": {"type": "string", "minLength": 1},
+    "supports_email_alerts": {"type": "boolean"},
+    "supports_direct_search": {"type": "boolean"},
+    "supports_rss": {"type": "boolean", "default": false},
+    "feed_urls": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "format": "uri"}
+    },
+    "bootstrap_url": {
+      "anyOf": [
+        {"type": "string", "format": "uri"},
+        {"type": "null"}
+      ]
+    },
+    "alert_delivery_state": {
+      "type": ["string", "null"]
+    },
+    "verification_authority": {
+      "enum": ["discovery_only", "official_when_institution_owned"]
+    },
+    "expected_update_cadence": {"type": "string", "minLength": 1},
+    "parser_version": {
+      "anyOf": [
+        {"type": "integer", "minimum": 1},
+        {"type": "string", "minLength": 1}
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+version: 1
+
+geography:
+  preferred: []
+  acceptable:
+    - US
+    - EUROPE
+  avoid: []
+
+institution_types:
+  preferred: []
+  acceptable:
+    - university
+    - independent_research_institute
+
+role_preferences:
+  tenure_track_preferred: true
+  independent_group_leader_allowed: true
+  open_rank_allowed: true
+  research_faculty_requires_independence_review: true
+
+teaching:
+  preference: null
+  maximum_load_if_known: null
+
+compensation:
+  minimum_if_explicitly_used: null
+  currency: null
+
+quality_of_life:
+  enabled: true
+  custom_factors: []
+
+reporting:
+  daily_enabled: true
+  weekly_enabled: true
+  deadline_warning_days: [30, 14, 7, 3, 1]

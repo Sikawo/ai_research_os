@@ -1,0 +1,36 @@
+# Reference template for experiment manifests (see LAB_SCHEMA.md).
+# Scripts should generate files with the same required keys; values are examples only.
+
+experiment_id: EXP_YYYYMMDD_short_description
+date: YYYY-MM-DD
+project: ""
+purpose: ""
+status: planned
+
+experimental_context:
+  biological_material: ""
+  stimulus: ""
+  assay: ""
+  readout: ""
+  comparison: ""
+
+note_location:
+  system: ""
+  reference: ""
+
+raw_data_location:
+  system: ""
+  path_or_url: ""
+  notes: "Raw data are stored externally and should not be renamed."
+
+processed_data_location:
+  system: ""
+  path_or_url: ""
+
+analysis_location:
+  system: ""
+  path: ""
+
+summary_location:
+  system: GitHub
+  path: "Experiments/EXP_YYYYMMDD_short_description/summary.md"

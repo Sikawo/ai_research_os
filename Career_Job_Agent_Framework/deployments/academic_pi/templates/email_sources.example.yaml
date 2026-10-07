@@ -1,0 +1,64 @@
+version: 1
+
+# Synthetic/public rules only. Account addresses and connector identifiers
+# belong in the private overlay. Sender-domain matching accepts subdomains.
+email_sources:
+  - source_id: nature_careers
+    sender_domains: [jobmail.naturecareers.com]
+    sender_addresses: []
+    subject_positive: []
+    subject_negative: []
+    enabled: true
+    status: configured_unconfirmed
+    expected_behavior: send_when_matches_exist
+    parser: generic_job_alert
+
+  - source_id: science_careers
+    sender_domains: [sciencecareers.org]
+    enabled: true
+    status: configured_unconfirmed
+    expected_behavior: send_when_matches_exist
+    parser: generic_job_alert
+
+  - source_id: academic_positions
+    sender_domains: [academicpositions.com]
+    enabled: true
+    status: configured_unconfirmed
+    expected_behavior: send_when_matches_exist
+    parser: generic_job_alert
+
+  - source_id: jobs_ac_uk
+    sender_domains: [jobs.ac.uk]
+    subject_negative: [PhDs by Email]
+    enabled: true
+    status: active
+    expected_behavior: send_when_matches_exist
+    parser: generic_job_alert
+
+  - source_id: higher_ed_jobs
+    sender_domains: [higheredjobs.com]
+    enabled: true
+    status: active
+    expected_behavior: send_when_matches_exist
+    parser: generic_job_alert
+
+  - source_id: jrec_in
+    sender_domains: [jst.go.jp]
+    enabled: true
+    status: configured_unconfirmed
+    expected_behavior: send_when_matches_exist
+    parser: generic_job_alert
+
+  - source_id: euraxess
+    sender_domains: []
+    enabled: true
+    status: configured_unconfirmed
+    expected_behavior: send_when_matches_exist
+    parser: generic_job_alert
+
+  - source_id: asm_career_connections
+    sender_domains: []
+    enabled: true
+    status: configured_unconfirmed
+    expected_behavior: send_when_matches_exist
+    parser: generic_job_alert

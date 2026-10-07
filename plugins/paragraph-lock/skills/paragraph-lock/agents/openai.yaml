@@ -1,0 +1,4 @@
+interface:
+  display_name: "ParagraphLock"
+  short_description: "Approve exact text changes without collateral rewrites"
+  default_prompt: "Use $paragraph-lock to revise one paragraph while preserving all unapproved text."

@@ -1,0 +1,51 @@
+version: 1
+household:
+  adults: 1
+  children:
+    - age: 2
+      care: full_time_childcare
+    - age: 5
+      school_scenarios: [public, private]
+  second_income:
+    include: false
+    annual_gross: null
+
+commute:
+  maximum_minutes: 30
+  primary_mode: drive
+  secondary_modes: [transit]
+  time_window: weekday_peak
+  include_tolls_parking_and_variability: true
+
+housing:
+  tenure: rent
+  minimum_square_feet: 800
+  bedroom_scenarios: [1, 2]
+  include_current_listings: true
+  include_hud_reference: true
+
+education:
+  public_school:
+    use_official_state_report_cards: true
+    use_nces_context: true
+    include_after_school_costs: true
+  private_school:
+    include: true
+    representative_school_count: 3
+    use_official_tuition: true
+
+budget:
+  salary_points: [lower_bound, midpoint, upper_bound]
+  filing_status_assumption: married_filing_jointly
+  include_federal_state_local_and_payroll_taxes: true
+  include_food_healthcare_transport_utilities_internet_and_other_needs: true
+  scenarios:
+    - one_bedroom_public_school
+    - two_bedroom_public_school
+    - two_bedroom_private_school
+
+output:
+  neighborhood_count: 5
+  include_economic_qol_verdict: true
+  include_educational_qol_verdict: true
+  include_practical_cautions: true

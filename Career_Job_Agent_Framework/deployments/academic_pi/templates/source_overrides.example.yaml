@@ -1,0 +1,27 @@
+version: 1
+
+sources:
+  nature_careers:
+    enabled: true
+    frequency_class: high
+  euraxess:
+    enabled: true
+    frequency_class: high
+  scientific_society_template:
+    enabled: false
+    base_url: null
+
+society_sources:
+  - source_id: scientific_society_template
+    enabled: false
+    field_relevance:
+      - FIELD_A
+
+query_generation:
+  maximum_queries_per_source_per_run: 10
+  priority_terms:
+    - FIELD_A
+    - RESEARCH_THEME_A
+  negative_terms: []
+
+privacy_note: Do not place connector credentials in this file.

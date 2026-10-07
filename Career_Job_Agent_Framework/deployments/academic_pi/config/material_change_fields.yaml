@@ -1,0 +1,63 @@
+version: 1
+
+material_fields:
+  - status.lifecycle_status
+  - status.verification_status
+  - dates.deadline
+  - dates.deadline_type
+  - identity.raw_title
+  - identity.normalized_role_class
+  - identity.department
+  - identity.city
+  - identity.region
+  - position.tenure_status
+  - position.faculty_track
+  - position.appointment_type
+  - position.salary_min
+  - position.salary_max
+  - position.salary_currency
+  - position.salary_period
+  - position.salary_basis
+  - position.salary_evidence_url
+  - position.employer_retirement_or_super
+  - position.contract_term
+  - position.startup_information
+  - position.lab_space_information
+  - position.visa_or_sponsorship_information
+  - requirements.required_documents
+  - requirements.reference_letter_policy
+  - requirements.number_of_references
+  - requirements.citizenship_or_eligibility
+  - search_scope.declared_fields
+  - search_scope.department_scope
+  - search_scope.rank_scope
+  - position.teaching_expectation
+  - position.clinical_expectation
+  - dates.expected_start_date
+  - urls.official_url
+  - identity.job_id_or_requisition
+
+non_material_changes:
+  - punctuation_only
+  - formatting_only
+  - whitespace_only
+  - reordered_boilerplate
+  - tracking_parameter_only
+  - fragment_identifier_only
+
+ignored_url_query_parameters:
+  - utm_source
+  - utm_medium
+  - utm_campaign
+  - utm_term
+  - utm_content
+  - gclid
+  - fbclid
+
+change_record_fields:
+  - changed_at
+  - field
+  - old_value
+  - new_value
+  - source
+  - confidence

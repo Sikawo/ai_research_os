@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/career-job-agent/academic-pi/candidate-profile.schema.json",
+  "title": "Academic PI Candidate Profile",
+  "description": "Private, evidence-based description of what a candidate can credibly do.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_version",
+    "identity",
+    "career_stage",
+    "scientific_identity",
+    "evidence",
+    "departments",
+    "eligibility",
+    "career_constraints"
+  ],
+  "properties": {
+    "profile_version": {"type": "integer", "const": 1},
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["display_name"],
+      "properties": {
+        "display_name": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "career_stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_level", "target_independence"],
+      "properties": {
+        "current_level": {"$ref": "#/$defs/nullableString"},
+        "target_independence": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "independent_pi",
+              "tenure_track_faculty",
+              "faculty_open_rank",
+              "independent_group_leader",
+              "likely_independent_pi"
+            ]
+          }
+        }
+      }
+    },
+    "scientific_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary_fields",
+        "secondary_fields",
+        "research_questions",
+        "systems",
+        "pathogens_or_disease_areas",
+        "methods",
+        "computational_or_quantitative_strengths",
+        "translational_strengths"
+      ],
+      "properties": {
+        "primary_fields": {"$ref": "#/$defs/stringArray"},
+        "secondary_fields": {"$ref": "#/$defs/stringArray"},
+        "research_questions": {"$ref": "#/$defs/stringArray"},
+        "systems": {"$ref": "#/$defs/stringArray"},
+        "pathogens_or_disease_areas": {"$ref": "#/$defs/stringArray"},
+        "methods": {"$ref": "#/$defs/stringArray"},
+        "computational_or_quantitative_strengths": {"$ref": "#/$defs/stringArray"},
+        "translational_strengths": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cv_path",
+        "publication_sources",
+        "research_statement_path",
+        "additional_evidence_paths"
+      ],
+      "properties": {
+        "cv_path": {"$ref": "#/$defs/nullableString"},
+        "publication_sources": {"$ref": "#/$defs/stringArray"},
+        "research_statement_path": {"$ref": "#/$defs/nullableString"},
+        "additional_evidence_paths": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "departments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strong_fit", "plausible_fit", "usually_not_fit"],
+      "properties": {
+        "strong_fit": {"$ref": "#/$defs/stringArray"},
+        "plausible_fit": {"$ref": "#/$defs/stringArray"},
+        "usually_not_fit": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "eligibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "countries_or_regions",
+        "work_authorization_notes",
+        "explicit_citizenship_constraints"
+      ],
+      "properties": {
+        "countries_or_regions": {"$ref": "#/$defs/stringArray"},
+        "work_authorization_notes": {"$ref": "#/$defs/nullableString"},
+        "explicit_citizenship_constraints": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "career_constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["excluded_role_classes", "acceptable_role_classes"],
+      "properties": {
+        "excluded_role_classes": {"$ref": "#/$defs/stringArray"},
+        "acceptable_role_classes": {"$ref": "#/$defs/stringArray"}
+      }
+    }
+  },
+  "$defs": {
+    "nullableString": {"type": ["string", "null"]},
+    "stringArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

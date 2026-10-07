@@ -1,0 +1,59 @@
+# Example request for Scripts/register_experiment_from_request.py.
+# Raw data must stay external; use repo-safe external references.
+# Do not include local absolute paths or local file URLs.
+
+project:
+  project_id: demo_project
+  display_name: Demo project
+  description: Synthetic public example experiments.
+  status: active
+  create_if_missing: true
+
+experiment:
+  date: "2030-01-05"
+  short_description: demo_analysis
+  status: planned
+  purpose: Compare a synthetic reference payload with a synthetic candidate payload.
+
+experimental_context:
+  biological_material: synthetic example cells
+  stimulus: none
+  assay: synthetic assay
+  readout: normalized signal
+  comparison: reference payload versus candidate payload
+
+locations:
+  note_location:
+    system: GitHub
+    reference: Experiments/EXP_20300105_demo_analysis/summary.md
+  raw_data_location:
+    system: cloud_storage
+    path_or_url: cloud_storage/synthetic_demo
+    notes: Example raw data are stored externally and should not be renamed.
+  processed_data_location:
+    system: N/A
+    path_or_url: not generated yet
+  analysis_location:
+    system: GitHub
+    path: Analysis/EXP_20300105_demo_analysis
+
+summary:
+  short_title: Synthetic payload readout
+  index_summary: Planned synthetic comparison for the public example workflow.
+  freeform_notes: Synthetic fixture only; replace through private deployment configuration.
+
+# Optional: request creation/completion of the corresponding synced cloud folder.
+# Local absolute parent paths are allowed only in this execution-only storage
+# block; they must not appear in Git metadata fields above.
+storage:
+  provider: box
+  mode: synced_folder
+  create_cloud_folder: true
+  parent_ref: default_experiments_parent
+  folder_template: standard_experiment_v1
+
+# Optional: enable local CLI Git automation. Auto-commit and auto-push only
+# operate on the generated experiment metadata allowlist.
+git:
+  auto_commit: true
+  auto_push: true

@@ -1,0 +1,59 @@
+profile_version: 1
+
+identity:
+  display_name: null
+
+career_stage:
+  current_level: SYNTHETIC_CURRENT_LEVEL
+  target_independence:
+    - tenure_track_faculty
+    - independent_group_leader
+
+scientific_identity:
+  primary_fields:
+    - FIELD_A
+    - FIELD_B
+  secondary_fields:
+    - FIELD_C
+  research_questions:
+    - RESEARCH_THEME_A
+  systems:
+    - MODEL_SYSTEM_A
+  pathogens_or_disease_areas: []
+  methods:
+    - METHOD_A
+    - METHOD_B
+  computational_or_quantitative_strengths: []
+  translational_strengths: []
+
+evidence:
+  cv_path: null
+  publication_sources: []
+  research_statement_path: null
+  additional_evidence_paths: []
+
+departments:
+  strong_fit:
+    - DEPARTMENT_A
+    - DEPARTMENT_B
+  plausible_fit:
+    - DEPARTMENT_C
+  usually_not_fit: []
+
+eligibility:
+  countries_or_regions:
+    - US
+    - EUROPE
+  work_authorization_notes: null
+  explicit_citizenship_constraints: []
+
+career_constraints:
+  excluded_role_classes:
+    - postdoc
+    - staff_scientist
+    - technician
+  acceptable_role_classes:
+    - tenure_track_faculty
+    - faculty_open_rank
+    - independent_group_leader
+    - likely_independent_pi

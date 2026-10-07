@@ -1,0 +1,43 @@
+version: 1
+
+# Copy this file to the private overlay as connectors.yaml. Connector factories
+# are registered by trusted host code; this data file never imports code or
+# stores credentials. Replace the placeholder factory names, enable only the
+# connectors the host provides, and add their IDs to the matching bindings.
+plugins:
+  - id: institution_direct
+    factory: official_search_v1
+    enabled: false
+    capabilities: [discovery, verification]
+    options:
+      credential_profile: replace_with_private_profile_selector
+
+  - id: email_alert
+    factory: academic_alerts_v1
+    enabled: false
+    capabilities: [email]
+    options:
+      account_profile: replace_with_private_profile_selector
+
+  - id: academic_jobs_online
+    factory: rss_discovery_v1
+    enabled: false
+    capabilities: [discovery]
+    options:
+      state_profile: replace_with_private_state_selector
+
+  - id: public_web_discovery
+    factory: public_search_v1
+    enabled: false
+    capabilities: [discovery]
+
+  - id: official_search
+    factory: official_search_v1
+    enabled: false
+    capabilities: [discovery, verification]
+
+bindings:
+  discovery: []
+  verification: null
+  email: null
+  report: []
