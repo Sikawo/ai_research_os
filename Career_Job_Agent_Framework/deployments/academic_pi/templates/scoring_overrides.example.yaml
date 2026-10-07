@@ -1,0 +1,27 @@
+rubric_version: 1
+
+weights:
+  scientific_program_fit: 30
+  department_search_fit: 20
+  independence_and_career_stage_fit: 15
+  method_or_model_system_relevance: 10
+  strategic_research_environment_fit: 10
+  evidence_of_candidate_distinctiveness: 10
+  translational_or_collaborative_fit: 5
+
+thresholds:
+  tier_1_min_fit: 80
+  tier_2_min_fit: 68
+  watchlist_min_fit: 55
+
+broad_search:
+  keyword_absence_penalty: 0
+  evaluate_department_and_program_contribution: true
+
+evidence:
+  require_reference_for_major_positive_match: true
+  preserve_adjacent_evidence_label: true
+
+hard_blockers:
+  separate_from_raw_fit_score: true
+  configured_geographic_avoid_is_hard_exclusion: false

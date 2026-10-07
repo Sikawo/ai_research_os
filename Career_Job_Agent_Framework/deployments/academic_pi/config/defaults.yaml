@@ -1,0 +1,138 @@
+version: 1
+deployment: academic_pi
+
+academic_pi:
+  regions:
+    - US
+    - EUROPE
+
+  private_config:
+    directory_environment_variable: ACADEMIC_PI_PRIVATE_CONFIG_DIR
+    resolution_order:
+      - academic_pi_private_config_dir
+      - existing_career_job_agent_private_config
+      - profiles_local
+      - example_profile_for_tests_or_demo
+    example_profile_for_tests_or_demo_only: true
+
+  normalized_target_roles:
+    - tenure_track_faculty
+    - independent_pi
+    - independent_group_leader
+    - faculty_open_rank
+    - likely_independent_pi
+
+  exclude_by_default:
+    - postdoc
+    - technician
+    - staff_scientist
+    - teaching_only
+
+  verification:
+    official_source_required_for_high_confidence: true
+    transient_failure_closes_job: false
+    source_of_truth_order:
+      - official_job_detail
+      - official_applicant_tracking_system
+      - official_department_recruitment_page
+      - trusted_aggregator
+      - discovery_message
+
+  scoring:
+    dimensions:
+      scientific_program_fit: 30
+      department_search_fit: 20
+      independence_and_career_stage_fit: 15
+      method_or_model_system_relevance: 10
+      strategic_research_environment_fit: 10
+      evidence_of_candidate_distinctiveness: 10
+      translational_or_collaborative_fit: 5
+    broad_search_keyword_absence_penalty: 0
+    require_evidence_for_positive_claims: true
+    preserve_adjacent_evidence_label: true
+
+  tiering:
+    tier_1_min_fit: 80
+    tier_2_min_fit: 68
+    watchlist_min_fit: 55
+    require_no_hard_blocker_for_tier_1_or_2: true
+    require_sufficient_verification_for_tier_1: true
+
+  deadlines:
+    warning_days: [30, 14, 7, 3, 1]
+
+  coverage:
+    frequency_classes:
+      high:
+        interval_days: 1
+      medium:
+        interval_days: 3
+      low:
+        interval_days: 7
+    target_institutions:
+      default_interval_days: 7
+      priority_tiers:
+        S: 1
+        A: 7
+    reverify_active:
+      tier_1_interval_days: 1
+      tier_2_interval_days: 3
+      watchlist_interval_days: 7
+
+  email:
+    labels:
+      alerts: Academic PI Job Agent/Alerts
+      processed: Academic PI Job Agent/Processed
+      needs_review: Academic PI Job Agent/Needs Review
+      error: Academic PI Job Agent/Error
+    archive_after_processing: false
+    delete_after_processing: false
+    source_registry: email_sources.yaml
+    max_messages_per_run: 100
+
+  rss:
+    conditional_requests: true
+    bootstrap_once: true
+    close_jobs_on_feed_failure: false
+
+  qol_refresh:
+    salary_days: 7
+    tax_rules_days: 90
+    housing_days: 30
+    childcare_days: 90
+    education_days: 180
+    commute_days: 30
+    fx_days: 1
+    trigger_tiers: [Tier 1, Tier 2]
+    watchlist_full_assessment: false
+
+  query_generation:
+    include_role_first: true
+    include_field_first: true
+    include_broad_search: true
+    include_target_institution: true
+    use_priority_ranking: true
+    rotate_queries: true
+    deduplicate_semantically_equivalent_queries: true
+
+  state_persistence:
+    manual_evaluations:
+      enabled: true
+      upsert_actionable_tier_1_2: true
+      require_current_official_verification: true
+
+  reports:
+    include_current_active: true
+    include_no_match_marker: true
+    include_coverage_summary: true
+    state_scientific_qol_eligibility_separately: true
+
+  automation:
+    auto_apply: false
+    auto_send_application_email: false
+    auto_archive_job_alert_email: false
+    auto_delete_job_alert_email: false
+
+  privacy_guard:
+    forbidden_literals: []
+    forbidden_regexes: []

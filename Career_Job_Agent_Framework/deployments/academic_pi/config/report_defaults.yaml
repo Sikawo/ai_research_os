@@ -1,0 +1,87 @@
+report_contract_version: 1
+
+daily:
+  title: Academic PI Job Agent — Daily
+  no_match_marker: "[NO MATCH] No new verified Tier 1 or Tier 2 roles today."
+  sections:
+    - Action Required
+    - New Tier 1
+    - New Tier 2
+    - Material Changes
+    - CURRENT ACTIVE TIER 1
+    - CURRENT ACTIVE TIER 2
+    - Verification Pending / Errors
+    - COMPENSATION & QOL
+    - DISCOVERY COVERAGE
+    - Email alerts
+    - RSS feeds
+    - Target institutions
+    - EMAIL BACKLOG / PARSE ERRORS
+    - RSS ERRORS
+    - TARGET URL ERRORS
+    - BLIND SPOTS
+    - Applications
+  role_fields:
+    - institution
+    - department
+    - title
+    - location
+    - deadline
+    - fit_score
+    - tier
+    - strongest_fit
+    - main_gap
+    - official_url
+    - verification_date
+  empty_application_activity_text: No applications submitted.
+  include_unchanged_current_active: true
+
+weekly:
+  title: Academic PI Job Agent — Weekly Audit
+  sections:
+    - CURRENT ACTIVE TIER 1
+    - CURRENT ACTIVE TIER 2
+    - NEW THIS WEEK
+    - MATERIAL CHANGES
+    - DEADLINES
+    - VERIFY / REVIEW
+    - SOURCE COVERAGE AUDIT
+    - TARGET-INSTITUTION COVERAGE AUDIT
+    - COMPENSATION & QOL COMPARISON
+    - STALE QOL / COMPENSATION ASSUMPTIONS
+    - RSS ERRORS
+    - EMAIL BACKLOG / PARSE ERRORS
+    - CLOSED / EXPIRED / REOPENED THIS WEEK
+    - APPLICATION STATUS
+    - Top roles to act on this week
+    - Roles needing a user decision
+    - Roles likely to close soon
+    - Coverage gaps
+  role_fields:
+    - fit
+    - why_now
+    - strongest_scientific_alignment
+    - most_important_gap
+    - independence_status
+    - deadline
+    - required_documents
+    - letters
+    - verification_status
+    - application_status
+  deadline_buckets:
+    - max_days: 7
+      label: <= 7 days
+    - min_days: 8
+      max_days: 14
+      label: 8–14 days
+    - min_days: 15
+      max_days: 30
+      label: 15–30 days
+    - min_days: 31
+      label: "> 30 days / rolling / unknown"
+
+shared:
+  distinguish_scientific_qol_eligibility: true
+  show_unknown_instead_of_inference: true
+  official_verification_required_for_current_active: true
+  delivery_success_requires_channel_confirmation: true

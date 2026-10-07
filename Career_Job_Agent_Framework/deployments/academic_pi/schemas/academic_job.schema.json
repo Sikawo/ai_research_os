@@ -1,0 +1,494 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/career-job-agent/academic-pi/academic-job.schema.json",
+  "title": "Canonical Academic PI Job",
+  "description": "A verified, deduplicated academic opportunity with explicit unknowns and provenance-ready fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "identity",
+    "urls",
+    "source",
+    "dates",
+    "status",
+    "independence",
+    "search_scope",
+    "requirements",
+    "position",
+    "evaluation",
+    "application"
+  ],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 1},
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonical_job_id",
+        "institution",
+        "department",
+        "institute_or_center",
+        "raw_title",
+        "normalized_role_class",
+        "job_id_or_requisition",
+        "country",
+        "region",
+        "city"
+      ],
+      "properties": {
+        "canonical_job_id": {"type": "string", "minLength": 1},
+        "institution": {"type": "string", "minLength": 1},
+        "department": {"$ref": "#/$defs/nullableString"},
+        "institute_or_center": {"$ref": "#/$defs/nullableString"},
+        "raw_title": {"type": "string", "minLength": 1},
+        "normalized_role_class": {"$ref": "#/$defs/roleClass"},
+        "job_id_or_requisition": {"$ref": "#/$defs/nullableString"},
+        "country": {"$ref": "#/$defs/nullableString"},
+        "region": {"$ref": "#/$defs/nullableString"},
+        "city": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "urls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["discovery_urls", "official_url", "application_url"],
+      "properties": {
+        "discovery_urls": {"$ref": "#/$defs/uriArray"},
+        "official_url": {"$ref": "#/$defs/nullableUri"},
+        "application_url": {"$ref": "#/$defs/nullableUri"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["first_discovered_by", "all_discovery_sources", "source_message_ids"],
+      "properties": {
+        "first_discovered_by": {"$ref": "#/$defs/nullableString"},
+        "all_discovery_sources": {"$ref": "#/$defs/stringArray"},
+        "source_message_ids": {"$ref": "#/$defs/stringArray"},
+        "source_listing_ids": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "dates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "first_seen",
+        "last_seen",
+        "posted_date",
+        "deadline",
+        "deadline_type",
+        "expected_start_date"
+      ],
+      "properties": {
+        "first_seen": {"$ref": "#/$defs/dateTimeOrNull"},
+        "last_seen": {"$ref": "#/$defs/dateTimeOrNull"},
+        "posted_date": {"$ref": "#/$defs/nullableString"},
+        "deadline": {"$ref": "#/$defs/nullableString"},
+        "deadline_type": {"enum": ["fixed", "rolling", "unknown"]},
+        "expected_start_date": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lifecycle_status",
+        "verification_status",
+        "last_verified",
+        "verification_confidence",
+        "close_reason"
+      ],
+      "properties": {
+        "lifecycle_status": {"type": "string", "minLength": 1},
+        "verification_status": {
+          "enum": [
+            "verified_open",
+            "verified_closed",
+            "verified_expired",
+            "verified_reopened",
+            "verification_pending",
+            "verification_failed_transient",
+            "verification_failed_persistent",
+            "official_source_not_found",
+            "manual_review_required",
+            "unknown"
+          ]
+        },
+        "last_verified": {"$ref": "#/$defs/dateTimeOrNull"},
+        "verification_confidence": {"$ref": "#/$defs/confidenceOrNull"},
+        "close_reason": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "independence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class", "confidence", "evidence"],
+      "properties": {
+        "class": {"$ref": "#/$defs/independenceClass"},
+        "confidence": {"$ref": "#/$defs/confidenceOrNull"},
+        "evidence": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "search_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared_fields", "broad_search", "department_scope", "rank_scope"],
+      "properties": {
+        "declared_fields": {"$ref": "#/$defs/stringArray"},
+        "broad_search": {"type": "boolean"},
+        "department_scope": {"$ref": "#/$defs/stringArray"},
+        "rank_scope": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_degree",
+        "years_or_stage",
+        "required_expertise",
+        "preferred_expertise",
+        "required_documents",
+        "reference_letter_policy",
+        "number_of_references",
+        "citizenship_or_eligibility",
+        "other_requirements"
+      ],
+      "properties": {
+        "required_degree": {"$ref": "#/$defs/nullableString"},
+        "years_or_stage": {"$ref": "#/$defs/nullableString"},
+        "required_expertise": {"$ref": "#/$defs/stringArray"},
+        "preferred_expertise": {"$ref": "#/$defs/stringArray"},
+        "required_documents": {"$ref": "#/$defs/stringArray"},
+        "reference_letter_policy": {"$ref": "#/$defs/nullableString"},
+        "number_of_references": {"type": ["integer", "null"], "minimum": 0},
+        "citizenship_or_eligibility": {"$ref": "#/$defs/nullableString"},
+        "other_requirements": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tenure_status",
+        "faculty_track",
+        "appointment_type",
+        "contract_term",
+        "salary_min",
+        "salary_max",
+        "salary_currency",
+        "startup_information",
+        "lab_space_information",
+        "teaching_expectation",
+        "clinical_expectation",
+        "visa_or_sponsorship_information"
+      ],
+      "properties": {
+        "tenure_status": {"$ref": "#/$defs/nullableString"},
+        "faculty_track": {"$ref": "#/$defs/nullableString"},
+        "appointment_type": {"$ref": "#/$defs/nullableString"},
+        "contract_term": {"$ref": "#/$defs/nullableString"},
+        "salary_min": {"$ref": "#/$defs/nullableNumber"},
+        "salary_max": {"$ref": "#/$defs/nullableNumber"},
+        "salary_currency": {"$ref": "#/$defs/nullableString"},
+        "salary_period": {"$ref": "#/$defs/nullableString"},
+        "salary_basis": {"$ref": "#/$defs/nullableString"},
+        "salary_evidence_url": {"$ref": "#/$defs/nullableUri"},
+        "salary_is_estimate": {"type": ["boolean", "null"]},
+        "employer_retirement_or_super": {
+          "anyOf": [
+            {"type": "number"},
+            {"type": "object"},
+            {"type": "null"}
+          ]
+        },
+        "startup_information": {"$ref": "#/$defs/nullableString"},
+        "lab_space_information": {"$ref": "#/$defs/nullableString"},
+        "teaching_expectation": {"$ref": "#/$defs/nullableString"},
+        "clinical_expectation": {"$ref": "#/$defs/nullableString"},
+        "visa_or_sponsorship_information": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fit_score",
+        "fit_confidence",
+        "tier",
+        "strongest_matches",
+        "meaningful_gaps",
+        "hard_blockers",
+        "opportunity_notes",
+        "qol_notes"
+      ],
+      "properties": {
+        "fit_score": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "fit_confidence": {"$ref": "#/$defs/confidenceOrNull"},
+        "tier": {"enum": ["Tier 1", "Tier 2", "Watchlist", "BLOCKED", "Below threshold", null]},
+        "strongest_matches": {"$ref": "#/$defs/stringArray"},
+        "meaningful_gaps": {"$ref": "#/$defs/stringArray"},
+        "hard_blockers": {"$ref": "#/$defs/stringArray"},
+        "opportunity_notes": {"$ref": "#/$defs/stringArray"},
+        "qol_notes": {"$ref": "#/$defs/stringArray"},
+        "uncertainty": {"$ref": "#/$defs/stringArray"},
+        "raw_fit_score": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "category_scores": {
+          "type": "object",
+          "additionalProperties": {"type": "number"}
+        },
+        "broad_search": {"type": "boolean"},
+        "profile_version": {"type": ["integer", "string", "null"]},
+        "rubric_version": {"type": ["integer", "string", "null"]}
+      }
+    },
+    "eligibility_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {"enum": ["eligible", "ineligible", "unknown", "needs_review"]},
+        "evidence": {"$ref": "#/$defs/stringArray"},
+        "blockers": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "opportunity_quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "score": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "confidence": {"$ref": "#/$defs/confidenceOrNull"},
+        "known_factors": {"$ref": "#/$defs/stringArray"},
+        "unknown_factors": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "qol_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {"enum": ["not_requested", "pending", "complete", "unknown"]},
+        "score": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "confidence": {"$ref": "#/$defs/confidenceOrNull"},
+        "assessed_at": {"$ref": "#/$defs/dateTimeOrNull"},
+        "compensation": {"$ref": "#/$defs/qolCompensation"},
+        "take_home": {"$ref": "#/$defs/qolTakeHome"},
+        "housing": {"$ref": "#/$defs/qolHousing"},
+        "childcare": {"$ref": "#/$defs/qolChildcare"},
+        "education": {"$ref": "#/$defs/qolEducation"},
+        "transport": {"$ref": "#/$defs/qolTransport"},
+        "scenarios": {"type": "array", "items": {"$ref": "#/$defs/qolScenario"}},
+        "verdicts": {"$ref": "#/$defs/qolVerdicts"},
+        "notes": {"$ref": "#/$defs/stringArray"},
+        "unknowns": {"$ref": "#/$defs/stringArray"},
+        "sources": {"$ref": "#/$defs/qolSourceArray"}
+      }
+    },
+    "application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "gatedsprint_status", "package_path", "submitted_date", "notes"],
+      "properties": {
+        "status": {
+          "enum": [
+            "not_started",
+            "needs_answers",
+            "needs_review",
+            "reviewed",
+            "interested",
+            "not_interested",
+            "preparing_application",
+            "ready_to_submit",
+            "submitted",
+            "interview",
+            "closed_expired",
+            "withdrawn",
+            "verification_pending",
+            "blocked",
+            null
+          ]
+        },
+        "gatedsprint_status": {"$ref": "#/$defs/nullableString"},
+        "package_path": {"$ref": "#/$defs/nullableString"},
+        "submitted_date": {"$ref": "#/$defs/nullableString"},
+        "notes": {"$ref": "#/$defs/stringArray"},
+        "existing_materials": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "extra": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "nullableString": {"type": ["string", "null"]},
+    "nullableNumber": {"type": ["number", "null"]},
+    "nullableNumberRange": {
+      "anyOf": [
+        {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2},
+        {"type": "null"}
+      ]
+    },
+    "nullableUri": {
+      "anyOf": [
+        {"type": "string", "format": "uri"},
+        {"type": "null"}
+      ]
+    },
+    "dateTimeOrNull": {
+      "anyOf": [
+        {"type": "string", "format": "date-time"},
+        {"type": "null"}
+      ]
+    },
+    "confidenceOrNull": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "uriArray": {
+      "type": "array",
+      "items": {"type": "string", "format": "uri"}
+    },
+    "qolCompensation": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "salary_min": {"$ref": "#/$defs/nullableNumber"},
+        "salary_mid": {"$ref": "#/$defs/nullableNumber"},
+        "salary_max": {"$ref": "#/$defs/nullableNumber"},
+        "currency": {"$ref": "#/$defs/nullableString"},
+        "period": {"$ref": "#/$defs/nullableString"},
+        "basis": {"$ref": "#/$defs/nullableString"},
+        "official": {"type": ["boolean", "null"]},
+        "evidence_url": {"$ref": "#/$defs/nullableUri"},
+        "source_date": {"$ref": "#/$defs/nullableString"},
+        "employer_retirement_or_super": {
+          "anyOf": [{"type": "number"}, {"type": "object"}, {"type": "null"}]
+        },
+        "notes": {"$ref": "#/$defs/stringArray"},
+        "unknowns": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "qolTakeHome": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "filing_assumption": {"$ref": "#/$defs/nullableString"},
+        "tax_year": {"$ref": "#/$defs/nullableString"},
+        "annual_net_min": {"$ref": "#/$defs/nullableNumber"},
+        "annual_net_mid": {"$ref": "#/$defs/nullableNumber"},
+        "annual_net_max": {"$ref": "#/$defs/nullableNumber"},
+        "monthly_net_min": {"$ref": "#/$defs/nullableNumber"},
+        "monthly_net_mid": {"$ref": "#/$defs/nullableNumber"},
+        "monthly_net_max": {"$ref": "#/$defs/nullableNumber"},
+        "currency": {"$ref": "#/$defs/nullableString"},
+        "estimate_method": {"$ref": "#/$defs/nullableString"},
+        "confidence": {"$ref": "#/$defs/confidenceOrNull"},
+        "sources": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "qolHousing": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "areas": {"$ref": "#/$defs/stringArray"},
+        "one_bedroom_range": {"$ref": "#/$defs/nullableNumberRange"},
+        "two_bedroom_range": {"$ref": "#/$defs/nullableNumberRange"},
+        "minimum_square_feet": {"$ref": "#/$defs/nullableNumber"},
+        "currency": {"$ref": "#/$defs/nullableString"},
+        "sample_date": {"$ref": "#/$defs/nullableString"},
+        "sample_size": {"type": ["integer", "null"], "minimum": 0},
+        "sources": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "qolChildcare": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "monthly_cost_range": {"$ref": "#/$defs/nullableNumberRange"},
+        "currency": {"$ref": "#/$defs/nullableString"},
+        "sources": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "qolEducation": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "public_school_summary": {"$ref": "#/$defs/nullableString"},
+        "private_school_tuition_range": {"$ref": "#/$defs/nullableNumberRange"},
+        "sources": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "qolTransport": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "commute_summary": {"$ref": "#/$defs/nullableString"},
+        "parking_tolls_transit_range": {"$ref": "#/$defs/nullableNumberRange"},
+        "currency": {"$ref": "#/$defs/nullableString"},
+        "sources": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "qolScenario": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "name": {"$ref": "#/$defs/nullableString"},
+        "gross_salary": {"$ref": "#/$defs/nullableNumber"},
+        "estimated_monthly_take_home": {"$ref": "#/$defs/nullableNumber"},
+        "rent": {"$ref": "#/$defs/nullableNumber"},
+        "childcare": {"$ref": "#/$defs/nullableNumber"},
+        "education": {"$ref": "#/$defs/nullableNumber"},
+        "food": {"$ref": "#/$defs/nullableNumber"},
+        "healthcare": {"$ref": "#/$defs/nullableNumber"},
+        "transport": {"$ref": "#/$defs/nullableNumber"},
+        "utilities_internet": {"$ref": "#/$defs/nullableNumber"},
+        "other_needs": {"$ref": "#/$defs/nullableNumber"},
+        "estimated_monthly_surplus": {"$ref": "#/$defs/nullableNumber"},
+        "confidence": {"$ref": "#/$defs/confidenceOrNull"},
+        "unknowns": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "qolVerdicts": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "economic_qol": {"$ref": "#/$defs/nullableString"},
+        "education_qol": {"$ref": "#/$defs/nullableString"},
+        "commute_qol": {"$ref": "#/$defs/nullableString"},
+        "overall_qol": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "qolSourceArray": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {"type": "string", "minLength": 1},
+          {"type": "object"}
+        ]
+      }
+    },
+    "roleClass": {
+      "enum": [
+        "independent_pi",
+        "tenure_track_faculty",
+        "faculty_open_rank",
+        "independent_group_leader",
+        "likely_independent_pi",
+        "ambiguous_independence",
+        "research_faculty",
+        "non_independent_research",
+        "postdoc",
+        "staff_scientist",
+        "technician",
+        "teaching_only",
+        "administrative",
+        "other"
+      ]
+    },
+    "independenceClass": {
+      "enum": [
+        "independent",
+        "likely_independent",
+        "ambiguous",
+        "non_independent"
+      ]
+    }
+  }
+}

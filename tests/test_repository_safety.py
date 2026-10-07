@@ -76,6 +76,7 @@ class RepositorySafetyTests(unittest.TestCase):
         )
 
     def test_repository_manifest_has_exact_reviewed_inventory(self) -> None:
+        self.assertEqual(EXPECTED_TRANSFER_COUNT, 171)
         root = Path(__file__).resolve().parents[1]
         manifest, errors = load_manifest(root)
         self.assertEqual(errors, [])

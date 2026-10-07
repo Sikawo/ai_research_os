@@ -1,0 +1,78 @@
+rules_version: 1
+
+regions:
+  US:
+    aliases: [USA, United States]
+    role_terms:
+      - Assistant Professor
+      - Tenure-track Faculty
+      - Faculty Position
+      - Open Rank
+      - Investigator
+    title_overrides:
+      assistant professor:
+        normalized_class: tenure_track_faculty
+        require_tenure_or_independence_evidence: true
+      investigator:
+        normalized_class: ambiguous_independence
+        require_independence_evidence: true
+
+  GB:
+    aliases: [UK, United Kingdom]
+    role_terms:
+      - Lecturer
+      - Senior Lecturer
+      - Group Leader
+      - Professor
+    title_overrides:
+      lecturer:
+        normalized_class: likely_independent_pi
+        require_institution_context: true
+      senior lecturer:
+        normalized_class: likely_independent_pi
+        require_institution_context: true
+      group leader:
+        normalized_class: independent_group_leader
+        require_independence_evidence: true
+
+  DE:
+    aliases: [Germany]
+    role_terms:
+      - W1 Professor
+      - Junior Group Leader
+      - Group Leader
+      - Professor
+    title_overrides:
+      w1 professor:
+        normalized_class: likely_independent_pi
+        require_institution_context: true
+      junior group leader:
+        normalized_class: independent_group_leader
+        require_independence_evidence: true
+
+  EUROPE:
+    aliases: [EU, Europe]
+    role_terms:
+      - Group Leader
+      - Junior Group Leader
+      - Independent Group Leader
+      - Assistant Professor
+      - Tenure Track
+      - Lecturer
+      - Professor
+      - Investigator
+    title_overrides:
+      professor:
+        normalized_class: ambiguous_independence
+        require_country_and_institution_context: true
+      group leader:
+        normalized_class: independent_group_leader
+        require_independence_evidence: true
+      investigator:
+        normalized_class: ambiguous_independence
+        require_independence_evidence: true
+
+fallback:
+  unknown_title_class: other
+  ambiguous_independence_class: ambiguous_independence
+  never_infer_equivalent_meaning_across_countries: true

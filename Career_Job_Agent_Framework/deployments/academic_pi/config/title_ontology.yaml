@@ -1,0 +1,184 @@
+ontology_version: 1
+
+classes:
+  independent_pi:
+    target_role: true
+    requires_contextual_verification: true
+  tenure_track_faculty:
+    target_role: true
+    requires_contextual_verification: true
+  faculty_open_rank:
+    target_role: true
+    requires_contextual_verification: true
+  independent_group_leader:
+    target_role: true
+    requires_contextual_verification: true
+  likely_independent_pi:
+    target_role: true
+    requires_contextual_verification: true
+  ambiguous_independence:
+    target_role: false
+    requires_contextual_verification: true
+  research_faculty:
+    target_role: false
+    requires_contextual_verification: true
+  non_independent_research:
+    target_role: false
+    requires_contextual_verification: false
+  postdoc:
+    target_role: false
+    requires_contextual_verification: false
+  staff_scientist:
+    target_role: false
+    requires_contextual_verification: false
+  technician:
+    target_role: false
+    requires_contextual_verification: false
+  teaching_only:
+    target_role: false
+    requires_contextual_verification: true
+  administrative:
+    target_role: false
+    requires_contextual_verification: false
+  other:
+    target_role: false
+    requires_contextual_verification: true
+
+rules:
+  - id: independent_group_leader
+    priority: 100
+    patterns:
+      - independent group leader
+      - junior group leader
+    normalized_class: independent_group_leader
+  - id: tenure_track_faculty
+    priority: 95
+    patterns:
+      - tenure-track faculty
+      - tenure track faculty
+      - tenure-track assistant professor
+      - tenure track assistant professor
+    normalized_class: tenure_track_faculty
+  - id: assistant_professor
+    priority: 90
+    patterns:
+      - assistant professor
+    normalized_class: tenure_track_faculty
+    require_context_for_final_independence: true
+  - id: open_rank
+    priority: 85
+    patterns:
+      - open rank professor
+      - open-rank professor
+      - open rank faculty
+      - faculty open rank
+    normalized_class: faculty_open_rank
+  - id: faculty_position
+    priority: 70
+    patterns:
+      - faculty position
+      - faculty opening
+    normalized_class: likely_independent_pi
+  - id: group_leader
+    priority: 65
+    patterns:
+      - group leader
+    normalized_class: independent_group_leader
+    require_context_for_final_independence: true
+  - id: investigator
+    priority: 60
+    patterns:
+      - investigator
+    normalized_class: ambiguous_independence
+  - id: w1_professor
+    priority: 75
+    patterns:
+      - w1 professor
+    normalized_class: likely_independent_pi
+    require_context_for_final_independence: true
+  - id: lecturer
+    priority: 55
+    patterns:
+      - lecturer
+      - senior lecturer
+    normalized_class: likely_independent_pi
+    require_country_context: true
+  - id: professor_generic
+    priority: 40
+    patterns:
+      - professor
+    normalized_class: ambiguous_independence
+    require_country_context: true
+  - id: research_faculty
+    priority: 55
+    patterns:
+      - research assistant professor
+      - research associate professor
+      - research professor
+    normalized_class: research_faculty
+  - id: research_scientist
+    priority: 50
+    patterns:
+      - research scientist
+    normalized_class: non_independent_research
+    allow_contextual_override: true
+  - id: staff_scientist
+    priority: 100
+    patterns:
+      - staff scientist
+    normalized_class: staff_scientist
+  - id: postdoc
+    priority: 100
+    patterns:
+      - postdoctoral fellow
+      - postdoctoral researcher
+      - postdoc
+    normalized_class: postdoc
+  - id: technician
+    priority: 100
+    patterns:
+      - research technician
+      - laboratory technician
+      - lab technician
+    normalized_class: technician
+  - id: teaching_only
+    priority: 90
+    patterns:
+      - teaching professor
+      - teaching faculty
+      - teaching-only faculty
+    normalized_class: teaching_only
+  - id: administrative
+    priority: 90
+    patterns:
+      - academic administrator
+      - dean
+    normalized_class: administrative
+
+independence_evidence:
+  positive:
+    - establish an independent research program
+    - build an independent research program
+    - recruit and supervise a research group
+    - startup package
+    - laboratory space
+    - independent budget
+    - tenure-track
+    - tenure track
+    - faculty appointment
+    - graduate student supervision
+    - principal investigator eligibility
+    - independent funding
+  negative:
+    - work under the supervision of
+    - support the principal investigator
+    - assist an existing research group
+    - postdoctoral training position
+  confidence_thresholds:
+    high: 0.80
+    medium: 0.55
+    low: 0.30
+
+fallback:
+  normalized_class: other
+  require_manual_review_for_independence: true

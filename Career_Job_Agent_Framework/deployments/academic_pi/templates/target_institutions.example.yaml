@@ -1,0 +1,46 @@
+version: 1
+
+institutions:
+  - id: synthetic_daily_institute
+    name: Synthetic Daily Research Institute
+    aliases:
+      - SDRI
+    country: US
+    region: Example Metro
+    priority_tier: S
+    priority: 100
+    enabled: true
+    domains:
+      - daily.example.org
+    career_urls:
+      - https://daily.example.org/faculty-recruitment
+    department_urls: []
+    departments: []
+    expected_role_terms:
+      - Assistant Professor
+      - Principal Investigator
+      - Faculty Position
+    interval_days: 1
+    notes: null
+
+  - id: synthetic_weekly_university
+    name: Synthetic Weekly University
+    aliases: []
+    country: DE
+    region: Example Region
+    priority_tier: A
+    priority: 80
+    enabled: true
+    domains:
+      - weekly.example.edu
+    career_urls:
+      - https://weekly.example.edu/careers
+    department_urls:
+      - https://weekly.example.edu/life-sciences/recruitment
+    departments: []
+    expected_role_terms:
+      - Group Leader
+      - Independent Group Leader
+      - W2 Professor
+    interval_days: 7
+    notes: null

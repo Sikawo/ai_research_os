@@ -1,0 +1,12 @@
+version: 1
+
+# Connector code is supplied by a trusted host and registered in an explicit
+# Python factory allowlist. This public file never names an import path or
+# stores credentials. Private overlays may add enabled plugin declarations.
+plugins: []
+
+bindings:
+  discovery: []
+  verification: null
+  email: null
+  report: []

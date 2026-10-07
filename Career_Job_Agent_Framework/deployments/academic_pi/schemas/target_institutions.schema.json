@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/career-job-agent/academic-pi/target-institutions.schema.json",
+  "title": "Private Academic PI Target Institution Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "institutions"],
+  "properties": {
+    "version": {"type": "integer", "minimum": 1},
+    "institutions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/institution"}
+    }
+  },
+  "$defs": {
+    "nullableString": {"type": ["string", "null"]},
+    "stringArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "uriArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "format": "uri"}
+    },
+    "institution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$"},
+        "name": {"type": "string", "minLength": 1},
+        "aliases": {"$ref": "#/$defs/stringArray"},
+        "country": {"type": "string", "minLength": 2},
+        "region": {"$ref": "#/$defs/nullableString"},
+        "priority_tier": {"enum": ["S", "A"]},
+        "priority": {"type": "integer", "minimum": 0, "maximum": 100},
+        "enabled": {"type": "boolean"},
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,}$"
+          }
+        },
+        "career_urls": {"$ref": "#/$defs/uriArray"},
+        "department_urls": {"$ref": "#/$defs/uriArray"},
+        "departments": {"$ref": "#/$defs/stringArray"},
+        "expected_role_terms": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "interval_days": {"type": "integer", "minimum": 1},
+        "scan_frequency_days": {"type": "integer", "minimum": 1},
+        "cadence_days": {"type": "integer", "minimum": 1},
+        "scan_frequency": {
+          "anyOf": [
+            {"enum": ["daily", "weekly", "high", "medium", "low"]},
+            {"type": "integer", "minimum": 1}
+          ]
+        },
+        "notes": {"$ref": "#/$defs/nullableString"}
+      }
+    }
+  }
+}

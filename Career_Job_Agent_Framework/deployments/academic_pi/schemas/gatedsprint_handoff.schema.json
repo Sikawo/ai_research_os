@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/career-job-agent/academic-pi/gatedsprint-handoff.schema.json",
+  "title": "Academic GatedSprint Handoff",
+  "description": "Evidence-backed handoff from job discovery to application-material preparation. It never authorizes submission.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "job", "search", "evaluation", "candidate_evidence", "application"],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 1},
+    "job": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonical_job_id",
+        "official_url",
+        "verified_at",
+        "institution",
+        "department",
+        "title",
+        "deadline"
+      ],
+      "properties": {
+        "canonical_job_id": {"type": "string", "minLength": 1},
+        "official_url": {"type": "string", "format": "uri"},
+        "verified_at": {"type": "string", "format": "date-time"},
+        "institution": {"type": "string", "minLength": 1},
+        "department": {"$ref": "#/$defs/nullableString"},
+        "title": {"type": "string", "minLength": 1},
+        "deadline": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "search": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "normalized_role_class",
+        "independence_evidence",
+        "declared_fields",
+        "broad_search",
+        "required_documents",
+        "reference_letter_policy"
+      ],
+      "properties": {
+        "normalized_role_class": {"$ref": "#/$defs/roleClass"},
+        "independence_evidence": {"$ref": "#/$defs/stringArray"},
+        "declared_fields": {"$ref": "#/$defs/stringArray"},
+        "broad_search": {"type": "boolean"},
+        "required_documents": {"$ref": "#/$defs/stringArray"},
+        "reference_letter_policy": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fit_score",
+        "tier",
+        "strongest_matches",
+        "meaningful_gaps",
+        "blockers",
+        "uncertainty"
+      ],
+      "properties": {
+        "fit_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "tier": {"enum": ["Tier 1", "Tier 2", "Watchlist", "BLOCKED", "Below threshold"]},
+        "strongest_matches": {"$ref": "#/$defs/stringArray"},
+        "meaningful_gaps": {"$ref": "#/$defs/stringArray"},
+        "blockers": {"$ref": "#/$defs/stringArray"},
+        "uncertainty": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "candidate_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_refs"],
+      "properties": {
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["ref", "strength"],
+            "properties": {
+              "ref": {"type": "string", "minLength": 1},
+              "strength": {
+                "enum": ["strong_direct_evidence", "credible_adjacent_evidence", "uncertain", "no_evidence"]
+              },
+              "note": {"$ref": "#/$defs/nullableString"}
+            }
+          }
+        }
+      }
+    },
+    "application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_status", "existing_materials", "submission_authorized"],
+      "properties": {
+        "current_status": {"type": ["string", "null"]},
+        "existing_materials": {"$ref": "#/$defs/stringArray"},
+        "submission_authorized": {"type": "boolean", "const": false}
+      }
+    }
+  },
+  "$defs": {
+    "nullableString": {"type": ["string", "null"]},
+    "stringArray": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "roleClass": {
+      "enum": [
+        "independent_pi",
+        "tenure_track_faculty",
+        "faculty_open_rank",
+        "independent_group_leader",
+        "likely_independent_pi",
+        "ambiguous_independence",
+        "research_faculty",
+        "non_independent_research",
+        "postdoc",
+        "staff_scientist",
+        "technician",
+        "teaching_only",
+        "administrative",
+        "other"
+      ]
+    }
+  }
+}

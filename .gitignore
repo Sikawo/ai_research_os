@@ -24,3 +24,13 @@ logs/
 cache/
 raw_data/
 data/
+
+# Career Job Agent repo-local private overlays and runtime artifacts
+Career_Job_Agent_Framework/profiles/local/
+Career_Job_Agent_Framework/private/
+Career_Job_Agent_Framework/state/
+Career_Job_Agent_Framework/outputs/
+Career_Job_Agent_Framework/reports/private/
+Career_Job_Agent_Framework/application_materials/
+Career_Job_Agent_Framework/credentials/
+Career_Job_Agent_Framework/tokens/

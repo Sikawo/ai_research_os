@@ -1,0 +1,8 @@
+# Project registration request.
+# Keep this file small. Do not include raw data, local paths, secrets, or URLs.
+
+project_id: "example_project"
+name: "Example Project"
+status: "active"
+description: "One or two sentence project description."
+notes: "Optional short note."

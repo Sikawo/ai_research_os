@@ -1,0 +1,58 @@
+version: 1
+search:
+  employment_types: [fulltime]
+  target_titles: []
+  target_domains: []
+  excluded_titles: []
+  preferred_locations: []
+  remote_policy: allowed
+  company_allowlist_file: company_allowlist.yaml
+  official_career_page_required: true
+  aggregator_policy: discovery_only
+
+fit:
+  tier_1_threshold: 80
+  tier_2_threshold: 68
+  watchlist_threshold: 60
+  maximum_questions_per_tier_1_role: 5
+  target_tier_1_cadence: one_or_more_per_week
+  require_no_hard_blocker_for_tier_1: true
+
+state_persistence:
+  manual_evaluations:
+    enabled: true
+    upsert_actionable_tier_1_2: true
+    require_current_official_verification: true
+
+notifications:
+  daily_report: true
+  notify_when_no_new_matches: true
+
+reporting:
+  current_active_tier_1_2:
+    enabled: true
+    heading: "CURRENT ACTIVE TIER 1/2"
+    include_unchanged: true
+    reverify_official_status_each_daily_run: true
+    include_in:
+      - daily_report
+      - chatgpt_digest
+      - gmail_digest
+      - slack_digest
+    sort:
+      - tier
+      - fit_score_desc
+      - company
+      - title
+    fields:
+      - tier
+      - fit_score
+      - company
+      - title
+      - job_id
+      - location
+      - salary
+      - workflow_status
+      - strongest_match
+      - key_gap
+      - official_url

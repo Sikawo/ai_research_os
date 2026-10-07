@@ -1,0 +1,230 @@
+catalog_version: 1
+
+source_classes:
+  - GENERAL_ACADEMIC_AGGREGATOR
+  - SCIENCE_JOB_BOARD
+  - REGIONAL_ACADEMIC_PORTAL
+  - SCIENTIFIC_SOCIETY
+  - INSTITUTION_DIRECT
+  - EMAIL_ALERT
+  - SEARCH_ENGINE_DISCOVERY
+  - MANUAL
+
+sources:
+  - id: academic_jobs_online
+    name: AcademicJobsOnline
+    class: GENERAL_ACADEMIC_AGGREGATOR
+    base_url: https://academicjobsonline.org/
+    regions: [GLOBAL]
+    enabled_by_default: true
+    priority: 90
+    frequency_class: high
+    discovery_method: rss_feed
+    supports_email_alerts: false
+    supports_direct_search: true
+    supports_rss: true
+    feed_urls:
+      - https://academicjobsonline.org/ajo?joblist-0-0-0-1----rss--
+      - https://academicjobsonline.org/ajo?joblist-0-0-0-200----rss--
+    bootstrap_url: https://academicjobsonline.org/ajo/jobs/job
+    alert_delivery_state: null
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 2
+
+  - id: nature_careers
+    name: Nature Careers
+    class: SCIENCE_JOB_BOARD
+    base_url: https://www.nature.com/naturecareers
+    regions: [GLOBAL]
+    enabled_by_default: true
+    priority: 90
+    frequency_class: high
+    discovery_method: configured_runtime_search
+    supports_email_alerts: true
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 1
+
+  - id: science_careers
+    name: Science Careers
+    class: SCIENCE_JOB_BOARD
+    base_url: https://jobs.sciencecareers.org/
+    regions: [GLOBAL]
+    enabled_by_default: true
+    priority: 90
+    frequency_class: high
+    discovery_method: configured_runtime_search
+    supports_email_alerts: true
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 1
+
+  - id: higher_ed_jobs
+    name: HigherEdJobs
+    class: GENERAL_ACADEMIC_AGGREGATOR
+    base_url: https://www.higheredjobs.com/
+    regions: [US]
+    enabled_by_default: true
+    priority: 70
+    frequency_class: high
+    discovery_method: configured_runtime_search
+    supports_email_alerts: true
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 1
+
+  - id: euraxess
+    name: EURAXESS
+    class: REGIONAL_ACADEMIC_PORTAL
+    base_url: https://euraxess.ec.europa.eu/jobs
+    regions: [EUROPE]
+    enabled_by_default: true
+    priority: 90
+    frequency_class: high
+    discovery_method: configured_runtime_search
+    supports_email_alerts: true
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 1
+
+  - id: academic_positions
+    name: Academic Positions
+    class: GENERAL_ACADEMIC_AGGREGATOR
+    base_url: https://academicpositions.com/
+    regions: [GLOBAL, EUROPE]
+    enabled_by_default: true
+    priority: 75
+    frequency_class: high
+    discovery_method: configured_runtime_search
+    supports_email_alerts: true
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 1
+
+  - id: jobs_ac_uk
+    name: jobs.ac.uk
+    class: REGIONAL_ACADEMIC_PORTAL
+    base_url: https://www.jobs.ac.uk/
+    regions: [GB, EUROPE]
+    enabled_by_default: true
+    priority: 75
+    frequency_class: high
+    discovery_method: configured_runtime_search
+    supports_email_alerts: true
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 1
+
+  - id: jrec_in
+    name: JREC-IN Portal
+    class: REGIONAL_ACADEMIC_PORTAL
+    base_url: https://jrecin.jst.go.jp/
+    regions: [JP]
+    enabled_by_default: true
+    priority: 80
+    frequency_class: high
+    discovery_method: email_with_web_fallback
+    supports_email_alerts: true
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 1
+    alert_delivery_state: configured_unconfirmed
+
+  - id: asm_career_connections
+    name: ASM Career Connections
+    class: SCIENTIFIC_SOCIETY
+    base_url: https://careers.asm.org/
+    regions: [GLOBAL]
+    enabled_by_default: true
+    priority: 70
+    frequency_class: high
+    discovery_method: email_alert
+    supports_email_alerts: true
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 1
+    alert_delivery_state: configured_unconfirmed
+
+  - id: institution_direct
+    name: Institution Direct
+    class: INSTITUTION_DIRECT
+    base_url: null
+    regions: [GLOBAL]
+    enabled_by_default: true
+    priority: 100
+    frequency_class: medium
+    discovery_method: private_target_institution_registry
+    supports_email_alerts: false
+    supports_direct_search: true
+    verification_authority: official_when_institution_owned
+    expected_update_cadence: configured_per_institution
+    parser_version: 1
+
+  - id: scientific_society_template
+    name: Scientific Society Source Template
+    class: SCIENTIFIC_SOCIETY
+    base_url: null
+    regions: [GLOBAL]
+    enabled_by_default: false
+    priority: 60
+    frequency_class: medium
+    discovery_method: private_source_override_required
+    supports_email_alerts: true
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: every_three_days
+    parser_version: 1
+
+  - id: email_alert
+    name: Email Alert Ingestion
+    class: EMAIL_ALERT
+    base_url: null
+    regions: [GLOBAL]
+    enabled_by_default: true
+    priority: 100
+    frequency_class: high
+    discovery_method: configured_email_connector
+    supports_email_alerts: true
+    supports_direct_search: false
+    verification_authority: discovery_only
+    expected_update_cadence: daily
+    parser_version: 1
+
+  - id: search_engine_discovery
+    name: Search Engine Discovery
+    class: SEARCH_ENGINE_DISCOVERY
+    base_url: null
+    regions: [GLOBAL]
+    enabled_by_default: true
+    priority: 70
+    frequency_class: medium
+    discovery_method: configured_runtime_search
+    supports_email_alerts: false
+    supports_direct_search: true
+    verification_authority: discovery_only
+    expected_update_cadence: every_three_days
+    parser_version: 1
+
+  - id: manual
+    name: Manual Discovery
+    class: MANUAL
+    base_url: null
+    regions: [GLOBAL]
+    enabled_by_default: true
+    priority: 100
+    frequency_class: null
+    discovery_method: manual
+    supports_email_alerts: false
+    supports_direct_search: false
+    verification_authority: discovery_only
+    expected_update_cadence: on_demand
+    parser_version: 1

@@ -1,0 +1,16 @@
+version: 1
+source_policy:
+  official_career_page_is_source_of_truth: true
+  aggregators_are_discovery_only: true
+
+companies:
+  - company: REPLACE_ME
+    aliases: []
+    career_url: null
+    company_type: big_pharma_or_established_biotech
+    enabled: true
+
+excluded_by_default:
+  - unverified employer
+  - role without an official career-page record
+  - company category excluded by the user
