@@ -1,0 +1,15 @@
+schema_version: 1
+manifest_id: phase6a-transfer-allowlist
+status: empty
+deny_by_default: true
+source_classes:
+  - reviewed_public_framework_source
+  - explicitly_authorized_configuration_schema_source
+  - newly_authored_public_source
+transfers: []
+rules:
+  exact_paths_only: true
+  synthetic_fixtures_only: true
+  copy_git_history: false
+  copy_private_values: false
+  copy_runtime_state: false

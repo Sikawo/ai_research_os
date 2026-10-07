@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "repository": "ai_research_os",
+  "origin_url": "https://github.com/Sikawo/ai_research_os.git",
+  "github_repository": "Sikawo/ai_research_os",
+  "enabled": false,
+  "max_git_level": 0,
+  "base_branch": "main",
+  "allowed_branch_prefixes": [
+    "codex/"
+  ],
+  "allowed_task_classes": [],
+  "protected_content_mode": "forbidden",
+  "draft_pr_allowed": false,
+  "merge_allowed": false,
+  "forbid_force_push": true,
+  "forbid_branch_delete": true
+}
