@@ -5,10 +5,10 @@ workflow infrastructure.
 
 ## Current status
 
-This repository is a safety-only scaffold. It does not yet provide executable
-research, career, document-review, or analysis capabilities. Future transfers
-must be explicitly allowlisted, independently reviewed, and supported by
-synthetic tests before they enter this public history.
+The clean-history bootstrap is complete. Phase 6A activates public governance
+and a deny-by-default transfer manifest before reusable capabilities are ported
+offline. A manifest entry permits review and implementation; it does not imply
+that a capability is already present or live.
 
 ## Repository boundaries
 
@@ -20,17 +20,17 @@ synthetic tests before they enter this public history.
 
 See `AGENTS.md`, `AI_SAFE.md`, and `REPO_PROFILE.md` before proposing changes.
 
-## Initial validation
+## Validation
 
 Run:
 
 ```bash
-python3 Scripts/validate_repository_safety.py --phase pre-commit
-python3 -m unittest discover -s tests -p 'test_*.py' -v
+python3 Scripts/validate_repository_safety.py --phase working-tree
+python3 -m pytest -q -p no:cacheprovider
 ```
 
-After the root commit exists, use `--phase post-commit` to verify the clean
-history, branch, remote, and committed allowlist.
+Use `--phase repository` after a commit to verify the independent root history,
+origin, branch boundary, public tree, and transfer manifest.
 
 ## License
 

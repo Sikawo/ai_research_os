@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "task_id": "SPEC_example_autonomous_delivery_task",
+  "verdict": "APPROVE",
+  "reviewed_paths": [
+    "Docs/example.md",
+    "tests/test_example.py"
+  ],
+  "reviewed_snapshot_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "final_review_packet_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "reviewed_base_commit": "0000000000000000000000000000000000000000",
+  "reviewed_head_commit": "0000000000000000000000000000000000000000",
+  "pr_body_path": "Docs/autonomous_delivery_pr_body.md",
+  "pr_body_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+}

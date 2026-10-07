@@ -1,15 +1,1552 @@
-schema_version: 1
-manifest_id: phase6a-transfer-allowlist
-status: empty
-deny_by_default: true
-source_classes:
-  - reviewed_public_framework_source
-  - explicitly_authorized_configuration_schema_source
-  - newly_authored_public_source
-transfers: []
-rules:
-  exact_paths_only: true
-  synthetic_fixtures_only: true
-  copy_git_history: false
-  copy_private_values: false
-  copy_runtime_state: false
+{
+  "schema_version": 1,
+  "manifest_id": "phase6a-transfer-allowlist",
+  "status": "approved_for_offline_transfer",
+  "deny_by_default": true,
+  "sources": {
+    "legacy_public_framework": {
+      "repository": "Sikawo/ai_research_os_legacy_private",
+      "commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "access_class": "reviewed_public_framework_source"
+    },
+    "authorized_private_industry_source": {
+      "repository": "Sikawo/personal_research_brain",
+      "commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "access_class": "explicitly_authorized_exact_paths_only"
+    }
+  },
+  "rules": {
+    "exact_paths_only": true,
+    "synthetic_fixtures_only": true,
+    "copy_git_history": false,
+    "copy_private_values": false,
+    "copy_runtime_state": false,
+    "copy_connector_bindings": false,
+    "copy_scheduled_tasks": false,
+    "live_cutover": false
+  },
+  "expected_transfer_count": 169,
+  "transfers": [
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/README.md",
+      "destination_path": "Career_Job_Agent_Framework/README.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/__init__.py",
+      "destination_path": "Career_Job_Agent_Framework/__init__.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/contracts/daily_run.md",
+      "destination_path": "Career_Job_Agent_Framework/contracts/daily_run.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/contracts/fit_scoring.md",
+      "destination_path": "Career_Job_Agent_Framework/contracts/fit_scoring.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/contracts/qol_assessment.md",
+      "destination_path": "Career_Job_Agent_Framework/contracts/qol_assessment.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/contracts/state_persistence.md",
+      "destination_path": "Career_Job_Agent_Framework/contracts/state_persistence.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/__init__.py",
+      "destination_path": "Career_Job_Agent_Framework/core/__init__.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/changes.py",
+      "destination_path": "Career_Job_Agent_Framework/core/changes.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/config.py",
+      "destination_path": "Career_Job_Agent_Framework/core/config.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/connectors.py",
+      "destination_path": "Career_Job_Agent_Framework/core/connectors.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/identity.py",
+      "destination_path": "Career_Job_Agent_Framework/core/identity.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/models.py",
+      "destination_path": "Career_Job_Agent_Framework/core/models.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/privacy.py",
+      "destination_path": "Career_Job_Agent_Framework/core/privacy.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/sources.py",
+      "destination_path": "Career_Job_Agent_Framework/core/sources.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/state.py",
+      "destination_path": "Career_Job_Agent_Framework/core/state.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/urls.py",
+      "destination_path": "Career_Job_Agent_Framework/core/urls.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/core/validation.py",
+      "destination_path": "Career_Job_Agent_Framework/core/validation.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/__init__.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/__init__.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/README.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/README.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/__init__.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/__init__.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/__main__.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/__main__.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/adapters.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/adapters.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/cli.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/cli.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/connectors.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/connectors.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/country_title_rules.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/country_title_rules.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/defaults.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/defaults.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/material_change_fields.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/material_change_fields.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/report_defaults.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/report_defaults.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/source_catalog.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/source_catalog.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/title_ontology.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/config/title_ontology.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/CONNECTORS.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/CONNECTORS.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/GMAIL_ALERTS.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/GMAIL_ALERTS.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/QOL.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/QOL.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/RSS_ALERTS.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/RSS_ALERTS.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/SCORING.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/SCORING.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/SETUP.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/SETUP.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/SHARING_AND_PRIVACY.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/SHARING_AND_PRIVACY.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/SOURCES.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/SOURCES.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/STATE_MODEL.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/STATE_MODEL.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/TARGET_INSTITUTIONS.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/docs/TARGET_INSTITUTIONS.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/email_ingestion.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/email_ingestion.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/email_sources.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/email_sources.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/handoff.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/handoff.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/institution_monitor.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/institution_monitor.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/models.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/models.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/daily_scan.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/daily_scan.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/evaluate_fit.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/evaluate_fit.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/gatedsprint_handoff.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/gatedsprint_handoff.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/verify_job.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/verify_job.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/weekly_audit.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/prompts/weekly_audit.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/qol.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/qol.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/queries.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/queries.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/reports.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/reports.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/rss_adapters.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/rss_adapters.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/rss_ingestion.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/rss_ingestion.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/academic_job.schema.json",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/academic_job.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/candidate_profile.schema.json",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/candidate_profile.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/gatedsprint_handoff.schema.json",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/gatedsprint_handoff.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/preferences.schema.json",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/preferences.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/source.schema.json",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/source.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/target_institutions.schema.json",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/schemas/target_institutions.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/scoring.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/scoring.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/service.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/service.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/candidate_profile.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/candidate_profile.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/connectors.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/connectors.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/email_sources.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/email_sources.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/preferences.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/preferences.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/scoring_overrides.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/scoring_overrides.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/source_overrides.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/source_overrides.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/target_institutions.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/templates/target_institutions.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/deployments/academic_pi/titles.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/academic_pi/titles.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/templates/company_allowlist.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/templates/company_allowlist.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/templates/life_preferences.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/templates/life_preferences.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/templates/search_preferences.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/templates/search_preferences.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Career_Job_Agent_Framework/templates/user_profile.example.yaml",
+      "destination_path": "Career_Job_Agent_Framework/templates/user_profile.example.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_cli_ops.py",
+      "destination_path": "tests/test_academic_pi_cli_ops.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_contract_hardening.py",
+      "destination_path": "tests/test_academic_pi_contract_hardening.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_contracts_runtime.py",
+      "destination_path": "tests/test_academic_pi_contracts_runtime.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_core_correctness.py",
+      "destination_path": "tests/test_academic_pi_core_correctness.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_core_hardening.py",
+      "destination_path": "tests/test_academic_pi_core_hardening.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_email_sources.py",
+      "destination_path": "tests/test_academic_pi_email_sources.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_job_agent.py",
+      "destination_path": "tests/test_academic_pi_job_agent.py",
+      "transfer_mode": "sanitized_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_privacy_gate.py",
+      "destination_path": "tests/test_academic_pi_privacy_gate.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_production_upgrade.py",
+      "destination_path": "tests/test_academic_pi_production_upgrade.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_qol.py",
+      "destination_path": "tests/test_academic_pi_qol.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_rss.py",
+      "destination_path": "tests/test_academic_pi_rss.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_service_correctness.py",
+      "destination_path": "tests/test_academic_pi_service_correctness.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_service_hardening.py",
+      "destination_path": "tests/test_academic_pi_service_hardening.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_academic_pi_target_monitor.py",
+      "destination_path": "tests/test_academic_pi_target_monitor.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_career_job_agent_current_active_contract.py",
+      "destination_path": "tests/test_career_job_agent_current_active_contract.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_career_job_agent_state_persistence_contract.py",
+      "destination_path": "tests/test_career_job_agent_state_persistence_contract.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "shared_core/CORE_AI_CHAT_ACCESS_POLICY.md",
+      "destination_path": "shared_core/CORE_AI_CHAT_ACCESS_POLICY.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "shared_core/CORE_AUTONOMOUS_DELIVERY_POLICY.md",
+      "destination_path": "shared_core/CORE_AUTONOMOUS_DELIVERY_POLICY.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "shared_core/CORE_COMMAND_POLICY.md",
+      "destination_path": "shared_core/CORE_COMMAND_POLICY.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "shared_core/CORE_EXTERNAL_AI.md",
+      "destination_path": "shared_core/CORE_EXTERNAL_AI.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "shared_core/CORE_PRINCIPLES.md",
+      "destination_path": "shared_core/CORE_PRINCIPLES.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "shared_core/CORE_REVIEW_POLICY.md",
+      "destination_path": "shared_core/CORE_REVIEW_POLICY.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "shared_core/CORE_WORKFLOW.md",
+      "destination_path": "shared_core/CORE_WORKFLOW.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "shared_core/README.md",
+      "destination_path": "shared_core/README.md",
+      "transfer_mode": "sanitized_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "plugins/paragraph-lock/.codex-plugin/plugin.json",
+      "destination_path": "plugins/paragraph-lock/.codex-plugin/plugin.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "plugins/paragraph-lock/skills/paragraph-lock/SKILL.md",
+      "destination_path": "plugins/paragraph-lock/skills/paragraph-lock/SKILL.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "plugins/paragraph-lock/skills/paragraph-lock/agents/openai.yaml",
+      "destination_path": "plugins/paragraph-lock/skills/paragraph-lock/agents/openai.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "plugins/paragraph-lock/skills/paragraph-lock/references/protocol.md",
+      "destination_path": "plugins/paragraph-lock/skills/paragraph-lock/references/protocol.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "plugins/paragraph-lock/skills/paragraph-lock/scripts/verify_paragraph_lock.py",
+      "destination_path": "plugins/paragraph-lock/skills/paragraph-lock/scripts/verify_paragraph_lock.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Docs/paragraph_lock_mode.md",
+      "destination_path": "Docs/paragraph_lock_mode.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_paragraph_lock_plugin.py",
+      "destination_path": "tests/test_paragraph_lock_plugin.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Docs/codex_autonomous_work_policy.md",
+      "destination_path": "Docs/codex_autonomous_work_policy.md",
+      "transfer_mode": "sanitized_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Docs/codex_team_workflow.md",
+      "destination_path": "Docs/codex_team_workflow.md",
+      "transfer_mode": "sanitized_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Docs/final_review_workflow.md",
+      "destination_path": "Docs/final_review_workflow.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Schemas/autonomous_delivery.schema.json",
+      "destination_path": "Schemas/autonomous_delivery.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Schemas/autonomous_review.schema.json",
+      "destination_path": "Schemas/autonomous_review.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Schemas/autonomous_task_scope.schema.json",
+      "destination_path": "Schemas/autonomous_task_scope.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/autonomous_delivery.py",
+      "destination_path": "Scripts/autonomous_delivery.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/check_shared_core.py",
+      "destination_path": "Scripts/check_shared_core.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/finalize_completed_change.py",
+      "destination_path": "Scripts/finalize_completed_change.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/finish_change.py",
+      "destination_path": "Scripts/finish_change.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/handoff.py",
+      "destination_path": "Scripts/handoff.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/import_change_spec.py",
+      "destination_path": "Scripts/import_change_spec.py",
+      "transfer_mode": "sanitized_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/prepare_commit_after_review.py",
+      "destination_path": "Scripts/prepare_commit_after_review.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/run_safety_check.py",
+      "destination_path": "Scripts/run_safety_check.py",
+      "transfer_mode": "sanitized_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/safe_codex_auto_push.py",
+      "destination_path": "Scripts/safe_codex_auto_push.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/start_change.py",
+      "destination_path": "Scripts/start_change.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/autonomous_delivery.example.json",
+      "destination_path": "Templates/autonomous_delivery.example.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/autonomous_review.example.json",
+      "destination_path": "Templates/autonomous_review.example.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/autonomous_task_scope.example.json",
+      "destination_path": "Templates/autonomous_task_scope.example.json",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/change_spec_template.md",
+      "destination_path": "Templates/change_spec_template.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/expected_behavior_template.md",
+      "destination_path": "Templates/expected_behavior_template.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/user_profile_template.md",
+      "destination_path": "Templates/user_profile_template.md",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_autonomous_delivery.py",
+      "destination_path": "tests/test_autonomous_delivery.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_check_shared_core.py",
+      "destination_path": "tests/test_check_shared_core.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_codex_autonomous_work_policy.py",
+      "destination_path": "tests/test_codex_autonomous_work_policy.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_final_review_workflow.py",
+      "destination_path": "tests/test_final_review_workflow.py",
+      "transfer_mode": "sanitized_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_finalize_completed_change.py",
+      "destination_path": "tests/test_finalize_completed_change.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_import_change_spec.py",
+      "destination_path": "tests/test_import_change_spec.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_prepare_commit_after_review.py",
+      "destination_path": "tests/test_prepare_commit_after_review.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_safe_codex_auto_push.py",
+      "destination_path": "tests/test_safe_codex_auto_push.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_start_change.py",
+      "destination_path": "tests/test_start_change.py",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "requirements-dev.txt",
+      "destination_path": "requirements-dev.txt",
+      "transfer_mode": "exact_copy",
+      "phase": "6A.0",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Docs/experiment_registration_workflow.md",
+      "destination_path": "Docs/experiment_registration_workflow.md",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/export_experiment_context.py",
+      "destination_path": "Scripts/export_experiment_context.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/export_experiments_json.py",
+      "destination_path": "Scripts/export_experiments_json.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/export_project_context.py",
+      "destination_path": "Scripts/export_project_context.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/list_experiments.py",
+      "destination_path": "Scripts/list_experiments.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/register_experiment.py",
+      "destination_path": "Scripts/register_experiment.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/register_experiment_from_request.py",
+      "destination_path": "Scripts/register_experiment_from_request.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/register_project_from_request.py",
+      "destination_path": "Scripts/register_project_from_request.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/research-os",
+      "destination_path": "Scripts/research-os",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/research_os.py",
+      "destination_path": "Scripts/research_os.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Scripts/validate_experiments.py",
+      "destination_path": "Scripts/validate_experiments.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/ai_experiment_registration_response_template.md",
+      "destination_path": "Templates/ai_experiment_registration_response_template.md",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/experiment_manifest_template.yaml",
+      "destination_path": "Templates/experiment_manifest_template.yaml",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/experiment_request_template.yaml",
+      "destination_path": "Templates/experiment_request_template.yaml",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/experiment_summary_template.md",
+      "destination_path": "Templates/experiment_summary_template.md",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "Templates/project_registration_request_template.yaml",
+      "destination_path": "Templates/project_registration_request_template.yaml",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_cli_scripts.py",
+      "destination_path": "tests/test_cli_scripts.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_experiment_request_registration.py",
+      "destination_path": "tests/test_experiment_request_registration.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_project_registration_request.py",
+      "destination_path": "tests/test_project_registration_request.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_research_os_cloud_folder_only.py",
+      "destination_path": "tests/test_research_os_cloud_folder_only.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "legacy_public_framework",
+      "source_commit": "96a779fb2b3cd3b541cf2be00831cc6f02abc3d2",
+      "source_path": "tests/test_research_os_new_exp.py",
+      "destination_path": "tests/test_research_os_new_exp.py",
+      "transfer_mode": "refactor_public_api",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": ".github/workflows/career-job-agent-tests.yml",
+      "destination_path": ".github/workflows/industry-career-agent-tests.yml",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Career_Job_Agent/career_job_agent/__init__.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/industry/__init__.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Career_Job_Agent/career_job_agent/reporting.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/industry/reporting.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Career_Job_Agent/career_job_agent/scoring.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/industry/scoring.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Career_Job_Agent/career_job_agent/state_persistence.py",
+      "destination_path": "Career_Job_Agent_Framework/deployments/industry/state_persistence.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Career_Job_Agent/config/daily_run_contract.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/industry/contracts/daily_run.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Career_Job_Agent/runtime/daily_task_contract.md",
+      "destination_path": "Career_Job_Agent_Framework/deployments/industry/contracts/runtime.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Career_Job_Agent/tests/test_reporting.py",
+      "destination_path": "tests/test_industry_reporting.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Career_Job_Agent/tests/test_scoring.py",
+      "destination_path": "tests/test_industry_scoring.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    },
+    {
+      "source_id": "authorized_private_industry_source",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Career_Job_Agent/tests/test_state_persistence.py",
+      "destination_path": "tests/test_industry_state_persistence.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "6A.1",
+      "status": "planned"
+    }
+  ]
+}

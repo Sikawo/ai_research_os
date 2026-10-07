@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "task_id": "SPEC_example_autonomous_delivery_task",
+  "repository": "example_repository",
+  "task_class": "documentation",
+  "change_class": "medium",
+  "requested_git_level": 4,
+  "base_branch": "main",
+  "branch": "agent/example-autonomous-delivery-task",
+  "allowed_paths": [
+    "Docs/example.md",
+    "tests/test_example.py"
+  ],
+  "allowed_new_files": [
+    "Docs/example.md",
+    "tests/test_example.py"
+  ],
+  "review_required_paths": [],
+  "forbidden_paths": [
+    ".env",
+    "exports/**",
+    "**/raw/**"
+  ],
+  "protected_content_mode": "none",
+  "validation_commands": [
+    "python3 Scripts/run_safety_check.py"
+  ],
+  "commit_message": "Document example autonomous delivery task",
+  "pr_title": "Document example autonomous delivery task",
+  "pr_body_file": "exports/active_change/autonomous_delivery_pr_body.md",
+  "existing_draft_pr_number": null
+}
