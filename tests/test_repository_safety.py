@@ -14,10 +14,17 @@ from Scripts.validate_repository_safety import (
     PHASE12_EXPECTED_TARGET_COUNT,
     PHASE12_EXPECTED_TRANSFER_COUNT,
     PHASE12_MANIFEST_PATH,
+    PHASE12B_EXPECTED_INTEGRATION_PATHS,
+    PHASE12B_CLASSIFICATION_SHA256,
+    PHASE12B_EXPECTED_TARGET_COUNT,
+    PHASE12B_EXPECTED_TRANSFER_COUNT,
+    PHASE12B_MANIFEST_PATH,
     load_manifest,
     load_phase12_manifest,
+    load_phase12b_manifest,
     validate_manifest,
     validate_phase12_manifest,
+    validate_phase12b_manifest,
     validate_tree,
 )
 
@@ -143,10 +150,18 @@ class RepositorySafetyTests(unittest.TestCase):
             "transfers": transfers,
         }
 
+    def phase12b_manifest(self) -> dict[str, object]:
+        root = Path(__file__).resolve().parents[1]
+        return json.loads((root / PHASE12B_MANIFEST_PATH).read_text(encoding="utf-8"))
+
     def make_tree(self, root: Path) -> None:
         phase12 = self.phase12_manifest()
+        phase12b = self.phase12b_manifest()
         phase12_paths = set(phase12["allowed_target_paths"])
-        for relative in BASELINE_PATHS | GOVERNANCE_PATHS | phase12_paths:
+        phase12b_paths = set(phase12b["allowed_target_paths"])
+        for relative in (
+            BASELINE_PATHS | GOVERNANCE_PATHS | phase12_paths | phase12b_paths
+        ):
             path = root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("synthetic public content\n", encoding="utf-8")
@@ -155,6 +170,9 @@ class RepositorySafetyTests(unittest.TestCase):
         )
         (root / PHASE12_MANIFEST_PATH).write_text(
             json.dumps(phase12), encoding="utf-8"
+        )
+        (root / PHASE12B_MANIFEST_PATH).write_text(
+            json.dumps(phase12b), encoding="utf-8"
         )
         package_manifest = (
             root
@@ -192,6 +210,14 @@ class RepositorySafetyTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(len(allowed), PHASE12_EXPECTED_TARGET_COUNT)
         self.assertEqual(len(destinations), PHASE12_EXPECTED_TRANSFER_COUNT)
+
+        phase12b, phase12b_errors = load_phase12b_manifest(root)
+        self.assertEqual(phase12b_errors, [])
+        self.assertIsNotNone(phase12b)
+        errors, allowed, destinations = validate_phase12b_manifest(phase12b or {})
+        self.assertEqual(errors, [])
+        self.assertEqual(len(allowed), PHASE12B_EXPECTED_TARGET_COUNT)
+        self.assertEqual(len(destinations), PHASE12B_EXPECTED_TRANSFER_COUNT)
 
     def test_exact_synthetic_tree_passes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -234,6 +260,45 @@ class RepositorySafetyTests(unittest.TestCase):
         self.assertTrue(
             any("allowed targets must equal" in error for error in errors)
         )
+
+    def test_phase12b_scope_must_match_transfers_and_integration_paths(self) -> None:
+        manifest = self.phase12b_manifest()
+        allowed = manifest["allowed_target_paths"]
+        assert isinstance(allowed, list)
+        allowed[-1] = "unexpected.txt"
+        errors, _, _ = validate_phase12b_manifest(manifest)
+        self.assertTrue(
+            any("allowed targets must equal" in error for error in errors)
+        )
+
+    def test_phase12b_excluded_source_cannot_be_transferred(self) -> None:
+        manifest = self.phase12b_manifest()
+        transfers = manifest["transfers"]
+        excluded = manifest["excluded_source_paths"]
+        assert isinstance(transfers, list) and isinstance(excluded, list)
+        transfers[0]["source_path"] = excluded[0]
+        errors, _, _ = validate_phase12b_manifest(manifest)
+        self.assertTrue(any("excluded Phase 12B source" in error for error in errors))
+
+    def test_phase12b_arbitrary_transfer_source_is_rejected(self) -> None:
+        manifest = self.phase12b_manifest()
+        transfers = manifest["transfers"]
+        assert isinstance(transfers, list)
+        transfers[0]["source_path"] = "Unapproved_Private_Area/arbitrary.md"
+        errors, _, _ = validate_phase12b_manifest(manifest)
+        self.assertTrue(any("source classification" in error for error in errors))
+
+    def test_phase12b_arbitrary_exclusion_replacement_is_rejected(self) -> None:
+        manifest = self.phase12b_manifest()
+        excluded = manifest["excluded_source_paths"]
+        assert isinstance(excluded, list)
+        excluded[0] = "Unapproved_Private_Area/arbitrary.md"
+        errors, _, _ = validate_phase12b_manifest(manifest)
+        self.assertTrue(any("source classification" in error for error in errors))
+
+    def test_phase12b_classification_digest_is_fixed(self) -> None:
+        manifest = self.phase12b_manifest()
+        self.assertEqual(manifest["classification_sha256"], PHASE12B_CLASSIFICATION_SHA256)
 
     def test_unsafe_relative_path_is_rejected(self) -> None:
         manifest = self.manifest()

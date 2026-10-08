@@ -1,0 +1,37 @@
+name: Review Tools plugin tests
+
+on:
+  pull_request:
+    paths:
+      - ".agents/plugins/marketplace.json"
+      - ".github/workflows/review-tools-tests.yml"
+      - "manifests/phase12b_review_tools_allowlist.yaml"
+      - "plugins/review-tools/**"
+      - "Scripts/validate_repository_safety.py"
+      - "tests/test_phase12b_review_tools.py"
+      - "tests/test_repository_safety.py"
+  push:
+    branches: [main]
+    paths:
+      - ".agents/plugins/marketplace.json"
+      - ".github/workflows/review-tools-tests.yml"
+      - "manifests/phase12b_review_tools_allowlist.yaml"
+      - "plugins/review-tools/**"
+      - "Scripts/validate_repository_safety.py"
+      - "tests/test_phase12b_review_tools.py"
+      - "tests/test_repository_safety.py"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependencies
+        run: python3 -m pip install -r requirements-dev.txt
+      - name: Run Review Tools integration tests
+        run: python3 -m pytest -q -p no:cacheprovider tests/test_phase12b_review_tools.py tests/test_repository_safety.py
+      - name: Run public repository safety
+        run: python3 Scripts/validate_repository_safety.py --phase working-tree
