@@ -23,10 +23,12 @@ from Scripts.validate_repository_safety import (
     PHASE13_EXPECTED_TARGET_COUNT,
     PHASE13_EXPECTED_TRANSFER_COUNT,
     PHASE13_MANIFEST_PATH,
+    effective_branch_name,
     load_manifest,
     load_phase12_manifest,
     load_phase12b_manifest,
     load_phase13_manifest,
+    normalize_origin_url,
     validate_manifest,
     validate_phase12_manifest,
     validate_phase12b_manifest,
@@ -36,6 +38,54 @@ from Scripts.validate_repository_safety import (
 
 
 class RepositorySafetyTests(unittest.TestCase):
+    def test_effective_branch_name_uses_github_pr_head_for_detached_checkout(self) -> None:
+        environment = {
+            "GITHUB_ACTIONS": "true",
+            "GITHUB_EVENT_NAME": "pull_request",
+            "GITHUB_HEAD_REF": "codex/phase-13-research-workflows-public-plugin",
+            "GITHUB_REF_NAME": "5/merge",
+        }
+
+        self.assertEqual(
+            effective_branch_name("", environment),
+            "codex/phase-13-research-workflows-public-plugin",
+        )
+        self.assertEqual(effective_branch_name("main", environment), "main")
+
+    def test_effective_branch_name_does_not_trust_non_github_fallback(self) -> None:
+        self.assertEqual(
+            effective_branch_name("", {"GITHUB_HEAD_REF": "codex/untrusted"}),
+            "",
+        )
+
+    def test_effective_branch_name_rejects_detached_non_pr_actions_events(self) -> None:
+        for event_name, ref_name in (
+            ("push", "main"),
+            ("workflow_dispatch", "codex/manually-selected"),
+        ):
+            with self.subTest(event_name=event_name):
+                self.assertEqual(
+                    effective_branch_name(
+                        "",
+                        {
+                            "GITHUB_ACTIONS": "true",
+                            "GITHUB_EVENT_NAME": event_name,
+                            "GITHUB_REF_NAME": ref_name,
+                        },
+                    ),
+                    "",
+                )
+
+    def test_origin_normalization_allows_only_optional_dot_git_suffix(self) -> None:
+        self.assertEqual(
+            normalize_origin_url("https://github.com/Sikawo/ai_research_os.git"),
+            normalize_origin_url("https://github.com/Sikawo/ai_research_os"),
+        )
+        self.assertNotEqual(
+            normalize_origin_url("https://github.com/other/ai_research_os.git"),
+            normalize_origin_url("https://github.com/Sikawo/ai_research_os.git"),
+        )
+
     def manifest(self) -> dict[str, object]:
         governance = sorted(GOVERNANCE_PATHS)
         transfers: list[dict[str, object]] = []

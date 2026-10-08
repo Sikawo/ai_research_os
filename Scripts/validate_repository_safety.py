@@ -6,10 +6,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import subprocess
 from pathlib import Path, PurePosixPath
-from typing import Any
+from typing import Any, Mapping
 
 
 BASELINE_PATHS = {
@@ -167,6 +168,26 @@ def git(root: Path, *args: str) -> subprocess.CompletedProcess[str]:
         ["git", *args], cwd=root, check=False, text=True,
         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
     )
+
+
+def effective_branch_name(git_branch: str, environment: Mapping[str, str]) -> str:
+    """Return the checked-out branch or the immutable GitHub PR head branch."""
+
+    branch_name = git_branch.strip()
+    if branch_name or environment.get("GITHUB_ACTIONS") != "true":
+        return branch_name
+    if environment.get("GITHUB_EVENT_NAME") == "pull_request":
+        return environment.get("GITHUB_HEAD_REF", "").strip()
+    return ""
+
+
+def normalize_origin_url(value: str) -> str:
+    """Normalize the optional .git suffix used by GitHub checkout remotes."""
+
+    normalized = value.strip().rstrip("/")
+    if normalized.endswith(".git"):
+        normalized = normalized[:-4]
+    return normalized
 
 
 def repository_files(root: Path) -> set[str]:
@@ -923,16 +944,22 @@ def validate_tree(root: Path) -> list[str]:
     return errors
 
 
-def validate_repository(root: Path, *, require_clean: bool) -> list[str]:
+def validate_repository(
+    root: Path,
+    *,
+    require_clean: bool,
+    environment: Mapping[str, str] | None = None,
+) -> list[str]:
     errors: list[str] = []
+    environment = os.environ if environment is None else environment
     branch = git(root, "branch", "--show-current")
-    branch_name = branch.stdout.strip()
+    branch_name = effective_branch_name(branch.stdout, environment)
     if branch.returncode or not (
         branch_name == "main" or branch_name.startswith("agent/") or branch_name.startswith("codex/")
     ):
         errors.append("branch must be main or use an approved feature prefix")
     origin = git(root, "remote", "get-url", "origin")
-    if origin.returncode or origin.stdout.strip() != EXPECTED_ORIGIN:
+    if origin.returncode or normalize_origin_url(origin.stdout) != normalize_origin_url(EXPECTED_ORIGIN):
         errors.append("origin does not match the public repository")
     roots = git(root, "rev-list", "--max-parents=0", "HEAD")
     root_commits = [line for line in roots.stdout.splitlines() if line]
