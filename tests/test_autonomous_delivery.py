@@ -99,6 +99,9 @@ class TempGitRepo:
             "- Python syntax status: PASS\n"
             "- Pytest status: PASS\n"
             "- Unsafe marker status: PASS\n\n"
+            "## Repository Safety Validation Output\n\n"
+            "Command: python3 Scripts/validate_repository_safety.py --phase working-tree\n"
+            "Exit code: 0\nPASS\n\n"
             "## Safety Check Output\n\n"
             "Command: python3 Scripts/run_safety_check.py\nExit code: 0\nPASS\n\n"
             "## Pytest Output\n\nCommand: python3 -m pytest\nExit code: 0\nPASS\n\n"
@@ -327,6 +330,25 @@ class AutonomousDeliveryTests(unittest.TestCase):
             ["git add -- Docs/note.md"],
         )
 
+    def test_review_accepts_repository_safety_validation_evidence(self) -> None:
+        self.make_dirty_task_branch()
+        command = "python3 Scripts/validate_repository_safety.py --phase working-tree"
+        self.policy["required_validation_commands"].append(command)
+        self.task["validation_commands"].append(command)
+        packet = self.repo.approval_packet()
+        review = self.review_record(packet)
+
+        assessment = delivery.assess_delivery(
+            self.repo.root,
+            self.policy,
+            self.task,
+            "review",
+            final_review_packet=packet,
+            review_record=review,
+        )
+
+        self.assertEqual(assessment.decision, delivery.READY)
+
     def test_review_second_pass_prints_commit_only_for_fully_staged_snapshot(self) -> None:
         self.make_dirty_task_branch()
         packet = self.repo.approval_packet()
@@ -391,7 +413,11 @@ class AutonomousDeliveryTests(unittest.TestCase):
         self.make_dirty_task_branch()
         packet = self.repo.approval_packet()
         packet.write_text(
-            packet.read_text(encoding="utf-8").replace("Exit code: 0", "Exit code: 1", 1),
+            packet.read_text(encoding="utf-8").replace(
+                "Command: python3 Scripts/run_safety_check.py\nExit code: 0",
+                "Command: python3 Scripts/run_safety_check.py\nExit code: 1",
+                1,
+            ),
             encoding="utf-8",
         )
         review = self.review_record(packet)

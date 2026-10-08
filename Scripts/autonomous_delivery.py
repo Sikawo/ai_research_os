@@ -650,6 +650,7 @@ def packet_passes_final_review(
         "Human-Readable Summary",
         "Change Spec Identity",
         "Spec-Based Review Summary",
+        "Repository Safety Validation Output",
         "Safety Check Output",
         "Pytest Output",
         "Relevant Diff",
@@ -690,6 +691,7 @@ def packet_passes_final_review(
         return False, "packet changed paths do not match current task paths"
 
     evidence_sections = [
+        markdown_section(packet_text, "Repository Safety Validation Output"),
         markdown_section(packet_text, "Safety Check Output"),
         markdown_section(packet_text, "Python Syntax Check Output"),
         markdown_section(packet_text, "Pytest Output"),

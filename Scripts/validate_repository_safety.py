@@ -14,10 +14,13 @@ from typing import Any, Mapping
 
 
 BASELINE_PATHS = {
+    ".github/dependabot.yml",
+    ".github/workflows/codeql.yml",
     ".gitattributes",
     ".gitignore",
     "AGENTS.md",
     "AI_SAFE.md",
+    "HANDOFF.md",
     "LICENSE",
     "README.md",
     "REPO_PROFILE.md",
@@ -25,6 +28,7 @@ BASELINE_PATHS = {
     "config/autonomous_delivery.json",
     "manifests/phase6a_transfer_allowlist.yaml",
     "tests/test_repository_safety.py",
+    "tests/test_workflow_security.py",
 }
 
 GOVERNANCE_PATHS = {
