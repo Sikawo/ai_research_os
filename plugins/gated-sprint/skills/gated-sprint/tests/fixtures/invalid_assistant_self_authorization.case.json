@@ -1,0 +1,15 @@
+{
+  "description": "APPROVED and AUTHORIZED transitions require explicit user authority.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "replace", "path": "/events/1/actor", "value": "assistant"},
+    {"op": "replace", "path": "/events/1/authority_kind", "value": "ASSISTANT"},
+    {"op": "replace", "path": "/events/3/actor", "value": "assistant"},
+    {"op": "replace", "path": "/events/3/authority_kind", "value": "ASSISTANT"}
+  ],
+  "expected_check_ids": ["STATE.EVENT_AUTHORITY"]
+}

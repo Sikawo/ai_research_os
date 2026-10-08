@@ -1,0 +1,69 @@
+{
+  "description": "A resolution owned by the active decision cannot say OTHER_SELECTED and thereby select the pending competitor.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "copy", "from": "/decisions/0", "path": "/decisions/-"},
+    {"op": "replace", "path": "/decisions/1/decision_id", "value": "GS-002"},
+    {"op": "replace", "path": "/decisions/1/source_id", "value": "SRC-NEW"},
+    {"op": "replace", "path": "/decisions/1/source_fingerprint", "value": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"},
+    {"op": "replace", "path": "/decisions/1/proposal_fingerprint", "value": "sha256:8888888888888888888888888888888888888888888888888888888888888888"},
+    {
+      "op": "replace",
+      "path": "/decisions/1/source_bindings",
+      "value": [
+        {
+          "binding_type": "INITIAL",
+          "event_id": "EVT-IMPL-101",
+          "source_id": "SRC-NEW",
+          "source_fingerprint": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "proposal_fingerprint": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+          "timestamp": "2026-10-01T13:03:10Z",
+          "actor": "assistant",
+          "authority_basis": "A competing proposal was recorded on the current draft.",
+          "old_source_id": null,
+          "old_source_fingerprint": null,
+          "old_anchor_hash": null,
+          "new_anchor_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "protected_intent_hash": "sha256:976c1fd672ca9c9edd704915c79ed39c6a08c2c64985a56f908c183bceb5a188",
+          "dependency_set_hash": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "comparison_result": "INITIAL"
+        }
+      ]
+    },
+    {"op": "replace", "path": "/decisions/1/decision_state", "value": "PROPOSED"},
+    {"op": "replace", "path": "/decisions/1/source_impact", "value": "CURRENT"},
+    {
+      "op": "replace",
+      "path": "/decisions/0/conflicts",
+      "value": [{"decision_id": "GS-002", "proposal_revision": 1}]
+    },
+    {
+      "op": "replace",
+      "path": "/decisions/0/conflict_resolutions",
+      "value": [
+        {
+          "with_decision": {"decision_id": "GS-002", "proposal_revision": 1},
+          "resolution": "OTHER_SELECTED",
+          "rationale": "This incorrectly claims that the pending competitor was selected.",
+          "authority_basis": "Malformed orientation regression fixture."
+        }
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/decisions/1/conflicts",
+      "value": [{"decision_id": "GS-001", "proposal_revision": 1}]
+    },
+    {"op": "replace", "path": "/decisions/1/conflict_resolutions", "value": []},
+    {"op": "copy", "from": "/events/0", "path": "/events/3"},
+    {"op": "replace", "path": "/events/3/event_id", "value": "EVT-IMPL-101"},
+    {"op": "replace", "path": "/events/3/decision_id", "value": "GS-002"},
+    {"op": "replace", "path": "/events/3/timestamp", "value": "2026-10-01T13:03:10Z"},
+    {"op": "replace", "path": "/events/3/proposal_fingerprint", "value": "sha256:8888888888888888888888888888888888888888888888888888888888888888"},
+    {"op": "replace", "path": "/events/3/source_id", "value": "SRC-NEW"},
+    {"op": "replace", "path": "/events/3/source_fingerprint", "value": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"}
+  ],
+  "expected_check_ids": ["STATE.CONFLICT"]
+}

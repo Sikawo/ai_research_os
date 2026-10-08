@@ -1,0 +1,12 @@
+{
+  "description": "After source revalidation, later decision events cannot bind the superseded source merely because it remains in binding history.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "copy", "from": "/events/1", "path": "/events/3"},
+    {"op": "remove", "path": "/events/1"},
+    {"op": "replace", "path": "/events/2/timestamp", "value": "2026-10-01T13:03:30Z"}
+  ],
+  "expected_check_ids": ["STATE.EVENT_BINDING"]
+}

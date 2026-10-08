@@ -1,0 +1,450 @@
+{
+  "schema_version": 1,
+  "skill_name": "gated-sprint",
+  "workflow_version": "2.1.0",
+  "hash_algorithm": "sha256",
+  "package_hash": "3463283f18a5f21d4d5a787136fb212c0de687fe2f90ecdb4bc6ddf2bd1b2535",
+  "file_count": 88,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "49980b8d86b44c4aca22851a14a58008a08bcccdaaae27d25e898cf7ccd538ef",
+      "bytes": 10253
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "689f57302703d18cf3f11b62a062c7bb5e0770f568e62787b561f64f614044e5",
+      "bytes": 8203
+    },
+    {
+      "path": "agents/openai.yaml",
+      "sha256": "1331407afc2c7df864921b4816ab8d9fe04357a81032c4e561c2986e65ac0756",
+      "bytes": 267
+    },
+    {
+      "path": "evals/cases.json",
+      "sha256": "2786c1f798d427f4526e4ffaad6287799e4d75e03872f131fa8fe391bfc8f3ca",
+      "bytes": 142767
+    },
+    {
+      "path": "evals/fixtures/file-versioning-scenarios.json",
+      "sha256": "d496d20cde5bd2e74306512b4cf8ee0ffb5799e6928ff45e30006b6d748ac2b9",
+      "bytes": 3277
+    },
+    {
+      "path": "evals/fixtures/scenarios.json",
+      "sha256": "894995085e7c142540f2594533d8b960dbdaf1fd06d75a7420ec6201f7e5063b",
+      "bytes": 19387
+    },
+    {
+      "path": "references/core-invariants.md",
+      "sha256": "5088614f1a37000a89d6d07639db4030109e1979e4d949370fb7f5b05d41196b",
+      "bytes": 11851
+    },
+    {
+      "path": "references/decision-state.md",
+      "sha256": "aed4b8dcca77b2696eb611241c882d911194961a10b0d3c77ea46d2fc0a46d0e",
+      "bytes": 15758
+    },
+    {
+      "path": "references/deliverable-routing.md",
+      "sha256": "8b92cafc9853d1e707c14d78e484803a37ad49f42a88441e4bf661fab08e05e4",
+      "bytes": 13849
+    },
+    {
+      "path": "references/diagnostic-phase.md",
+      "sha256": "0ec338479d9d7f811350c8ec0ce452eb926e44ac20b65af69beab8edc0b8ff81",
+      "bytes": 11333
+    },
+    {
+      "path": "references/figures-and-layout.md",
+      "sha256": "e349a8b10f80fcb70651e701986bd74465d60780c9ebb4a42381207943bc20af",
+      "bytes": 4025
+    },
+    {
+      "path": "references/file-versioning.md",
+      "sha256": "d799a0c8ab8056b4864181067284220ad264b6bd45385ad5f576bbeefeb5d210",
+      "bytes": 3971
+    },
+    {
+      "path": "references/finalization.md",
+      "sha256": "7f8027970417001db0dc06fb4e357f1a65dc282cb2924fca3aef1e47ce2d6e85",
+      "bytes": 7993
+    },
+    {
+      "path": "references/industry-resume.md",
+      "sha256": "5017ed19e8bde66d3ed733363ae0c238b65be16c3bd07229b776b5495cb5bb48",
+      "bytes": 21944
+    },
+    {
+      "path": "references/negotiation-and-implementation.md",
+      "sha256": "3e0bd66c105e645b90781582b3b233b25e7ba277e21e04acf1b7c2a5159f77ee",
+      "bytes": 6817
+    },
+    {
+      "path": "references/retrospective.md",
+      "sha256": "735b049b75fad17f6a46fc52e43f1bae5620ecf36eba2fa4a5c56a7c5571a4b6",
+      "bytes": 2287
+    },
+    {
+      "path": "references/review-rubrics.md",
+      "sha256": "f9b506b1a97af1c945b740ff0213a40f2ff744961f304492b5b4aad62a23be29",
+      "bytes": 18754
+    },
+    {
+      "path": "references/sprint-mode.md",
+      "sha256": "963709628880769d021fcd4341deac0b77733cf14038c0053e6b0f077f12ba7b",
+      "bytes": 4687
+    },
+    {
+      "path": "schemas/eval-case.schema.json",
+      "sha256": "a1a92b27cd80818227770adebc633cf8a9e47fb5df3a1592de63ae38727720fb",
+      "bytes": 14224
+    },
+    {
+      "path": "schemas/gatedsprint-state.schema.json",
+      "sha256": "6476b50a3bad74c434229442be7739170e4069b34f205e2e2103a00fd0985024",
+      "bytes": 30082
+    },
+    {
+      "path": "schemas/industry-resume-analysis.schema.json",
+      "sha256": "52b8af23c96d585383157ab80dc68702c43b72a4de90f5e38f2452abafc5b19e",
+      "bytes": 35276
+    },
+    {
+      "path": "scripts/build_skill_manifest.py",
+      "sha256": "25d09e04c8c16f71dbb37cabdfbca6275d3fcc8936d95b542533334b2a5c54bb",
+      "bytes": 3521
+    },
+    {
+      "path": "scripts/run_gatedsprint_evals.py",
+      "sha256": "015aa49cc70488cfd422097d27e823caaaff0f2a8175725d969d4e61651c5e7f",
+      "bytes": 93735
+    },
+    {
+      "path": "scripts/validate_gatedsprint_state.py",
+      "sha256": "dcc927b97c6f149e73d08593c6818ef720d7cf6814e517622f674fa97e378b95",
+      "bytes": 188759
+    },
+    {
+      "path": "scripts/validate_industry_resume_analysis.py",
+      "sha256": "a120fa873110f0a34547b0ea3c6e38a2dcc34bad143088b9814968da5ca9c2ab",
+      "bytes": 174041
+    },
+    {
+      "path": "tests/fixtures/approved-source.txt",
+      "sha256": "cf40fbd1b90427f1d79b335a2adcf4b3bf593afea52350b57d90789d043861f1",
+      "bytes": 111
+    },
+    {
+      "path": "tests/fixtures/diagnostic_baseline.json",
+      "sha256": "12101911900184d21fedda00957f60e8825641aa914423141cd003e916ebe2a3",
+      "bytes": 825
+    },
+    {
+      "path": "tests/fixtures/industry-resume-e2e-files/outputs/final-resume.txt",
+      "sha256": "e4a2653681ec78afd9af79fe4ef7468caee3192ffaaa25e17767d64742dca94b",
+      "bytes": 407
+    },
+    {
+      "path": "tests/fixtures/industry-resume-e2e-files/outputs/industry-resume-audit.md",
+      "sha256": "47fd07a49de9040172b47cec99ce72ec171b9cae248a443b4f0a036342e6533c",
+      "bytes": 11248
+    },
+    {
+      "path": "tests/fixtures/industry-resume-e2e-files/sources/baseline-resume.txt",
+      "sha256": "63a856707a7579e8d0fa056b3e8f72a93f89498a763d4d94a132f2aa89285db6",
+      "bytes": 318
+    },
+    {
+      "path": "tests/fixtures/industry-resume-e2e-files/sources/candidate-evidence-profile.txt",
+      "sha256": "ea18dfdd109ea21deed7a6f02f8c08ee581f50dd17ddddf9dbccbf7e5f5c2153",
+      "bytes": 201
+    },
+    {
+      "path": "tests/fixtures/industry-resume-e2e-files/sources/job-description.txt",
+      "sha256": "83649b763c3960b7e4b6f4b209b8678c2a4a4855f66e67ced38e64634ab31b17",
+      "bytes": 416
+    },
+    {
+      "path": "tests/fixtures/industry-resume-e2e.json",
+      "sha256": "06070984ea389c97cf34641ee0435a4ee9ec25ce7808bf82e38b04a802cec086",
+      "bytes": 36267
+    },
+    {
+      "path": "tests/fixtures/invalid_artifact_hash_binding.case.json",
+      "sha256": "5c2ae4baf36fe3741415ff1504a5518aaa41acd6b605fbfcca8e5c269d35f49f",
+      "bytes": 531
+    },
+    {
+      "path": "tests/fixtures/invalid_assistant_self_authorization.case.json",
+      "sha256": "d4ca4ce44b816d25d259bafa95d55a08e8c1b89dbb83cb712d0192ccc92c78e2",
+      "bytes": 649
+    },
+    {
+      "path": "tests/fixtures/invalid_baseline_mutation.case.json",
+      "sha256": "c4627a3d63bf539edd212020e942e7ad1bb4be1c8dca97fb7dada143daa2926b",
+      "bytes": 473
+    },
+    {
+      "path": "tests/fixtures/invalid_blocked_authorized.case.json",
+      "sha256": "082802e70d2f72c9cee9c2b38285cbd7d67d05e43f8e42b79ee22db953ef2989",
+      "bytes": 749
+    },
+    {
+      "path": "tests/fixtures/invalid_changed_anchor_carry_forward.case.json",
+      "sha256": "cb68e75a12f369f2878d7554a14b3ff9663fa44185c3262e689320aa4128fede",
+      "bytes": 674
+    },
+    {
+      "path": "tests/fixtures/invalid_changed_protected_intent_carry_forward.case.json",
+      "sha256": "51f0d6756c71fba6303155a911521674737703cef9eb72642b7741b431c26f1a",
+      "bytes": 516
+    },
+    {
+      "path": "tests/fixtures/invalid_collapsed_confirmation_approval.case.json",
+      "sha256": "4d90516fcbd99f9ef7442de10fcaec0131f53c20f8c78346bef30a95a811916e",
+      "bytes": 1654
+    },
+    {
+      "path": "tests/fixtures/invalid_conflict_resolution_orientation.case.json",
+      "sha256": "7abab13c403ec774b05a94743a85568f592f2ff0d32213282422fac461c0ca2d",
+      "bytes": 3574
+    },
+    {
+      "path": "tests/fixtures/invalid_cross_artifact_decision.case.json",
+      "sha256": "b2a73d2e0c0fe6a9f4b6dd793d043e5e2444f8de1978d945a82ded5aee55b0a1",
+      "bytes": 674
+    },
+    {
+      "path": "tests/fixtures/invalid_dependency.case.json",
+      "sha256": "ef243d87ca3bce3e595badbc5980f0fbfe0f34b7a34a87b972664ad09c222204",
+      "bytes": 946
+    },
+    {
+      "path": "tests/fixtures/invalid_dependency_cycle.case.json",
+      "sha256": "e73021b3067f3ab1dbe423c5e13c8e88f6ae6821caa1d79c51a939ff6e03cfda",
+      "bytes": 2067
+    },
+    {
+      "path": "tests/fixtures/invalid_diagnostic_authority_opt_out.case.json",
+      "sha256": "7a146577558a7eec172663c1aa94b8364727f87dae510b8d7e3d1037eb6bd8f3",
+      "bytes": 592
+    },
+    {
+      "path": "tests/fixtures/invalid_diff_authorization.case.json",
+      "sha256": "08fdf63bd25156eca244bc9281eec32178eaae7abb29f5d107b0abff147ffa13",
+      "bytes": 477
+    },
+    {
+      "path": "tests/fixtures/invalid_docx_layout_authority.case.json",
+      "sha256": "1c688c8a5426b750b6925941b20859752f8e760d859ba622d3e04a1f272e523a",
+      "bytes": 519
+    },
+    {
+      "path": "tests/fixtures/invalid_duplicate_revision.case.json",
+      "sha256": "5349d892e7671c1a59eb3c30fb96c099197c521cd3d216ae187e687974effcea",
+      "bytes": 415
+    },
+    {
+      "path": "tests/fixtures/invalid_duplicate_source_id.case.json",
+      "sha256": "cc616e232dca57e0b83a50047f0d44d95a1e65784845c3d82e1aad5e9cbc6f59",
+      "bytes": 336
+    },
+    {
+      "path": "tests/fixtures/invalid_empty_candidate_manifest.case.json",
+      "sha256": "44ce5ee29b78e493a2ccc15ef90ec049fd924dcea27f201f599a685c9d011da0",
+      "bytes": 430
+    },
+    {
+      "path": "tests/fixtures/invalid_generic_implementation_before_creation.case.json",
+      "sha256": "57b5949846670b552b552691b494ed85e8533cb570340214fbab40646d34e6bd",
+      "bytes": 836
+    },
+    {
+      "path": "tests/fixtures/invalid_generic_verification_after_final_verification.case.json",
+      "sha256": "95214c13a6775a4d7bee03ad7733f1bf658099c43f92b1dc391ee0b8ba48b682",
+      "bytes": 810
+    },
+    {
+      "path": "tests/fixtures/invalid_historical_source_attestation.case.json",
+      "sha256": "859e2f7cddeaf27cd26f4bf605b9366bffab06c8fde58c8175a06cb10df9d84c",
+      "bytes": 590
+    },
+    {
+      "path": "tests/fixtures/invalid_late_edit.case.json",
+      "sha256": "4591c42f33fb8a97fda7a0cf22f3f70d946384c4f965ae0ec854a71e8f0b4144",
+      "bytes": 908
+    },
+    {
+      "path": "tests/fixtures/invalid_later_fail_same_timestamp.case.json",
+      "sha256": "05ae8d7253622198cf3c4dadb64c66dd7e1ed07d3cb686e2231f6ce157703aed",
+      "bytes": 749
+    },
+    {
+      "path": "tests/fixtures/invalid_layout_verification.case.json",
+      "sha256": "c724c8a67f6bbae61f1381ea55a309a47e61ad2406d4bf47096f4dcfb42d04af",
+      "bytes": 645
+    },
+    {
+      "path": "tests/fixtures/invalid_local_fix_category.case.json",
+      "sha256": "74fb38f99396b15155f6523c79e5532b98ef03cdba3b8c737760268bf06e16b5",
+      "bytes": 963
+    },
+    {
+      "path": "tests/fixtures/invalid_local_fix_mapping.case.json",
+      "sha256": "3f9732bd7274b09bb3ef19152bf074eb3a12097c70c8f84401f482d7b99f221d",
+      "bytes": 907
+    },
+    {
+      "path": "tests/fixtures/invalid_local_fix_reverse_mapping.case.json",
+      "sha256": "6b795114af8e3312738832d1de0c82ff746d1a10ff2c0ccf4ca0fa4a606605ed",
+      "bytes": 2779
+    },
+    {
+      "path": "tests/fixtures/invalid_mandatory_gate_not_applicable.case.json",
+      "sha256": "0bf6a74f26ed720e3ae601db0b34a3631399fa11b10172469fd8055e22c104f6",
+      "bytes": 616
+    },
+    {
+      "path": "tests/fixtures/invalid_needs_confirmation_approved.case.json",
+      "sha256": "2a9533f85b91ce89afa03c9140b79ec56f66a9cbedc33aa560ca5dd5908b59d9",
+      "bytes": 662
+    },
+    {
+      "path": "tests/fixtures/invalid_non_object_diff_map.case.json",
+      "sha256": "c3fe0603daf8918ba5a68f6d8704f2edb4bc4f3d80ba5d675f1500d3f09aaba0",
+      "bytes": 351
+    },
+    {
+      "path": "tests/fixtures/invalid_orphaned_supersession.case.json",
+      "sha256": "2a86e6c10c8f4571e17e6f029cbfb6c0403a23daaeabd68dfba68fe658b8aed7",
+      "bytes": 484
+    },
+    {
+      "path": "tests/fixtures/invalid_pdf_layout_opt_out.case.json",
+      "sha256": "22b808f8c1fe51a2d0ced45f981b7c1accbb2e32a616ffb5881b613aa99bc6c9",
+      "bytes": 1321
+    },
+    {
+      "path": "tests/fixtures/invalid_post_verification_attestation.case.json",
+      "sha256": "885f69a06507aa5260d5b01db2e4937536bdcb0b7071df3408ce26565e3a51bb",
+      "bytes": 506
+    },
+    {
+      "path": "tests/fixtures/invalid_source_fingerprint.case.json",
+      "sha256": "c68302e93bb7346268facd287050a86142e2cddf0cafe4e4819a9f114953c561",
+      "bytes": 781
+    },
+    {
+      "path": "tests/fixtures/invalid_source_impact_obsolete.case.json",
+      "sha256": "9c07473358ec1fa23acc04a3ac0534fdef905d023518c7a99ae79861d51fb146",
+      "bytes": 719
+    },
+    {
+      "path": "tests/fixtures/invalid_source_impact_revalidation.case.json",
+      "sha256": "c003f05ea9ddd808f83a8266b93c763223a4047cbfb97573d52bd85bde0d3d9e",
+      "bytes": 780
+    },
+    {
+      "path": "tests/fixtures/invalid_source_revalidation.case.json",
+      "sha256": "c0874b89377f0def9493239a9dd5332bddb3779f03f65828f2a79c19ea686a94",
+      "bytes": 449
+    },
+    {
+      "path": "tests/fixtures/invalid_stale_source_event_after_revalidation.case.json",
+      "sha256": "0b264313863819501efa33cd25926d5d9bb060e60f038b2bbc73fe28da9c3604",
+      "bytes": 552
+    },
+    {
+      "path": "tests/fixtures/invalid_transition.case.json",
+      "sha256": "ee31d86de6c39d10e80719fdaac23fa977bb4efdae1c6b128016f93807c5e9b2",
+      "bytes": 395
+    },
+    {
+      "path": "tests/fixtures/invalid_unauthorized_implementation_result.case.json",
+      "sha256": "e0ef4afe13193022a5a3063b5fe7df7a7721c67cf932f66c179ae949594af2fc",
+      "bytes": 719
+    },
+    {
+      "path": "tests/fixtures/invalid_unresolved_conflict.case.json",
+      "sha256": "b0e8728dbb523b36d43f76d6812bc8f91e97f3afefbaed993d2ad7da86df0b05",
+      "bytes": 2375
+    },
+    {
+      "path": "tests/fixtures/non_object_diff_map.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "path": "tests/fixtures/release_baseline.json",
+      "sha256": "0c236bff0a8a86dccd6a78fd82f6a96be7b7de539a7a3760cef43f83b583eef8",
+      "bytes": 598
+    },
+    {
+      "path": "tests/fixtures/release_candidate.json",
+      "sha256": "50fb47f05a737a84f090ebfef1b6dc5bf47f1a418d396e9fdf216ed3cc9d95ef",
+      "bytes": 456
+    },
+    {
+      "path": "tests/fixtures/release_diff_map.json",
+      "sha256": "4d50281dfcf10c16f1b0664270ef188981659e01b4211104431c1ce8b9b2354d",
+      "bytes": 965
+    },
+    {
+      "path": "tests/fixtures/revalidated_baseline.json",
+      "sha256": "1d4ba7ed7e6d0bde7fa10fc7069694638e1b016ccd48e59d6f18786921a5640e",
+      "bytes": 1114
+    },
+    {
+      "path": "tests/fixtures/submission-final.txt",
+      "sha256": "d1f815ce46011807ae669a162d5e315d980bfcf60ef01f21d3b119c887445122",
+      "bytes": 102
+    },
+    {
+      "path": "tests/fixtures/valid_blocked_diagnostic.case.json",
+      "sha256": "fea3d711bb92a20345869df56585cc3c4f26896e4978ed071f40b9f29e418727",
+      "bytes": 814
+    },
+    {
+      "path": "tests/fixtures/valid_diagnostic_state.json",
+      "sha256": "01f070dbd4b376ec7bdba86348fc69efdca66b767e9685d736e7467bf3f16c4c",
+      "bytes": 8877
+    },
+    {
+      "path": "tests/fixtures/valid_ready_to_implement_revalidated.json",
+      "sha256": "de5638f32deeef55fce4499e1f78af33c1231b532927ca6d5a4ec4442a7dea49",
+      "bytes": 14541
+    },
+    {
+      "path": "tests/fixtures/valid_ready_to_release.json",
+      "sha256": "f8c08b7ed02b7924f893d7acea662e11ebe459f3df5d51589934f1f8c424c797",
+      "bytes": 20500
+    },
+    {
+      "path": "tests/fixtures/valid_release_with_superseded_history.case.json",
+      "sha256": "629acf9f5672d6688434436cfc1832c0bdd5aa9208f83a07f5379c0789351109",
+      "bytes": 11199
+    },
+    {
+      "path": "tests/fixtures/valid_unresolved_content_authority.case.json",
+      "sha256": "19948311062deefcd56081dc210161f16be1c8505e93e099c6e71a452981f2ba",
+      "bytes": 1749
+    },
+    {
+      "path": "tests/test_eval_harness.py",
+      "sha256": "0ed5194094bf6b68a45b3dd32f16774918e4d7fab2501be71d97cba4ef041a59",
+      "bytes": 25206
+    },
+    {
+      "path": "tests/test_industry_resume_validation.py",
+      "sha256": "16f82d35d061d3837f725d3015e107660a2e1a8401b6c98b53ec7cfd09122912",
+      "bytes": 94002
+    },
+    {
+      "path": "tests/test_state_validation.py",
+      "sha256": "86dae1a495bab2e55be9b436c49791e4b482527e657a8fb877ed1403b4dc19ba",
+      "bytes": 120431
+    }
+  ]
+}

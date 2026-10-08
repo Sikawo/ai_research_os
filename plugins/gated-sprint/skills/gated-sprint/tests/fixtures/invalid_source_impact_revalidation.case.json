@@ -1,0 +1,15 @@
+{
+  "description": "REVALIDATION_REQUIRED prevents authorization on the changed source.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/source_impact", "value": "REVALIDATION_REQUIRED"},
+    {"op": "replace", "path": "/decisions/0/source_bindings/1/comparison_result", "value": "REVALIDATION_REQUIRED"},
+    {"op": "replace", "path": "/events/2/new_source_impact", "value": "REVALIDATION_REQUIRED"},
+    {"op": "replace", "path": "/events/2/details/comparison_result", "value": "REVALIDATION_REQUIRED"}
+  ],
+  "expected_check_ids": ["STATE.SOURCE_IMPACT", "STATE.READY_TO_IMPLEMENT"]
+}

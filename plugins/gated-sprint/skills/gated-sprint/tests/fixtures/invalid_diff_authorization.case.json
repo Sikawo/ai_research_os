@@ -1,0 +1,12 @@
+{
+  "description": "Every substantive release hunk must map to an authorized exact decision revision.",
+  "state": "valid_ready_to_release.json",
+  "baseline": "release_baseline.json",
+  "candidate": "release_candidate.json",
+  "diff_map": "release_diff_map.json",
+  "check": "ready-to-release",
+  "diff_map_mutations": [
+    {"op": "replace", "path": "/hunks/0/decision_id", "value": "GS-999"}
+  ],
+  "expected_check_ids": ["STATE.DIFF_AUTHORIZATION", "STATE.DIFF_BINDING"]
+}

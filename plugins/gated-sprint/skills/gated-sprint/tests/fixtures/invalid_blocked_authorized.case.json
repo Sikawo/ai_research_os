@@ -1,0 +1,15 @@
+{
+  "description": "User approval cannot authorize a scientifically blocked change.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/support_status", "value": "BLOCKED"},
+    {"op": "replace", "path": "/decisions/0/blocking_reason", "value": "The proposed claim contradicts the supplied evidence."},
+    {"op": "replace", "path": "/decisions/0/unblock_condition", "value": "Correct the claim or supply resolving evidence."},
+    {"op": "replace", "path": "/events/0/new_support_status", "value": "BLOCKED"}
+  ],
+  "expected_check_ids": ["STATE.SUPPORT"]
+}

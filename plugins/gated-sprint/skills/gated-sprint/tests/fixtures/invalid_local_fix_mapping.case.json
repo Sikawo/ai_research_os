@@ -1,0 +1,18 @@
+{
+  "description": "A local diff hunk must map to an authorized local-fix log entry for the exact candidate.",
+  "state": "valid_ready_to_release.json",
+  "baseline": "release_baseline.json",
+  "candidate": "release_candidate.json",
+  "diff_map": "release_diff_map.json",
+  "check": "ready-to-release",
+  "diff_map_mutations": [
+    {"op": "copy", "from": "/hunks/0", "path": "/hunks/-"},
+    {"op": "replace", "path": "/hunks/1/hunk_id", "value": "HUNK-002"},
+    {"op": "replace", "path": "/hunks/1/kind", "value": "LOCAL_FIX"},
+    {"op": "replace", "path": "/hunks/1/decision_id", "value": null},
+    {"op": "replace", "path": "/hunks/1/proposal_revision", "value": null},
+    {"op": "replace", "path": "/hunks/1/local_fix_id", "value": "LF-001"},
+    {"op": "replace", "path": "/hunks/1/description", "value": "Unlogged punctuation change."}
+  ],
+  "expected_check_ids": ["STATE.DIFF_AUTHORIZATION"]
+}

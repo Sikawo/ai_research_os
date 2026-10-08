@@ -1,0 +1,15 @@
+{
+  "description": "For equal timestamps, the later appended attestation controls and a FAIL cannot be hidden by an earlier PASS.",
+  "state": "valid_ready_to_release.json",
+  "baseline": "release_baseline.json",
+  "candidate": "release_candidate.json",
+  "diff_map": "release_diff_map.json",
+  "check": "ready-to-release",
+  "state_mutations": [
+    {"op": "copy", "from": "/attestations/7", "path": "/attestations/-"},
+    {"op": "replace", "path": "/attestations/11/attestation_id", "value": "ATT-REL-012"},
+    {"op": "replace", "path": "/attestations/11/result", "value": "FAIL"},
+    {"op": "replace", "path": "/attestations/11/evidence", "value": "A later review found a layout failure."}
+  ],
+  "expected_check_ids": ["STATE.ATTESTATION"]
+}

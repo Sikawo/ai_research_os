@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "candidate_artifact_id": "ART-FINAL",
+  "baseline_source_id": "SRC-RELEASE",
+  "baseline_hash": "sha256:cf40fbd1b90427f1d79b335a2adcf4b3bf593afea52350b57d90789d043861f1",
+  "candidate_hash": "sha256:d1f815ce46011807ae669a162d5e315d980bfcf60ef01f21d3b119c887445122",
+  "comparison_mode": "UTF8_TEXT_LINES",
+  "hunks": [
+    {
+      "hunk_id": "HUNK-001",
+      "kind": "SUBSTANTIVE",
+      "decision_id": "GS-001",
+      "proposal_revision": 1,
+      "local_fix_id": null,
+      "operation": "replace",
+      "baseline_start": 1,
+      "baseline_end": 2,
+      "candidate_start": 1,
+      "candidate_end": 2,
+      "baseline_lines_hash": "sha256:676c9b75aac8d732c5988a27aa10fc6c4fa66d37b7114553b760bc2c64f1b8fc",
+      "candidate_lines_hash": "sha256:1addd955b2163b58ce4de0cc88050542b67c1bcdc487cb795b83a25747e769d2",
+      "description": "Moved the existing motivating question and consequence before technical detail."
+    }
+  ]
+}

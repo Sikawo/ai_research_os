@@ -1,0 +1,2 @@
+Synthetic GatedSprint exact-artifact fixture.
+The validator binds release state to these exact bytes.

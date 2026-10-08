@@ -1,0 +1,2 @@
+Synthetic GatedSprint exact-artifact fixture.
+The release validator checks source bytes before implementation.

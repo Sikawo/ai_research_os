@@ -32,6 +32,17 @@ python3 -m pytest -q -p no:cacheprovider
 Use `--phase repository` after a commit to verify the independent root history,
 origin, branch boundary, public tree, and transfer manifest.
 
+## Public plugins
+
+- **ParagraphLock** provides approval-gated exact text replacement.
+- **GatedSprint 2.1.0** provides approval-gated application review and the
+  exact bare `Sprint` self-driving route from one reviewed skill package. Its
+  bundled fixtures are synthetic, and its deterministic runtime uses only the
+  Python standard library.
+
+Both plugins are registered in `.agents/plugins/marketplace.json` and licensed
+under Apache-2.0 with the rest of this repository.
+
 ## License
 
 Licensed under the Apache License, Version 2.0. See `LICENSE`.

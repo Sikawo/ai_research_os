@@ -1,0 +1,41 @@
+name: GatedSprint plugin tests
+
+on:
+  pull_request:
+    paths:
+      - ".agents/plugins/marketplace.json"
+      - ".github/workflows/gated-sprint-tests.yml"
+      - "manifests/phase12_review_tools_allowlist.yaml"
+      - "plugins/gated-sprint/**"
+      - "Scripts/validate_repository_safety.py"
+      - "tests/test_phase12_review_tools.py"
+      - "tests/test_repository_safety.py"
+  push:
+    branches: [main]
+    paths:
+      - ".agents/plugins/marketplace.json"
+      - ".github/workflows/gated-sprint-tests.yml"
+      - "manifests/phase12_review_tools_allowlist.yaml"
+      - "plugins/gated-sprint/**"
+      - "Scripts/validate_repository_safety.py"
+      - "tests/test_phase12_review_tools.py"
+      - "tests/test_repository_safety.py"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependencies
+        run: python3 -m pip install -r requirements-dev.txt
+      - name: Verify package manifest
+        run: python3 plugins/gated-sprint/skills/gated-sprint/scripts/build_skill_manifest.py verify
+      - name: Run deterministic unit tests
+        run: python3 -m unittest discover -s plugins/gated-sprint/skills/gated-sprint/tests -p 'test_*.py'
+      - name: Validate behavioral catalog
+        run: python3 plugins/gated-sprint/skills/gated-sprint/scripts/run_gatedsprint_evals.py validate
+      - name: Run repository integration tests
+        run: python3 -m pytest -q -p no:cacheprovider tests/test_phase12_review_tools.py tests/test_repository_safety.py

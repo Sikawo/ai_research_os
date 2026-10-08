@@ -1,0 +1,23 @@
+{
+  "description": "The actual submission PDF cannot opt out of layout verification by clearing its self-declared layout flag.",
+  "state": "valid_ready_to_release.json",
+  "baseline": "release_baseline.json",
+  "candidate": "release_candidate.json",
+  "diff_map": "release_diff_map.json",
+  "check": "ready-to-release",
+  "state_mutations": [
+    {"op": "replace", "path": "/artifacts/0/path", "value": "synthetic-submission.pdf"},
+    {"op": "replace", "path": "/artifacts/0/format", "value": "PDF"},
+    {"op": "replace", "path": "/artifacts/0/layout_relevant", "value": false},
+    {"op": "replace", "path": "/artifacts/0/verification/layout_result", "value": "NOT_APPLICABLE"},
+    {"op": "replace", "path": "/gate_applicability/9/applicability", "value": "NOT_APPLICABLE"},
+    {"op": "replace", "path": "/gate_applicability/9/reason", "value": "Improper attempt to opt the submission PDF out of layout review."},
+    {"op": "remove", "path": "/attestations/7"},
+    {"op": "remove", "path": "/artifacts/0/verification/check_ids/7"}
+  ],
+  "candidate_mutations": [
+    {"op": "replace", "path": "/artifacts/0/path", "value": "synthetic-submission.pdf"},
+    {"op": "replace", "path": "/artifacts/0/format", "value": "PDF"}
+  ],
+  "expected_check_ids": ["STATE.LAYOUT_VERIFICATION", "STATE.RELEASE_GATE_REGISTRY"]
+}

@@ -72,6 +72,22 @@ EXPECTED_ORIGIN = "https://github.com/Sikawo/ai_research_os.git"
 EXPECTED_ROOT_COMMIT = "89c16ee682ea8aec910e982130e236a281df924e"
 EXPECTED_TRANSFER_COUNT = 171
 EXPECTED_PORTED_COUNT = 40
+PHASE12_MANIFEST_PATH = "manifests/phase12_review_tools_allowlist.yaml"
+PHASE12_MANIFEST_ID = "phase12a-gated-sprint-public-plugin"
+PHASE12_SOURCE_COMMIT = "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f"
+PHASE12_TARGET_BASE = "e09dd53414d6c1bab9c70e8294808e51af3c70ba"
+PHASE12_EXPECTED_TRANSFER_COUNT = 89
+PHASE12_EXPECTED_TARGET_COUNT = 97
+PHASE12_EXPECTED_INTEGRATION_PATHS = {
+    ".agents/plugins/marketplace.json",
+    ".github/workflows/gated-sprint-tests.yml",
+    "README.md",
+    "Scripts/validate_repository_safety.py",
+    PHASE12_MANIFEST_PATH,
+    "plugins/gated-sprint/.codex-plugin/plugin.json",
+    "tests/test_phase12_review_tools.py",
+    "tests/test_repository_safety.py",
+}
 MAX_FILE_BYTES = 200_000
 
 FORBIDDEN_SUFFIXES = {
@@ -101,6 +117,10 @@ ALLOWED_TRANSFER_MODES = {
     "adapted_public_copy",
 }
 
+PHASE12_ALLOWED_TRANSFER_MODES = ALLOWED_TRANSFER_MODES | {
+    "regenerated_manifest",
+}
+
 
 def git(root: Path, *args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
@@ -124,13 +144,29 @@ def repository_files(root: Path) -> set[str]:
 
 
 def load_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
-    path = root / "manifests" / "phase6a_transfer_allowlist.yaml"
+    return load_json_manifest(
+        root,
+        "manifests/phase6a_transfer_allowlist.yaml",
+        "Phase 6A transfer manifest",
+    )
+
+
+def load_phase12_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
+    return load_json_manifest(root, PHASE12_MANIFEST_PATH, "Phase 12A transfer manifest")
+
+
+def load_json_manifest(
+    root: Path,
+    relative_path: str,
+    label: str,
+) -> tuple[dict[str, Any] | None, list[str]]:
+    path = root / relative_path
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
-        return None, [f"invalid transfer manifest: {exc}"]
+        return None, [f"invalid {label}: {exc}"]
     if not isinstance(value, dict):
-        return None, ["transfer manifest must be an object"]
+        return None, [f"{label} must be an object"]
     return value, []
 
 
@@ -231,6 +267,150 @@ def validate_manifest(manifest: dict[str, Any]) -> tuple[list[str], set[str], se
     return errors, destinations, ported
 
 
+def validate_phase12_manifest(
+    manifest: dict[str, Any],
+) -> tuple[list[str], set[str], set[str]]:
+    errors: list[str] = []
+    if manifest.get("schema_version") != 1:
+        errors.append("Phase 12A manifest schema_version must be 1")
+    if manifest.get("manifest_id") != PHASE12_MANIFEST_ID:
+        errors.append("unexpected Phase 12A manifest id")
+    if manifest.get("status") != "ported_offline":
+        errors.append("Phase 12A manifest must be ported_offline")
+    if manifest.get("deny_by_default") is not True:
+        errors.append("Phase 12A manifest must deny by default")
+    if manifest.get("license") != "Apache-2.0":
+        errors.append("Phase 12A manifest license must be Apache-2.0")
+    if manifest.get("expected_transfer_count") != PHASE12_EXPECTED_TRANSFER_COUNT:
+        errors.append(
+            f"Phase 12A expected_transfer_count must be {PHASE12_EXPECTED_TRANSFER_COUNT}"
+        )
+    if manifest.get("expected_target_path_count") != PHASE12_EXPECTED_TARGET_COUNT:
+        errors.append(
+            f"Phase 12A expected_target_path_count must be {PHASE12_EXPECTED_TARGET_COUNT}"
+        )
+
+    target = manifest.get("target")
+    if not isinstance(target, dict) or target.get("repository") != "Sikawo/ai_research_os":
+        errors.append("Phase 12A target repository is invalid")
+    elif target.get("base_commit") != PHASE12_TARGET_BASE:
+        errors.append("Phase 12A target base commit is invalid")
+
+    sources = manifest.get("sources")
+    source = sources.get("gated_sprint_v2_reviewed_package") if isinstance(sources, dict) else None
+    if not isinstance(source, dict):
+        errors.append("Phase 12A reviewed source is missing")
+        sources = {}
+    else:
+        if source.get("repository") != "Sikawo/personal_research_brain":
+            errors.append("Phase 12A source repository is invalid")
+        if source.get("commit") != PHASE12_SOURCE_COMMIT:
+            errors.append("Phase 12A source commit is invalid")
+        if source.get("package_root") != "Application_Review_OS/gated_sprint/v2":
+            errors.append("Phase 12A package root is invalid")
+
+    required_rules = {
+        "exact_paths_only": True,
+        "synthetic_fixtures_only": True,
+        "copy_git_history": False,
+        "copy_private_values": False,
+        "copy_runtime_state": False,
+        "copy_connector_bindings": False,
+        "copy_scheduled_tasks": False,
+        "live_cutover": False,
+    }
+    rules = manifest.get("rules")
+    if not isinstance(rules, dict):
+        errors.append("Phase 12A rules must be an object")
+    else:
+        for name, expected in required_rules.items():
+            if rules.get(name) is not expected:
+                errors.append(f"Phase 12A rule {name} must be {expected!r}")
+
+    integration_value = manifest.get("integration_paths")
+    integration_paths = (
+        set(integration_value)
+        if isinstance(integration_value, list)
+        and all(is_safe_relative_path(value) for value in integration_value)
+        else set()
+    )
+    if integration_paths != PHASE12_EXPECTED_INTEGRATION_PATHS:
+        errors.append("Phase 12A integration paths do not match the reviewed scope")
+
+    allowed_value = manifest.get("allowed_target_paths")
+    allowed_targets = (
+        set(allowed_value)
+        if isinstance(allowed_value, list)
+        and all(is_safe_relative_path(value) for value in allowed_value)
+        else set()
+    )
+    if len(allowed_targets) != PHASE12_EXPECTED_TARGET_COUNT:
+        errors.append(
+            f"Phase 12A must allow {PHASE12_EXPECTED_TARGET_COUNT} exact target paths; "
+            f"found {len(allowed_targets)}"
+        )
+
+    transfers = manifest.get("transfers")
+    if not isinstance(transfers, list):
+        return errors + ["Phase 12A transfers must be a list"], allowed_targets, set()
+    if len(transfers) != PHASE12_EXPECTED_TRANSFER_COUNT:
+        errors.append(
+            f"Phase 12A manifest must contain {PHASE12_EXPECTED_TRANSFER_COUNT} transfers; "
+            f"found {len(transfers)}"
+        )
+
+    source_paths: set[str] = set()
+    destinations: set[str] = set()
+    mode_counts: dict[str, int] = {}
+    for index, transfer in enumerate(transfers):
+        label = f"Phase 12A transfer[{index}]"
+        if not isinstance(transfer, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        source_path = transfer.get("source_path")
+        destination_path = transfer.get("destination_path")
+        mode = transfer.get("transfer_mode")
+        if transfer.get("source_id") != "gated_sprint_v2_reviewed_package":
+            errors.append(f"{label} has unknown source_id")
+        if transfer.get("source_commit") != PHASE12_SOURCE_COMMIT:
+            errors.append(f"{label} source_commit is invalid")
+        if not is_safe_relative_path(source_path) or not str(source_path).startswith(
+            "Application_Review_OS/gated_sprint/v2/"
+        ):
+            errors.append(f"{label} has unsafe source_path")
+        if not is_safe_relative_path(destination_path) or not str(destination_path).startswith(
+            "plugins/gated-sprint/skills/gated-sprint/"
+        ):
+            errors.append(f"{label} has unsafe destination_path")
+        if mode not in PHASE12_ALLOWED_TRANSFER_MODES:
+            errors.append(f"{label} has unsupported transfer_mode")
+        if transfer.get("phase") != "12A":
+            errors.append(f"{label} has unsupported phase")
+        if transfer.get("status") != "ported_offline":
+            errors.append(f"{label} must be ported_offline")
+        if isinstance(source_path, str):
+            if source_path in source_paths:
+                errors.append(f"duplicate Phase 12A source path: {source_path}")
+            source_paths.add(source_path)
+        if isinstance(destination_path, str):
+            if destination_path in destinations:
+                errors.append(f"duplicate Phase 12A destination path: {destination_path}")
+            destinations.add(destination_path)
+        if isinstance(mode, str):
+            mode_counts[mode] = mode_counts.get(mode, 0) + 1
+
+    expected_modes = {
+        "exact_copy": 85,
+        "adapted_public_copy": 3,
+        "regenerated_manifest": 1,
+    }
+    if mode_counts != expected_modes:
+        errors.append(f"Phase 12A transfer modes must be {expected_modes!r}")
+    if allowed_targets != destinations | integration_paths:
+        errors.append("Phase 12A allowed targets must equal transfers plus integration paths")
+    return errors, allowed_targets, destinations
+
+
 def validate_tree(root: Path) -> list[str]:
     errors: list[str] = []
     files = repository_files(root)
@@ -242,10 +422,43 @@ def validate_tree(root: Path) -> list[str]:
         manifest_result, destinations, ported = validate_manifest(manifest)
         errors.extend(manifest_result)
 
-    required = BASELINE_PATHS | GOVERNANCE_PATHS
+    phase12_manifest, phase12_load_errors = load_phase12_manifest(root)
+    errors.extend(phase12_load_errors)
+    phase12_allowed: set[str] = set()
+    phase12_ported: set[str] = set()
+    if phase12_manifest is not None:
+        phase12_errors, phase12_allowed, phase12_ported = validate_phase12_manifest(
+            phase12_manifest
+        )
+        errors.extend(phase12_errors)
+
+        source = phase12_manifest.get("sources", {}).get(
+            "gated_sprint_v2_reviewed_package", {}
+        )
+        package_manifest_path = (
+            root
+            / "plugins"
+            / "gated-sprint"
+            / "skills"
+            / "gated-sprint"
+            / "skill-package-manifest.json"
+        )
+        try:
+            package_manifest = json.loads(package_manifest_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"invalid GatedSprint package manifest: {exc}")
+        else:
+            if not isinstance(source, dict) or source.get(
+                "destination_package_hash"
+            ) != package_manifest.get("package_hash"):
+                errors.append("GatedSprint destination package hash does not match Phase 12A")
+            if package_manifest.get("file_count") != 88:
+                errors.append("GatedSprint package manifest must contain 88 files")
+
+    required = BASELINE_PATHS | GOVERNANCE_PATHS | phase12_allowed
     missing = sorted(required - files)
-    extra = sorted(files - (BASELINE_PATHS | destinations))
-    missing_ported = sorted(ported - files)
+    extra = sorted(files - (BASELINE_PATHS | destinations | phase12_allowed))
+    missing_ported = sorted((ported | phase12_ported) - files)
     if missing:
         errors.append(f"missing required paths: {', '.join(missing)}")
     if extra:

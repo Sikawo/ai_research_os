@@ -1,0 +1,12 @@
+{
+  "description": "A decision, binding, and event cannot collude around a hash absent from the immutable source register.",
+  "state": "valid_diagnostic_state.json",
+  "baseline": "diagnostic_baseline.json",
+  "check": "diagnostic",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/source_fingerprint", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"},
+    {"op": "replace", "path": "/decisions/0/source_bindings/0/source_fingerprint", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"},
+    {"op": "replace", "path": "/events/0/source_fingerprint", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"}
+  ],
+  "expected_check_ids": ["STATE.SOURCE_FINGERPRINT"]
+}

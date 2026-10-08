@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "RUN-IMPLEMENT",
+  "sources": [
+    {
+      "source_id": "SRC-OLD",
+      "path": "fixtures/draft-v1.docx",
+      "byte_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "extracted_text_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "user_designated_role": "HISTORICAL",
+      "content_authority": false,
+      "layout_authority": false,
+      "editable_target": false,
+      "equivalence_status": "DIFFERENT_CONTENT",
+      "version_designation": "HISTORICAL"
+    },
+    {
+      "source_id": "SRC-NEW",
+      "path": "fixtures/draft-v2.docx",
+      "byte_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "extracted_text_hash": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "user_designated_role": "CURRENT_DRAFT",
+      "content_authority": true,
+      "layout_authority": false,
+      "editable_target": true,
+      "equivalence_status": "NOT_APPLICABLE",
+      "version_designation": "EXPLICIT_CURRENT"
+    }
+  ]
+}

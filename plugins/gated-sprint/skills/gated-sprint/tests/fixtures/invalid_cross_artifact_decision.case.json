@@ -1,0 +1,13 @@
+{
+  "description": "Implementation and verification for one decision must bind to the same exact candidate.",
+  "state": "valid_ready_to_release.json",
+  "baseline": "release_baseline.json",
+  "candidate": "release_candidate.json",
+  "diff_map": "release_diff_map.json",
+  "check": "ready-to-release",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/implementation_result/artifact_id", "value": "ART-OLD"},
+    {"op": "replace", "path": "/decisions/0/implementation_result/candidate_hash", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"}
+  ],
+  "expected_check_ids": ["STATE.ARTIFACT_BINDING", "STATE.EVENT_BINDING"]
+}

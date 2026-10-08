@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "RUN-RELEASE",
+  "artifacts": [
+    {
+      "artifact_id": "ART-FINAL",
+      "path": "submission-final.txt",
+      "format": "TXT",
+      "baseline_source_ids": ["SRC-RELEASE"],
+      "candidate_hash": "sha256:d1f815ce46011807ae669a162d5e315d980bfcf60ef01f21d3b119c887445122",
+      "relationship_to_baseline": "DERIVED",
+      "actual_submission_artifact": true,
+      "artifact_status": "VERIFIED"
+    }
+  ]
+}

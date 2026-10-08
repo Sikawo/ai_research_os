@@ -1,0 +1,27 @@
+{
+  "description": "One generic state event cannot both resolve confirmation and approve the proposal.",
+  "state": "valid_diagnostic_state.json",
+  "baseline": "diagnostic_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "diagnostic",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/support_status", "value": "SUPPORTED"},
+    {"op": "replace", "path": "/decisions/0/confirmation_requirement", "value": null},
+    {"op": "replace", "path": "/decisions/0/decision_state", "value": "APPROVED"},
+    {"op": "copy", "from": "/events/0", "path": "/events/-"},
+    {"op": "replace", "path": "/events/1/event_id", "value": "EVT-DIAG-002"},
+    {"op": "replace", "path": "/events/1/event_type", "value": "DECISION_STATE_CHANGED"},
+    {"op": "replace", "path": "/events/1/actor", "value": "user"},
+    {"op": "replace", "path": "/events/1/authority_kind", "value": "USER"},
+    {"op": "replace", "path": "/events/1/timestamp", "value": "2026-10-01T12:02:00Z"},
+    {"op": "replace", "path": "/events/1/prior_state", "value": "PROPOSED"},
+    {"op": "replace", "path": "/events/1/new_state", "value": "APPROVED"},
+    {"op": "replace", "path": "/events/1/prior_support_status", "value": "NEEDS_CONFIRMATION"},
+    {"op": "replace", "path": "/events/1/new_support_status", "value": "SUPPORTED"},
+    {"op": "replace", "path": "/events/1/prior_source_impact", "value": null},
+    {"op": "replace", "path": "/events/1/new_source_impact", "value": null},
+    {"op": "replace", "path": "/events/1/authority_basis", "value": "Improper collapsed confirmation and approval."}
+  ],
+  "expected_check_ids": ["STATE.EVENT_CONTRACT"]
+}

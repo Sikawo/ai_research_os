@@ -1,0 +1,28 @@
+{
+  "description": "A local-fix record cannot use a semantic or otherwise unenumerated category.",
+  "state": "valid_ready_to_release.json",
+  "baseline": "release_baseline.json",
+  "candidate": "release_candidate.json",
+  "diff_map": "release_diff_map.json",
+  "check": "ready-to-release",
+  "state_mutations": [
+    {
+      "op": "add",
+      "path": "/local_fix_log/-",
+      "value": {
+        "local_fix_id": "LF-SEMANTIC",
+        "category": "SCIENTIFIC_SCOPE",
+        "scope": "Research statement opening",
+        "description": "Improperly treats a scientific-scope change as a local fix.",
+        "source_id": "SRC-RELEASE",
+        "source_fingerprint": "sha256:cf40fbd1b90427f1d79b335a2adcf4b3bf593afea52350b57d90789d043861f1",
+        "authorized": false,
+        "authorized_by": null,
+        "authorized_at": null,
+        "implemented_hunk_ids": [],
+        "candidate_hash": null
+      }
+    }
+  ],
+  "expected_check_ids": ["STATE.SCHEMA"]
+}

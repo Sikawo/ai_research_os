@@ -1,0 +1,75 @@
+{
+  "description": "Every hunk logged as an implemented local fix must appear in the exact candidate diff map.",
+  "state": "valid_ready_to_release.json",
+  "baseline": "release_baseline.json",
+  "candidate": "release_candidate.json",
+  "diff_map": "release_diff_map.json",
+  "check": "ready-to-release",
+  "state_mutations": [
+    {
+      "op": "add",
+      "path": "/local_fix_log/-",
+      "value": {
+        "local_fix_id": "LF-GHOST",
+        "category": "PUNCTUATION",
+        "scope": "Research statement opening",
+        "description": "Correct one enumerated punctuation error.",
+        "source_id": "SRC-RELEASE",
+        "source_fingerprint": "sha256:cf40fbd1b90427f1d79b335a2adcf4b3bf593afea52350b57d90789d043861f1",
+        "authorized": true,
+        "authorized_by": "user",
+        "authorized_at": "2026-10-01T14:03:30Z",
+        "implemented_hunk_ids": ["HUNK-GHOST"],
+        "candidate_hash": "sha256:d1f815ce46011807ae669a162d5e315d980bfcf60ef01f21d3b119c887445122"
+      }
+    },
+    {
+      "op": "add",
+      "path": "/events/3",
+      "value": {
+        "event_id": "EVT-REL-LF-001",
+        "event_type": "LOCAL_FIX_AUTHORIZED",
+        "decision_id": null,
+        "proposal_revision": null,
+        "artifact_id": null,
+        "actor": "user",
+        "authority_kind": "USER",
+        "timestamp": "2026-10-01T14:03:30Z",
+        "prior_state": null,
+        "new_state": null,
+        "prior_support_status": null,
+        "new_support_status": null,
+        "prior_source_impact": null,
+        "new_source_impact": null,
+        "proposal_fingerprint": null,
+        "source_id": "SRC-RELEASE",
+        "source_fingerprint": "sha256:cf40fbd1b90427f1d79b335a2adcf4b3bf593afea52350b57d90789d043861f1",
+        "artifact_hash": null,
+        "authority_basis": "The user approved this exact enumerated local fix.",
+        "details": {
+          "local_fix_id": "LF-GHOST",
+          "local_fix_payload_hash": "sha256:33316f9be808981c389e38ed365ff0b04ec16430881ed836aa4c076882ae68ef"
+        }
+      }
+    },
+    {
+      "op": "add",
+      "path": "/attestations/-",
+      "value": {
+        "attestation_id": "ATT-REL-LF-001",
+        "check_id": "local_fix_semantics:LF-GHOST",
+        "source_id": null,
+        "source_fingerprint": null,
+        "artifact_id": "ART-FINAL",
+        "artifact_hash": "sha256:d1f815ce46011807ae669a162d5e315d980bfcf60ef01f21d3b119c887445122",
+        "rubric": "local fix non-semantic review",
+        "result": "PASS",
+        "responsible_actor": "reviewer",
+        "authority_kind": "REVIEWER",
+        "timestamp": "2026-10-01T14:18:00Z",
+        "evidence": "The enumerated punctuation correction is non-semantic on the exact artifact."
+      }
+    }
+  ],
+  "expected_check_ids": ["STATE.DIFF_BINDING"]
+}
