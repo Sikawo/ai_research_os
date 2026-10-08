@@ -1,24 +1,24 @@
-name: Review Tools plugin tests
+name: Research Workflows plugin tests
 
 on:
   pull_request:
     paths:
       - ".agents/plugins/marketplace.json"
-      - ".github/workflows/review-tools-tests.yml"
-      - "manifests/phase12b_review_tools_allowlist.yaml"
-      - "plugins/review-tools/**"
+      - ".github/workflows/research-workflows-tests.yml"
+      - "manifests/phase13_research_workflows_allowlist.yaml"
+      - "plugins/research-workflows/**"
       - "Scripts/validate_repository_safety.py"
-      - "tests/test_phase12b_review_tools.py"
+      - "tests/test_phase13_research_workflows.py"
       - "tests/test_repository_safety.py"
   push:
     branches: [main]
     paths:
       - ".agents/plugins/marketplace.json"
-      - ".github/workflows/review-tools-tests.yml"
-      - "manifests/phase12b_review_tools_allowlist.yaml"
-      - "plugins/review-tools/**"
+      - ".github/workflows/research-workflows-tests.yml"
+      - "manifests/phase13_research_workflows_allowlist.yaml"
+      - "plugins/research-workflows/**"
       - "Scripts/validate_repository_safety.py"
-      - "tests/test_phase12b_review_tools.py"
+      - "tests/test_phase13_research_workflows.py"
       - "tests/test_repository_safety.py"
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
           python-version: "3.12"
       - name: Install test dependencies
         run: python3 -m pip install -r requirements-dev.txt
-      - name: Run Review Tools integration tests
-        run: python3 -m pytest -q -p no:cacheprovider tests/test_phase12b_review_tools.py tests/test_repository_safety.py
+      - name: Run Research Workflows integration tests
+        run: python3 -m pytest -q -p no:cacheprovider tests/test_phase13_research_workflows.py tests/test_repository_safety.py plugins/research-workflows/skills/*/tests
       - name: Run public repository safety
         run: python3 Scripts/validate_repository_safety.py --phase working-tree

@@ -1,0 +1,114 @@
+# Schema for Reagents/Antibodies/antibody_registry.yaml
+# This file defines the preferred fields for consistent AI extraction.
+
+schema_version: "0.1"
+updated: "2026-07-09"
+
+entry_template:
+  antibody_id: "AB-VENDOR-CATALOG"
+  antibody_type: "primary | secondary | other"
+  target_or_specificity: null
+  display_name: null
+
+  product_identity:
+    vendor: null
+    catalog_number: null
+    rrid: null
+    product_url: null
+    source_document: null
+    source_document_type: "url | pdf | datasheet | label | user_provided_text | unknown"
+    source_accessed_date: "YYYY-MM-DD"
+    extraction_date: "YYYY-MM-DD"
+    extraction_confidence: "high | medium | low"
+
+  antibody_properties:
+    host_species: null
+    clonality: null
+    clone: null
+    isotype: null
+    conjugate_or_fluorophore: null
+    unconjugated: null
+    concentration: null
+    purification: null
+    formulation: null
+    storage: null
+
+  primary_antibody_fields:
+    immunogen: null
+    epitope_or_region: null
+    species_reactivity: []
+    applications: []
+    recommended_dilutions: []
+    knockout_validated: null
+    endogenous_validation: null
+    compatible_fixation: []
+    compatible_permeabilization: []
+
+  secondary_antibody_fields:
+    reacts_against: null
+    heavy_light_chain_specificity: null
+    cross_adsorbed_against: []
+    minimal_cross_reactivity: []
+    fluorophore:
+      name: null
+      excitation_nm: null
+      emission_nm: null
+      laser_line_compatibility: []
+
+  lab_use:
+    lot_number: null
+    date_received: null
+    storage_location: null
+    current_status: "candidate | ordered | in_use | archived | depleted | unknown"
+    validation_status: "vendor_claim_only | user_reported_preliminary | user_reported_working | user_reported_problematic | not_evaluated | unknown"
+    usage_notes: []
+    lab_observations: []
+    user_comments: []
+
+  ai_metadata:
+    aliases: []
+    related_targets: []
+    related_projects: []
+    ai_flags: []
+    last_ai_update: "YYYY-MM-DD"
+
+controlled_vocabulary:
+  antibody_type:
+    - primary
+    - secondary
+    - other
+  source_document_type:
+    - url
+    - pdf
+    - datasheet
+    - label
+    - user_provided_text
+    - unknown
+  extraction_confidence:
+    - high
+    - medium
+    - low
+  current_status:
+    - candidate
+    - ordered
+    - in_use
+    - archived
+    - depleted
+    - unknown
+  validation_status:
+    - vendor_claim_only
+    - user_reported_preliminary
+    - user_reported_working
+    - user_reported_problematic
+    - not_evaluated
+    - unknown
+
+field_notes:
+  target_or_specificity: "For primary antibodies, use the antigen target. For secondary antibodies, use the recognized primary antibody species/isotype, e.g. anti-rabbit IgG H+L."
+  display_name: "Short human-readable name for chat retrieval."
+  rrid: "Use RRID exactly as provided by vendor or Antibody Registry. Do not invent."
+  recommended_dilutions: "Keep application-specific dilution claims, e.g. IF 1:200, WB 1:1000."
+  compatible_fixation: "Only include fixation conditions explicitly supported by source or reported by the researcher."
+  lab_observations: "Actual experimental observations from the researcher. Do not infer from vendor claims."
+  user_comments: "the user's subjective notes, concerns, preferences, or plans. Preserve verbatim where possible."
+  ai_flags: "Use for missing catalog number, conflicting source claims, unclear clone, likely duplicate, or low-confidence extraction."
