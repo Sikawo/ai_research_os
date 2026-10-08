@@ -1,0 +1,722 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase13-research-workflows-public-plugin",
+  "status": "ported_offline",
+  "deny_by_default": true,
+  "license": "Apache-2.0",
+  "license_authority": "user-owned generic implementation approved for Apache-2.0 publication on 2026-10-07",
+  "target": {
+    "repository": "Sikawo/ai_research_os",
+    "base_commit": "d53d0a5c33d31115a8913b8bce050cec1a7e37a1"
+  },
+  "sources": {
+    "phase13_research_workflows_classified": {
+      "repository": "Sikawo/personal_research_brain",
+      "commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "access_class": "explicitly_authorized_user_owned_generic_implementation",
+      "candidate_count": 70,
+      "exact_copy_count": 9,
+      "adapted_public_copy_count": 56,
+      "excluded_count": 5
+    }
+  },
+  "rules": {
+    "exact_paths_only": true,
+    "synthetic_fixtures_only": true,
+    "offline_first": true,
+    "dry_run_by_default": true,
+    "external_network_in_tests": false,
+    "automatic_pdf_access": false,
+    "automatic_purchase": false,
+    "copy_git_history": false,
+    "copy_private_values": false,
+    "copy_runtime_state": false,
+    "copy_connector_bindings": false,
+    "copy_scheduled_tasks": false,
+    "live_cutover": false
+  },
+  "expected_transfer_count": 65,
+  "expected_target_path_count": 74,
+  "classification_sha256": "9bde33d0153d3ae91fd345eb1bb77421f782fcc61b71194d1aa81f441e1bd0b6",
+  "integration_paths": [
+    ".agents/plugins/marketplace.json",
+    ".github/workflows/research-workflows-tests.yml",
+    "README.md",
+    "Scripts/validate_repository_safety.py",
+    "manifests/phase13_research_workflows_allowlist.yaml",
+    "plugins/research-workflows/.codex-plugin/plugin.json",
+    "plugins/research-workflows/skills/evidence-mode/SKILL.md",
+    "tests/test_phase13_research_workflows.py",
+    "tests/test_repository_safety.py"
+  ],
+  "allowed_target_paths": [
+    ".agents/plugins/marketplace.json",
+    ".github/workflows/research-workflows-tests.yml",
+    "README.md",
+    "Scripts/validate_repository_safety.py",
+    "manifests/phase13_research_workflows_allowlist.yaml",
+    "plugins/research-workflows/.codex-plugin/plugin.json",
+    "plugins/research-workflows/skills/antibody-registry/SKILL.md",
+    "plugins/research-workflows/skills/antibody-registry/assets/antibody_extraction_schema.yaml",
+    "plugins/research-workflows/skills/buycheck/SKILL.md",
+    "plugins/research-workflows/skills/evidence-mode/SKILL.md",
+    "plugins/research-workflows/skills/evidence-mode/references/evidence_gated_research_discussion_prompt.md",
+    "plugins/research-workflows/skills/paper-workflow/SKILL.md",
+    "plugins/research-workflows/skills/paper-workflow/assets/Paper_Template.md",
+    "plugins/research-workflows/skills/paper-workflow/assets/discuss_import_to_papers_template.md",
+    "plugins/research-workflows/skills/paper-workflow/assets/paper_extraction_prompt_template.md",
+    "plugins/research-workflows/skills/paper-workflow/assets/paper_note_quality_checklist.md",
+    "plugins/research-workflows/skills/paper-workflow/assets/paper_note_template.md",
+    "plugins/research-workflows/skills/paper-workflow/assets/pdf_only_full_text_chatgpt_instructions.md",
+    "plugins/research-workflows/skills/paper-workflow/assets/public_full_text_paper_note_prompt.md",
+    "plugins/research-workflows/skills/paper-workflow/references/full_text_paper_note_workflow.md",
+    "plugins/research-workflows/skills/paper-workflow/references/paper_extraction_workflow.md",
+    "plugins/research-workflows/skills/paper-workflow/references/paper_note_batch_checklist.md",
+    "plugins/research-workflows/skills/paper-workflow/references/paper_note_import_workflow.md",
+    "plugins/research-workflows/skills/paper-workflow/references/restricted_paper_note_workflow.md",
+    "plugins/research-workflows/skills/paper-workflow/references/workflow_c_pdf_bundle_workflow.md",
+    "plugins/research-workflows/skills/paper-workflow/scripts/build_bibliographic_note_packet.py",
+    "plugins/research-workflows/skills/paper-workflow/scripts/export_public_pdf_prompt.py",
+    "plugins/research-workflows/skills/paper-workflow/scripts/plan_note_filename_normalization.py",
+    "plugins/research-workflows/skills/paper-workflow/scripts/review_imported_full_text_notes.py",
+    "plugins/research-workflows/skills/paper-workflow/scripts/review_imported_generated_notes.py",
+    "plugins/research-workflows/skills/paper-workflow/scripts/review_selected_notes.py",
+    "plugins/research-workflows/skills/paper-workflow/tests/test_import_full_text_paper_notes.py",
+    "plugins/research-workflows/skills/paper-workflow/tests/test_import_generated_paper_notes.py",
+    "plugins/research-workflows/skills/paper-workflow/tests/test_import_selected_paper_notes.py",
+    "plugins/research-workflows/skills/paper-workflow/tests/test_normalize_paper_filenames.py",
+    "plugins/research-workflows/skills/paper-workflow/tests/test_paper_extraction.py",
+    "plugins/research-workflows/skills/paper-workflow/tests/test_pdf_only_full_text_prompt.py",
+    "plugins/research-workflows/skills/pubmed-workflow/SKILL.md",
+    "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_abstract_screening_packet_template.md",
+    "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_ai_chat_search_prompt.md",
+    "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_ai_screening_output_prompt.md",
+    "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_paper_note_template.md",
+    "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_search_packet_template.md",
+    "plugins/research-workflows/skills/pubmed-workflow/references/pubmed_ai_triage_workflow.md",
+    "plugins/research-workflows/skills/pubmed-workflow/scripts/import_screening_record.py",
+    "plugins/research-workflows/skills/pubmed-workflow/scripts/run_search.py",
+    "plugins/research-workflows/skills/pubmed-workflow/scripts/run_triage.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_abstract_screening.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_ai_backend_interface.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_chatgpt_note_packet.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_full_text_drafts.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_import_discussion_polish.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_openai_adapter.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_pmc_retrieval.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_public_only_gate.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_skeleton.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_screening_output_prompt.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_screening_record_import.py",
+    "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_search_workflow.py",
+    "plugins/research-workflows/skills/reagent-manual/SKILL.md",
+    "plugins/research-workflows/skills/reagent-manual/assets/Kit_Reagent_Manual_Template.md",
+    "plugins/research-workflows/skills/verified-search/SKILL.md",
+    "plugins/research-workflows/skills/verified-search/references/CHANGELOG.md",
+    "plugins/research-workflows/skills/verified-search/references/custom_gpt_instructions.md",
+    "plugins/research-workflows/skills/verified-search/references/custom_gpt_setup.md",
+    "plugins/research-workflows/skills/verified-search/references/custom_instructions_free.md",
+    "plugins/research-workflows/skills/verified-search/references/custom_instructions_full.md",
+    "plugins/research-workflows/skills/verified-search/references/test_cases.md",
+    "plugins/research-workflows/skills/verified-search/references/user_experience.md",
+    "plugins/research-workflows/skills/verified-search/references/verified_search_core.md",
+    "plugins/research-workflows/skills/verified-search/scripts/validate_deployments.py",
+    "plugins/research-workflows/skills/verified-search/tests/test_verified_search_deployment_limits.py",
+    "tests/test_phase13_research_workflows.py",
+    "tests/test_repository_safety.py"
+  ],
+  "excluded_source_paths": [
+    "Docs/verified_search_v1_2_custom_gpt_limit_fix_pr.md",
+    "Docs/verified_search_v1_2_governing_applicability_pr.md",
+    "Reagents/Antibodies/README.md",
+    "Reagents/Antibodies/decode_antibody_tables.py",
+    "Templates/Prompts/Active/000_EXECUTE_Paper_Extraction_v4_folder_zip.md"
+  ],
+  "transfers": [
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Docs/full_text_paper_note_workflow.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/references/full_text_paper_note_workflow.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Docs/paper_extraction_workflow.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/references/paper_extraction_workflow.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Docs/paper_md_workflow.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/SKILL.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Docs/paper_note_batch_checklist.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/references/paper_note_batch_checklist.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Docs/paper_note_import_workflow.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/references/paper_note_import_workflow.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Docs/pubmed_ai_triage_workflow.md",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/references/pubmed_ai_triage_workflow.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Docs/pubmed_literature_workflow.md",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/SKILL.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Docs/restricted_paper_note_workflow.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/references/restricted_paper_note_workflow.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Docs/workflow_c_pdf_bundle_workflow.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/references/workflow_c_pdf_bundle_workflow.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Procurement/buycheck_prompt.md",
+      "destination_path": "plugins/research-workflows/skills/buycheck/SKILL.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reagents/Antibodies/antibody_extraction_schema.yaml",
+      "destination_path": "plugins/research-workflows/skills/antibody-registry/assets/antibody_extraction_schema.yaml",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/export_pdf_only_full_text_prompt.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/scripts/export_public_pdf_prompt.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/import_full_text_paper_notes.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/scripts/review_imported_full_text_notes.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/import_generated_paper_notes.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/scripts/review_imported_generated_notes.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/import_pubmed_screening_record.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/scripts/import_screening_record.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/import_selected_paper_notes.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/scripts/review_selected_notes.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/normalize_paper_filenames.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/scripts/plan_note_filename_normalization.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/run_paper_extraction.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/scripts/build_bibliographic_note_packet.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/run_pubmed_ai_triage.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/scripts/run_triage.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/run_pubmed_search.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/scripts/run_search.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Scripts/validate_verified_search_deployments.py",
+      "destination_path": "plugins/research-workflows/skills/verified-search/scripts/validate_deployments.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/Kit_Reagent_Manual_Template.md",
+      "destination_path": "plugins/research-workflows/skills/reagent-manual/assets/Kit_Reagent_Manual_Template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/Paper_Template.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/assets/Paper_Template.md",
+      "transfer_mode": "exact_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/Prompts/Active/kit_reagent_manual_extraction_prompt.md",
+      "destination_path": "plugins/research-workflows/skills/reagent-manual/SKILL.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/antibody_update_prompt.md",
+      "destination_path": "plugins/research-workflows/skills/antibody-registry/SKILL.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/discuss_import_to_papers_template.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/assets/discuss_import_to_papers_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/evidence_gated_research_discussion_prompt.md",
+      "destination_path": "plugins/research-workflows/skills/evidence-mode/references/evidence_gated_research_discussion_prompt.md",
+      "transfer_mode": "exact_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/paper_extraction_prompt_template.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/assets/paper_extraction_prompt_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/paper_note_quality_checklist.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/assets/paper_note_quality_checklist.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/paper_note_template.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/assets/paper_note_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/pdf_only_full_text_chatgpt_instructions.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/assets/pdf_only_full_text_chatgpt_instructions.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/public_full_text_paper_note_prompt.md",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/assets/public_full_text_paper_note_prompt.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/pubmed_abstract_screening_packet_template.md",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_abstract_screening_packet_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/pubmed_ai_chat_search_prompt.md",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_ai_chat_search_prompt.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/pubmed_ai_screening_output_prompt.md",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_ai_screening_output_prompt.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/pubmed_paper_note_template.md",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_paper_note_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/pubmed_search_packet_template.md",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/assets/pubmed_search_packet_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/verified_search/CHANGELOG.md",
+      "destination_path": "plugins/research-workflows/skills/verified-search/references/CHANGELOG.md",
+      "transfer_mode": "exact_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/verified_search/README.md",
+      "destination_path": "plugins/research-workflows/skills/verified-search/SKILL.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/verified_search/custom_gpt_instructions.md",
+      "destination_path": "plugins/research-workflows/skills/verified-search/references/custom_gpt_instructions.md",
+      "transfer_mode": "exact_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/verified_search/custom_gpt_setup.md",
+      "destination_path": "plugins/research-workflows/skills/verified-search/references/custom_gpt_setup.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/verified_search/custom_instructions_free.md",
+      "destination_path": "plugins/research-workflows/skills/verified-search/references/custom_instructions_free.md",
+      "transfer_mode": "exact_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/verified_search/custom_instructions_full.md",
+      "destination_path": "plugins/research-workflows/skills/verified-search/references/custom_instructions_full.md",
+      "transfer_mode": "exact_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/verified_search/test_cases.md",
+      "destination_path": "plugins/research-workflows/skills/verified-search/references/test_cases.md",
+      "transfer_mode": "exact_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/verified_search/user_experience.md",
+      "destination_path": "plugins/research-workflows/skills/verified-search/references/user_experience.md",
+      "transfer_mode": "exact_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Templates/verified_search/verified_search_core.md",
+      "destination_path": "plugins/research-workflows/skills/verified-search/references/verified_search_core.md",
+      "transfer_mode": "exact_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_import_full_text_paper_notes.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/tests/test_import_full_text_paper_notes.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_import_generated_paper_notes.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/tests/test_import_generated_paper_notes.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_import_selected_paper_notes.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/tests/test_import_selected_paper_notes.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_normalize_paper_filenames.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/tests/test_normalize_paper_filenames.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_paper_extraction.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/tests/test_paper_extraction.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pdf_only_full_text_prompt.py",
+      "destination_path": "plugins/research-workflows/skills/paper-workflow/tests/test_pdf_only_full_text_prompt.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_ai_triage_abstract_screening.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_abstract_screening.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_ai_triage_ai_backend_interface.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_ai_backend_interface.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_ai_triage_chatgpt_note_packet.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_chatgpt_note_packet.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_ai_triage_full_text_drafts.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_full_text_drafts.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_ai_triage_import_discussion_polish.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_import_discussion_polish.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_ai_triage_openai_adapter.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_openai_adapter.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_ai_triage_pmc_retrieval.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_pmc_retrieval.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_ai_triage_public_only_gate.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_public_only_gate.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_ai_triage_skeleton.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_ai_triage_skeleton.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_screening_output_prompt.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_screening_output_prompt.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_screening_record_import.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_screening_record_import.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_pubmed_search_workflow.py",
+      "destination_path": "plugins/research-workflows/skills/pubmed-workflow/tests/test_pubmed_search_workflow.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase13_research_workflows_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "tests/test_verified_search_deployment_limits.py",
+      "destination_path": "plugins/research-workflows/skills/verified-search/tests/test_verified_search_deployment_limits.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "13",
+      "status": "ported_offline"
+    }
+  ]
+}

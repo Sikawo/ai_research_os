@@ -43,6 +43,11 @@ origin, branch boundary, public tree, and transfer manifest.
   reviewer critique, and professional communication review. It deliberately
   defers exact bare `Sprint` and every `GatedSprint` route to the GatedSprint
   plugin, and it contains no target-specific profiles or application context.
+- **Research Workflows 1.0.0** provides seven public, offline-first skills for
+  evidence-gated discussion, verified search, PubMed discovery, dry-run paper
+  workflows, reagent comparison, antibody-record preparation, and public
+  reagent-manual extraction. It contains no paper corpus, inventory, PDF,
+  private configuration, connector binding, or live runtime state.
 
 All plugins are registered in `.agents/plugins/marketplace.json` and licensed
 under Apache-2.0 with the rest of this repository.

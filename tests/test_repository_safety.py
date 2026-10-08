@@ -19,12 +19,18 @@ from Scripts.validate_repository_safety import (
     PHASE12B_EXPECTED_TARGET_COUNT,
     PHASE12B_EXPECTED_TRANSFER_COUNT,
     PHASE12B_MANIFEST_PATH,
+    PHASE13_CLASSIFICATION_SHA256,
+    PHASE13_EXPECTED_TARGET_COUNT,
+    PHASE13_EXPECTED_TRANSFER_COUNT,
+    PHASE13_MANIFEST_PATH,
     load_manifest,
     load_phase12_manifest,
     load_phase12b_manifest,
+    load_phase13_manifest,
     validate_manifest,
     validate_phase12_manifest,
     validate_phase12b_manifest,
+    validate_phase13_manifest,
     validate_tree,
 )
 
@@ -154,13 +160,23 @@ class RepositorySafetyTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         return json.loads((root / PHASE12B_MANIFEST_PATH).read_text(encoding="utf-8"))
 
+    def phase13_manifest(self) -> dict[str, object]:
+        root = Path(__file__).resolve().parents[1]
+        return json.loads((root / PHASE13_MANIFEST_PATH).read_text(encoding="utf-8"))
+
     def make_tree(self, root: Path) -> None:
         phase12 = self.phase12_manifest()
         phase12b = self.phase12b_manifest()
+        phase13 = self.phase13_manifest()
         phase12_paths = set(phase12["allowed_target_paths"])
         phase12b_paths = set(phase12b["allowed_target_paths"])
+        phase13_paths = set(phase13["allowed_target_paths"])
         for relative in (
-            BASELINE_PATHS | GOVERNANCE_PATHS | phase12_paths | phase12b_paths
+            BASELINE_PATHS
+            | GOVERNANCE_PATHS
+            | phase12_paths
+            | phase12b_paths
+            | phase13_paths
         ):
             path = root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -173,6 +189,9 @@ class RepositorySafetyTests(unittest.TestCase):
         )
         (root / PHASE12B_MANIFEST_PATH).write_text(
             json.dumps(phase12b), encoding="utf-8"
+        )
+        (root / PHASE13_MANIFEST_PATH).write_text(
+            json.dumps(phase13), encoding="utf-8"
         )
         package_manifest = (
             root
@@ -218,6 +237,14 @@ class RepositorySafetyTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(len(allowed), PHASE12B_EXPECTED_TARGET_COUNT)
         self.assertEqual(len(destinations), PHASE12B_EXPECTED_TRANSFER_COUNT)
+
+        phase13, phase13_errors = load_phase13_manifest(root)
+        self.assertEqual(phase13_errors, [])
+        self.assertIsNotNone(phase13)
+        errors, allowed, destinations = validate_phase13_manifest(phase13 or {})
+        self.assertEqual(errors, [])
+        self.assertEqual(len(allowed), PHASE13_EXPECTED_TARGET_COUNT)
+        self.assertEqual(len(destinations), PHASE13_EXPECTED_TRANSFER_COUNT)
 
     def test_exact_synthetic_tree_passes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -299,6 +326,27 @@ class RepositorySafetyTests(unittest.TestCase):
     def test_phase12b_classification_digest_is_fixed(self) -> None:
         manifest = self.phase12b_manifest()
         self.assertEqual(manifest["classification_sha256"], PHASE12B_CLASSIFICATION_SHA256)
+
+    def test_phase13_scope_and_classification_are_fixed(self) -> None:
+        manifest = self.phase13_manifest()
+        self.assertEqual(manifest["classification_sha256"], PHASE13_CLASSIFICATION_SHA256)
+        allowed = manifest["allowed_target_paths"]
+        assert isinstance(allowed, list)
+        allowed[-1] = "unexpected.txt"
+        errors, _, _ = validate_phase13_manifest(manifest)
+        self.assertTrue(any("allowed targets must equal" in error for error in errors))
+
+    def test_phase13_excluded_or_arbitrary_source_is_rejected(self) -> None:
+        manifest = self.phase13_manifest()
+        transfers = manifest["transfers"]
+        excluded = manifest["excluded_source_paths"]
+        assert isinstance(transfers, list) and isinstance(excluded, list)
+        transfers[0]["source_path"] = excluded[0]
+        errors, _, _ = validate_phase13_manifest(manifest)
+        self.assertTrue(any("excluded Phase 13 source" in error for error in errors))
+        transfers[0]["source_path"] = "Unapproved_Private_Area/arbitrary.md"
+        errors, _, _ = validate_phase13_manifest(manifest)
+        self.assertTrue(any("source classification" in error for error in errors))
 
     def test_unsafe_relative_path_is_rejected(self) -> None:
         manifest = self.manifest()

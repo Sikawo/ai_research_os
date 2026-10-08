@@ -1,0 +1,35 @@
+{
+  "name": "research-workflows",
+  "version": "1.0.0",
+  "description": "Public, offline-first evidence, search, literature, paper, and reagent research workflows.",
+  "author": {
+    "name": "Kojiro Mukai",
+    "url": "https://github.com/Sikawo"
+  },
+  "homepage": "https://github.com/Sikawo/ai_research_os/tree/main/plugins/research-workflows",
+  "repository": "https://github.com/Sikawo/ai_research_os",
+  "license": "Apache-2.0",
+  "keywords": [
+    "evidence",
+    "literature",
+    "pubmed",
+    "reagents",
+    "research"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Research Workflows",
+    "shortDescription": "Run public, evidence-gated research workflows.",
+    "longDescription": "Prepare evidence-gated searches, public literature packets, dry-run paper-note imports, and synthetic reagent comparisons without accessing private repositories or runtime state.",
+    "developerName": "Kojiro Mukai",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Run an evidence-gated research discussion.",
+      "Build a public PubMed screening packet.",
+      "Compare public reagent information without purchasing anything."
+    ]
+  }
+}

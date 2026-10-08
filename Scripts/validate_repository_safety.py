@@ -108,6 +108,26 @@ PHASE12B_EXPECTED_INTEGRATION_PATHS = {
     "tests/test_phase12b_review_tools.py",
     "tests/test_repository_safety.py",
 }
+PHASE13_MANIFEST_PATH = "manifests/phase13_research_workflows_allowlist.yaml"
+PHASE13_MANIFEST_ID = "phase13-research-workflows-public-plugin"
+PHASE13_SOURCE_COMMIT = "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f"
+PHASE13_TARGET_BASE = "d53d0a5c33d31115a8913b8bce050cec1a7e37a1"
+PHASE13_EXPECTED_TRANSFER_COUNT = 65
+PHASE13_EXPECTED_TARGET_COUNT = 74
+PHASE13_CLASSIFICATION_SHA256 = (
+    "9bde33d0153d3ae91fd345eb1bb77421f782fcc61b71194d1aa81f441e1bd0b6"
+)
+PHASE13_EXPECTED_INTEGRATION_PATHS = {
+    ".agents/plugins/marketplace.json",
+    ".github/workflows/research-workflows-tests.yml",
+    "README.md",
+    "Scripts/validate_repository_safety.py",
+    PHASE13_MANIFEST_PATH,
+    "plugins/research-workflows/.codex-plugin/plugin.json",
+    "plugins/research-workflows/skills/evidence-mode/SKILL.md",
+    "tests/test_phase13_research_workflows.py",
+    "tests/test_repository_safety.py",
+}
 MAX_FILE_BYTES = 200_000
 
 FORBIDDEN_SUFFIXES = {
@@ -177,6 +197,10 @@ def load_phase12_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]
 
 def load_phase12b_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
     return load_json_manifest(root, PHASE12B_MANIFEST_PATH, "Phase 12B transfer manifest")
+
+
+def load_phase13_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
+    return load_json_manifest(root, PHASE13_MANIFEST_PATH, "Phase 13 transfer manifest")
 
 
 def phase12b_classification_sha256(
@@ -617,6 +641,174 @@ def validate_phase12b_manifest(
     return errors, allowed_targets, destinations
 
 
+def validate_phase13_manifest(
+    manifest: dict[str, Any],
+) -> tuple[list[str], set[str], set[str]]:
+    errors: list[str] = []
+    if manifest.get("schema_version") != 1:
+        errors.append("Phase 13 manifest schema_version must be 1")
+    if manifest.get("manifest_id") != PHASE13_MANIFEST_ID:
+        errors.append("unexpected Phase 13 manifest id")
+    if manifest.get("status") != "ported_offline":
+        errors.append("Phase 13 manifest must be ported_offline")
+    if manifest.get("deny_by_default") is not True:
+        errors.append("Phase 13 manifest must deny by default")
+    if manifest.get("license") != "Apache-2.0":
+        errors.append("Phase 13 manifest license must be Apache-2.0")
+    if manifest.get("expected_transfer_count") != PHASE13_EXPECTED_TRANSFER_COUNT:
+        errors.append(
+            f"Phase 13 expected_transfer_count must be {PHASE13_EXPECTED_TRANSFER_COUNT}"
+        )
+    if manifest.get("expected_target_path_count") != PHASE13_EXPECTED_TARGET_COUNT:
+        errors.append(
+            f"Phase 13 expected_target_path_count must be {PHASE13_EXPECTED_TARGET_COUNT}"
+        )
+    if manifest.get("classification_sha256") != PHASE13_CLASSIFICATION_SHA256:
+        errors.append("Phase 13 classification_sha256 does not match the reviewed inventory")
+
+    target = manifest.get("target")
+    if not isinstance(target, dict) or target.get("repository") != "Sikawo/ai_research_os":
+        errors.append("Phase 13 target repository is invalid")
+    elif target.get("base_commit") != PHASE13_TARGET_BASE:
+        errors.append("Phase 13 target base commit is invalid")
+
+    sources = manifest.get("sources")
+    source = (
+        sources.get("phase13_research_workflows_classified")
+        if isinstance(sources, dict)
+        else None
+    )
+    if not isinstance(source, dict):
+        errors.append("Phase 13 classified source is missing")
+    else:
+        expected_source = {
+            "repository": "Sikawo/personal_research_brain",
+            "commit": PHASE13_SOURCE_COMMIT,
+            "candidate_count": 70,
+            "exact_copy_count": 9,
+            "adapted_public_copy_count": 56,
+            "excluded_count": 5,
+        }
+        for name, expected in expected_source.items():
+            if source.get(name) != expected:
+                errors.append(f"Phase 13 source {name} must be {expected!r}")
+
+    required_rules = {
+        "exact_paths_only": True,
+        "synthetic_fixtures_only": True,
+        "offline_first": True,
+        "dry_run_by_default": True,
+        "external_network_in_tests": False,
+        "automatic_pdf_access": False,
+        "automatic_purchase": False,
+        "copy_git_history": False,
+        "copy_private_values": False,
+        "copy_runtime_state": False,
+        "copy_connector_bindings": False,
+        "copy_scheduled_tasks": False,
+        "live_cutover": False,
+    }
+    rules = manifest.get("rules")
+    if not isinstance(rules, dict):
+        errors.append("Phase 13 rules must be an object")
+    else:
+        for name, expected in required_rules.items():
+            if rules.get(name) != expected:
+                errors.append(f"Phase 13 rule {name} must be {expected!r}")
+
+    integration_value = manifest.get("integration_paths")
+    integration_paths = (
+        set(integration_value)
+        if isinstance(integration_value, list)
+        and all(is_safe_relative_path(value) for value in integration_value)
+        else set()
+    )
+    if integration_paths != PHASE13_EXPECTED_INTEGRATION_PATHS:
+        errors.append("Phase 13 integration paths do not match the reviewed scope")
+
+    allowed_value = manifest.get("allowed_target_paths")
+    allowed_targets = (
+        set(allowed_value)
+        if isinstance(allowed_value, list)
+        and all(is_safe_relative_path(value) for value in allowed_value)
+        else set()
+    )
+    if len(allowed_targets) != PHASE13_EXPECTED_TARGET_COUNT:
+        errors.append(
+            f"Phase 13 must allow {PHASE13_EXPECTED_TARGET_COUNT} exact target paths; "
+            f"found {len(allowed_targets)}"
+        )
+
+    excluded_value = manifest.get("excluded_source_paths")
+    excluded = (
+        set(excluded_value)
+        if isinstance(excluded_value, list)
+        and all(is_safe_relative_path(value) for value in excluded_value)
+        else set()
+    )
+    if len(excluded) != 5:
+        errors.append("Phase 13 must record exactly 5 excluded source paths")
+
+    transfers = manifest.get("transfers")
+    if not isinstance(transfers, list):
+        return errors + ["Phase 13 transfers must be a list"], allowed_targets, set()
+    if len(transfers) != PHASE13_EXPECTED_TRANSFER_COUNT:
+        errors.append(
+            f"Phase 13 manifest must contain {PHASE13_EXPECTED_TRANSFER_COUNT} transfers; "
+            f"found {len(transfers)}"
+        )
+
+    source_paths: set[str] = set()
+    destinations: set[str] = set()
+    mode_counts: dict[str, int] = {}
+    for index, transfer in enumerate(transfers):
+        label = f"Phase 13 transfer[{index}]"
+        if not isinstance(transfer, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        source_path = transfer.get("source_path")
+        destination_path = transfer.get("destination_path")
+        mode = transfer.get("transfer_mode")
+        if transfer.get("source_id") != "phase13_research_workflows_classified":
+            errors.append(f"{label} has unknown source_id")
+        if transfer.get("source_commit") != PHASE13_SOURCE_COMMIT:
+            errors.append(f"{label} source_commit is invalid")
+        if not is_safe_relative_path(source_path):
+            errors.append(f"{label} has unsafe source_path")
+        if not is_safe_relative_path(destination_path) or not str(destination_path).startswith(
+            "plugins/research-workflows/skills/"
+        ):
+            errors.append(f"{label} has unsafe destination_path")
+        if mode not in {"exact_copy", "adapted_public_copy"}:
+            errors.append(f"{label} has unsupported transfer_mode")
+        if transfer.get("phase") != "13":
+            errors.append(f"{label} has unsupported phase")
+        if transfer.get("status") != "ported_offline":
+            errors.append(f"{label} must be ported_offline")
+        if isinstance(source_path, str):
+            if source_path in source_paths:
+                errors.append(f"duplicate Phase 13 source path: {source_path}")
+            if source_path in excluded:
+                errors.append(f"excluded Phase 13 source was transferred: {source_path}")
+            source_paths.add(source_path)
+        if isinstance(destination_path, str):
+            if destination_path in destinations:
+                errors.append(f"duplicate Phase 13 destination path: {destination_path}")
+            destinations.add(destination_path)
+        if isinstance(mode, str):
+            mode_counts[mode] = mode_counts.get(mode, 0) + 1
+
+    expected_modes = {"exact_copy": 9, "adapted_public_copy": 56}
+    if mode_counts != expected_modes:
+        errors.append(f"Phase 13 transfer modes must be {expected_modes!r}")
+    classification_digest = phase12b_classification_sha256(transfers, excluded)
+    if classification_digest != PHASE13_CLASSIFICATION_SHA256:
+        errors.append("Phase 13 source classification does not match the reviewed inventory")
+    if allowed_targets != destinations | integration_paths:
+        errors.append("Phase 13 allowed targets must equal transfers plus integration paths")
+    return errors, allowed_targets, destinations
+
+
 def validate_tree(root: Path) -> list[str]:
     errors: list[str] = []
     files = repository_files(root)
@@ -671,12 +863,37 @@ def validate_tree(root: Path) -> list[str]:
         )
         errors.extend(phase12b_errors)
 
-    required = BASELINE_PATHS | GOVERNANCE_PATHS | phase12_allowed | phase12b_allowed
+    phase13_manifest, phase13_load_errors = load_phase13_manifest(root)
+    errors.extend(phase13_load_errors)
+    phase13_allowed: set[str] = set()
+    phase13_ported: set[str] = set()
+    if phase13_manifest is not None:
+        phase13_errors, phase13_allowed, phase13_ported = validate_phase13_manifest(
+            phase13_manifest
+        )
+        errors.extend(phase13_errors)
+
+    required = (
+        BASELINE_PATHS
+        | GOVERNANCE_PATHS
+        | phase12_allowed
+        | phase12b_allowed
+        | phase13_allowed
+    )
     missing = sorted(required - files)
     extra = sorted(
-        files - (BASELINE_PATHS | destinations | phase12_allowed | phase12b_allowed)
+        files
+        - (
+            BASELINE_PATHS
+            | destinations
+            | phase12_allowed
+            | phase12b_allowed
+            | phase13_allowed
+        )
     )
-    missing_ported = sorted((ported | phase12_ported | phase12b_ported) - files)
+    missing_ported = sorted(
+        (ported | phase12_ported | phase12b_ported | phase13_ported) - files
+    )
     if missing:
         errors.append(f"missing required paths: {', '.join(missing)}")
     if extra:
