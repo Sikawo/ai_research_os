@@ -1,0 +1,34 @@
+{
+  "name": "gated-sprint",
+  "version": "2.1.0",
+  "description": "Version-aware approval-gated and self-driving application review with deterministic safety checks.",
+  "author": {
+    "name": "Kojiro Mukai",
+    "url": "https://github.com/Sikawo"
+  },
+  "homepage": "https://github.com/Sikawo/ai_research_os/tree/main/plugins/gated-sprint",
+  "repository": "https://github.com/Sikawo/ai_research_os",
+  "license": "Apache-2.0",
+  "keywords": [
+    "applications",
+    "review",
+    "resume",
+    "scientific-writing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "GatedSprint",
+    "shortDescription": "Run gated or self-driving application review.",
+    "longDescription": "Review scientific applications and industry resumes with source binding, explicit approval gates, deterministic release checks, and a distinct exact-bare-Sprint self-driving route.",
+    "developerName": "Kojiro Mukai",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use GatedSprint to diagnose this application and stop at the approval gate.",
+      "Use exact bare Sprint to run the supported self-driving improvement workflow."
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "description": "A qualitative PASS recorded after ARTIFACT_VERIFIED cannot retroactively verify the artifact.",
+  "state": "valid_ready_to_release.json",
+  "baseline": "release_baseline.json",
+  "candidate": "release_candidate.json",
+  "diff_map": "release_diff_map.json",
+  "check": "ready-to-release",
+  "state_mutations": [
+    {"op": "replace", "path": "/attestations/7/timestamp", "value": "2026-10-01T14:21:00Z"}
+  ],
+  "expected_check_ids": ["STATE.ATTESTATION_SEQUENCE", "STATE.ATTESTATION"]
+}

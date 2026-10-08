@@ -1,0 +1,15 @@
+{
+  "description": "Dependencies must resolve to an available decision revision.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/dependencies", "value": [{"decision_id": "GS-999", "proposal_revision": 1}]},
+    {"op": "replace", "path": "/decisions/0/source_bindings/0/dependency_set_hash", "value": "sha256:3fa34029c701247238a2add9836a27b9b293e33d5e52ac9a6c02905d664f2d11"},
+    {"op": "replace", "path": "/decisions/0/source_bindings/1/dependency_set_hash", "value": "sha256:3fa34029c701247238a2add9836a27b9b293e33d5e52ac9a6c02905d664f2d11"},
+    {"op": "replace", "path": "/events/2/details/dependency_set_hash", "value": "sha256:3fa34029c701247238a2add9836a27b9b293e33d5e52ac9a6c02905d664f2d11"}
+  ],
+  "expected_check_ids": ["STATE.DEPENDENCY"]
+}

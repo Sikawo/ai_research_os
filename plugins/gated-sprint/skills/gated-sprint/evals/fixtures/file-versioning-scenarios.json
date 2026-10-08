@@ -1,0 +1,89 @@
+{
+  "policy": {
+    "timestamp_form": "<family-stem>__YYYYMMDD-HHmmssZ.<extension>",
+    "semantic_form": "<family-stem>__<lower-kebab-version>.<extension>",
+    "safe_promotion_order": [
+      "CREATE_CANDIDATE_WITHOUT_OVERWRITE",
+      "VALIDATE_CANDIDATE_FOR_PROMOTION",
+      "ARCHIVE_SUPERSEDED_ROOT_GROUP",
+      "PROMOTE_VALIDATED_CANDIDATE"
+    ],
+    "manual_ambiguity_rule": "Do not move any plausible current file until explicit designation or content comparison resolves the ambiguity; modification time alone is insufficient.",
+    "companion_rule": "DOCX and PDF may share a version token only when they contain the same content revision.",
+    "routing_rule": "A naming-only request does not invoke GatedSprint unless the user requests that workflow."
+  },
+  "E-30": {
+    "working_folder": {
+      "parent": "WORKING_PARENT",
+      "family_stem": "Research_Statement",
+      "current_root_group": [
+        {
+          "name": "Research_Statement__20260930-221530Z.docx",
+          "content_revision": "r7",
+          "validated_for_promotion": true
+        }
+      ],
+      "candidate": {
+        "requested_version_name": "supervisor-review",
+        "expected_name": "Research_Statement__supervisor-review.docx",
+        "content_revision": "r8",
+        "created": true,
+        "opens": true,
+        "content_check": "PASS"
+      },
+      "previous": [
+        "Research_Statement__20260929-190000Z.docx"
+      ],
+      "requested_operation": "Promote the candidate validated for working-file promotion and retain the superseded file."
+    }
+  },
+  "E-31": {
+    "working_folder": {
+      "parent": "WORKING_PARENT",
+      "family_stem": "cover-letter",
+      "root_candidates": [
+        {
+          "name": "cover-letter__supervisor-review.docx",
+          "content_revision": "manual-A",
+          "modified_at": "2026-10-01T14:10:00Z"
+        },
+        {
+          "name": "cover-letter__20261001-141500Z.docx",
+          "content_revision": "manual-B",
+          "modified_at": "2026-10-01T14:15:00Z"
+        }
+      ],
+      "explicit_current_designation": null,
+      "content_comparison": "NOT_PERFORMED",
+      "previous": [
+        "cover-letter__v6.docx"
+      ],
+      "requested_operation": "Organize the folder so only the latest file remains at the root."
+    }
+  },
+  "E-32": {
+    "docx": {
+      "name": "research-statement__submitted.docx",
+      "content_revision": "pre-gma",
+      "text": "Pillar C tests how the input cue activates the response.",
+      "editable": true
+    },
+    "pdf": {
+      "name": "research-statement__submitted.pdf",
+      "content_revision": "submitted-final",
+      "text": "Pillar C tests how generic marker alpha (GMA) activates the response.",
+      "user_designation": "This PDF is the submitted final file."
+    },
+    "requested_operation": "Organize these files under the working-file convention."
+  },
+  "E-33": {
+    "file": {
+      "current_name": "Cover_Letter_draft.docx",
+      "family_stem": "Cover_Letter_draft",
+      "content_revision": "manual-r4",
+      "requested_timestamp_utc": "20261001-143000Z",
+      "expected_name": "Cover_Letter_draft__20261001-143000Z.docx"
+    },
+    "request_scope": "Return only a convention-compliant filename; do not review or edit the document."
+  }
+}

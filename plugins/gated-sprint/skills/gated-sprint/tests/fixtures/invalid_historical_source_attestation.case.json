@@ -1,0 +1,13 @@
+{
+  "description": "Implementation readiness cannot use a PASS attestation bound to the superseded source.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "replace", "path": "/attestations/0/source_id", "value": "SRC-OLD"},
+    {"op": "replace", "path": "/attestations/0/source_fingerprint", "value": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+  ],
+  "expected_check_ids": ["STATE.ATTESTATION"]
+}

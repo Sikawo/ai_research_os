@@ -1,0 +1,10 @@
+{
+  "description": "Source identifiers are unique across the immutable source register.",
+  "state": "valid_diagnostic_state.json",
+  "baseline": "diagnostic_baseline.json",
+  "check": "diagnostic",
+  "state_mutations": [
+    {"op": "copy", "from": "/sources/0", "path": "/sources/-"}
+  ],
+  "expected_check_ids": ["STATE.ID_UNIQUE"]
+}

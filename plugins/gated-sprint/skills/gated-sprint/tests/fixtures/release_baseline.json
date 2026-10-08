@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "RUN-RELEASE",
+  "sources": [
+    {
+      "source_id": "SRC-RELEASE",
+      "path": "approved-source.txt",
+      "byte_hash": "sha256:cf40fbd1b90427f1d79b335a2adcf4b3bf593afea52350b57d90789d043861f1",
+      "extracted_text_hash": "sha256:cf40fbd1b90427f1d79b335a2adcf4b3bf593afea52350b57d90789d043861f1",
+      "user_designated_role": "CURRENT_DRAFT",
+      "content_authority": true,
+      "layout_authority": false,
+      "editable_target": true,
+      "equivalence_status": "NOT_APPLICABLE",
+      "version_designation": "EXPLICIT_CURRENT"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "description": "A scientifically blocked proposal is valid diagnostic state so long as it remains non-implementable and records an unblock condition.",
+  "state": "valid_diagnostic_state.json",
+  "baseline": "diagnostic_baseline.json",
+  "check": "diagnostic",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/support_status", "value": "BLOCKED"},
+    {"op": "replace", "path": "/decisions/0/blocking_reason", "value": "The proposed claim is unsupported by the supplied evidence."},
+    {"op": "replace", "path": "/decisions/0/unblock_condition", "value": "Correct the claim boundary or supply resolving evidence."},
+    {"op": "replace", "path": "/decisions/0/confirmation_requirement", "value": null},
+    {"op": "replace", "path": "/events/0/new_support_status", "value": "BLOCKED"}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "description": "Supersession links must resolve to another revision of the same stable decision.",
+  "state": "valid_diagnostic_state.json",
+  "baseline": "diagnostic_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "diagnostic",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/supersession_links", "value": [{"relation": "SUPERSEDES", "decision_id": "GS-001", "proposal_revision": 99}]}
+  ],
+  "expected_check_ids": ["STATE.SUPERSESSION"]
+}

@@ -1,0 +1,40 @@
+{
+  "description": "Even unresolved proposals cannot form a dependency cycle.",
+  "state": "valid_diagnostic_state.json",
+  "baseline": "diagnostic_baseline.json",
+  "check": "diagnostic",
+  "state_mutations": [
+    {
+      "op": "replace",
+      "path": "/decisions/0/dependencies",
+      "value": [{"decision_id": "GS-002", "proposal_revision": 1}]
+    },
+    {
+      "op": "replace",
+      "path": "/decisions/0/source_bindings/0/dependency_set_hash",
+      "value": "sha256:858c1475d78ae0c8c6dd96f0fdbf0ab206d9c7b3cca87c589e44c626ac395a35"
+    },
+    {"op": "copy", "from": "/decisions/0", "path": "/decisions/-"},
+    {"op": "replace", "path": "/decisions/1/decision_id", "value": "GS-002"},
+    {"op": "replace", "path": "/decisions/1/proposal_fingerprint", "value": "sha256:8888888888888888888888888888888888888888888888888888888888888888"},
+    {"op": "replace", "path": "/decisions/1/source_bindings/0/event_id", "value": "EVT-DIAG-002"},
+    {"op": "replace", "path": "/decisions/1/source_bindings/0/proposal_fingerprint", "value": "sha256:8888888888888888888888888888888888888888888888888888888888888888"},
+    {"op": "replace", "path": "/decisions/1/source_bindings/0/timestamp", "value": "2026-10-01T12:02:00Z"},
+    {
+      "op": "replace",
+      "path": "/decisions/1/dependencies",
+      "value": [{"decision_id": "GS-001", "proposal_revision": 1}]
+    },
+    {
+      "op": "replace",
+      "path": "/decisions/1/source_bindings/0/dependency_set_hash",
+      "value": "sha256:5f3bc707f193de12fc1aa771763c22e15afa7107e079d23b32b034c59b726889"
+    },
+    {"op": "copy", "from": "/events/0", "path": "/events/-"},
+    {"op": "replace", "path": "/events/1/event_id", "value": "EVT-DIAG-002"},
+    {"op": "replace", "path": "/events/1/decision_id", "value": "GS-002"},
+    {"op": "replace", "path": "/events/1/proposal_fingerprint", "value": "sha256:8888888888888888888888888888888888888888888888888888888888888888"},
+    {"op": "replace", "path": "/events/1/timestamp", "value": "2026-10-01T12:02:00Z"}
+  ],
+  "expected_check_ids": ["STATE.DEPENDENCY"]
+}

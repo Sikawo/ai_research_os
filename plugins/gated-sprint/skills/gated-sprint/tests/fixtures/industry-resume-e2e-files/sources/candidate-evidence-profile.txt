@@ -1,0 +1,4 @@
+Synthetic Verified Candidate Evidence Profile
+
+- Used design-of-experiments methods for process optimization.
+- Evidence was verified for this contract fixture and was absent from the baseline resume.

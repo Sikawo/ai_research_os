@@ -1,0 +1,22 @@
+{
+  "description": "A proposed decision cannot carry an implementation result before approval and authorization.",
+  "state": "valid_diagnostic_state.json",
+  "baseline": "diagnostic_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "diagnostic",
+  "state_mutations": [
+    {
+      "op": "replace",
+      "path": "/decisions/0/implementation_result",
+      "value": {
+        "artifact_id": "ART-UNAUTHORIZED",
+        "candidate_hash": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "diff_hunk_ids": ["HUNK-UNAUTHORIZED"],
+        "implemented_at": "2026-10-01T12:02:00Z",
+        "actor": "assistant"
+      }
+    }
+  ],
+  "expected_check_ids": ["STATE.SCHEMA"]
+}

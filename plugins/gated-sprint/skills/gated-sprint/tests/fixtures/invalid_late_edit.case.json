@@ -1,0 +1,17 @@
+{
+  "description": "A modification after ARTIFACT_VERIFIED invalidates the release candidate.",
+  "state": "valid_ready_to_release.json",
+  "baseline": "release_baseline.json",
+  "candidate": "release_candidate.json",
+  "diff_map": "release_diff_map.json",
+  "check": "ready-to-release",
+  "state_mutations": [
+    {"op": "copy", "from": "/events/6", "path": "/events/-"},
+    {"op": "replace", "path": "/events/7/event_id", "value": "EVT-REL-008"},
+    {"op": "replace", "path": "/events/7/event_type", "value": "ARTIFACT_MODIFIED"},
+    {"op": "replace", "path": "/events/7/timestamp", "value": "2026-10-01T14:21:00Z"},
+    {"op": "replace", "path": "/events/7/artifact_hash", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"},
+    {"op": "replace", "path": "/events/7/authority_basis", "value": "Late unverified edit."}
+  ],
+  "expected_check_ids": ["STATE.LATE_EDIT"]
+}

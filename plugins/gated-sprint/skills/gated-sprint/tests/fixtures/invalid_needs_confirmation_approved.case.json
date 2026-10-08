@@ -1,0 +1,14 @@
+{
+  "description": "A fact-dependent change cannot be approved or authorized before confirmation.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/support_status", "value": "NEEDS_CONFIRMATION"},
+    {"op": "replace", "path": "/decisions/0/confirmation_requirement", "value": "Confirm the result and its evidentiary source."},
+    {"op": "replace", "path": "/events/0/new_support_status", "value": "NEEDS_CONFIRMATION"}
+  ],
+  "expected_check_ids": ["STATE.SUPPORT"]
+}

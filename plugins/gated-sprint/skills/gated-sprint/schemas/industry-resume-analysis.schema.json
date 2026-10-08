@@ -1,0 +1,831 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openai.local/gated-sprint/schemas/industry-resume-analysis.schema.json",
+  "title": "Industry Resume AI/ATS analysis sidecar",
+  "description": "Route-neutral machine contract shared by approval-gated GatedSprint and self-driving Sprint. It records evidence matching and audits; it does not grant editing authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "workflow_version",
+    "run",
+    "config",
+    "target",
+    "sources",
+    "candidate_facts",
+    "requirements",
+    "evidence_items",
+    "eligibility_results",
+    "semantic_alignments",
+    "qualification_results",
+    "gaps",
+    "gate_results",
+    "audits",
+    "evaluator_runs",
+    "claim_provenance",
+    "removed_claims",
+    "metrics",
+    "outputs",
+    "logging"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "workflow_version": { "const": "2.1.0" },
+    "run": { "$ref": "#/$defs/run" },
+    "config": { "$ref": "#/$defs/config" },
+    "target": {
+      "anyOf": [
+        { "$ref": "#/$defs/targetSummary" },
+        { "type": "null" }
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/source" }
+    },
+    "candidate_facts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/candidateFact" }
+    },
+    "requirements": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/jobRequirement" }
+    },
+    "evidence_items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidenceItem" }
+    },
+    "eligibility_results": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/eligibilityResult" }
+    },
+    "semantic_alignments": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/semanticAlignment" }
+    },
+    "qualification_results": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/qualificationResult" }
+    },
+    "gaps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/gap" }
+    },
+    "gate_results": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/gateResult" }
+    },
+    "audits": {
+      "anyOf": [
+        { "$ref": "#/$defs/auditBundle" },
+        { "type": "null" }
+      ]
+    },
+    "evaluator_runs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evaluatorRun" }
+    },
+    "claim_provenance": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/claimProvenance" }
+    },
+    "removed_claims": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/removedClaim" }
+    },
+    "metrics": {
+      "anyOf": [
+        { "$ref": "#/$defs/metrics" },
+        { "type": "null" }
+      ]
+    },
+    "outputs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/outputArtifact" }
+    },
+    "logging": { "$ref": "#/$defs/logging" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "config": {
+            "properties": {
+              "ai_ats_mode": { "const": true }
+            },
+            "required": ["ai_ats_mode"]
+          }
+        },
+        "required": ["config"]
+      },
+      "then": {
+        "properties": {
+          "requirements": { "minItems": 1 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullableString": {
+      "type": ["string", "null"]
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$"
+    },
+    "nullableIdentifier": {
+      "anyOf": [
+        { "$ref": "#/$defs/identifier" },
+        { "type": "null" }
+      ]
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nullableHash": {
+      "anyOf": [
+        { "$ref": "#/$defs/hash" },
+        { "type": "null" }
+      ]
+    },
+    "stringArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nonEmptyString" },
+      "uniqueItems": true
+    },
+    "identifierArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/identifier" },
+      "uniqueItems": true
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "execution_policy",
+        "operation",
+        "overall_status",
+        "current_resume_source_id",
+        "current_resume_hash",
+        "approval_ledger_created",
+        "authorization_verified",
+        "revisions_applied",
+        "revision_cycle",
+        "started_at",
+        "completed_at"
+      ],
+      "properties": {
+        "run_id": { "$ref": "#/$defs/identifier" },
+        "execution_policy": {
+          "enum": ["GATEDSPRINT", "SPRINT_SELF_DRIVING"]
+        },
+        "operation": {
+          "enum": ["DIAGNOSE", "NEGOTIATE", "RECEIPT", "IMPLEMENT", "RELEASE", "SELF_DRIVING"]
+        },
+        "overall_status": {
+          "enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL", "NOT_RUN"]
+        },
+        "current_resume_source_id": { "$ref": "#/$defs/nullableIdentifier" },
+        "current_resume_hash": { "$ref": "#/$defs/nullableHash" },
+        "approval_ledger_created": { "type": "boolean" },
+        "authorization_verified": { "type": "boolean" },
+        "revisions_applied": { "type": "boolean" },
+        "revision_cycle": { "type": "integer", "minimum": 0 },
+        "started_at": { "type": "string", "format": "date-time" },
+        "completed_at": {
+          "anyOf": [
+            { "type": "string", "format": "date-time" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ai_ats_mode",
+        "gates",
+        "required_min_level_target",
+        "preferred_min_level_target",
+        "max_revision_cycles",
+        "max_evaluator_retries",
+        "save_structured_audits",
+        "save_markdown_audits"
+      ],
+      "properties": {
+        "ai_ats_mode": { "type": "boolean" },
+        "gates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "jd_decomposition",
+            "eligibility",
+            "evidence_mapping",
+            "semantic_alignment",
+            "ats_parse",
+            "ai_recruiter",
+            "recruiter_scan",
+            "hiring_manager",
+            "integrity"
+          ],
+          "properties": {
+            "jd_decomposition": { "type": "boolean" },
+            "eligibility": { "type": "boolean" },
+            "evidence_mapping": { "type": "boolean" },
+            "semantic_alignment": { "type": "boolean" },
+            "ats_parse": { "type": "boolean" },
+            "ai_recruiter": { "type": "boolean" },
+            "recruiter_scan": { "type": "boolean" },
+            "hiring_manager": { "type": "boolean" },
+            "integrity": { "type": "boolean" }
+          }
+        },
+        "required_min_level_target": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "preferred_min_level_target": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "max_revision_cycles": { "type": "integer", "minimum": 1 },
+        "max_evaluator_retries": { "type": "integer", "minimum": 0 },
+        "save_structured_audits": { "type": "boolean" },
+        "save_markdown_audits": { "type": "boolean" }
+      }
+    },
+    "targetSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["job_description_source_id", "job_description_hash", "job_title", "seniority", "function", "required_requirement_ids", "preferred_requirement_ids", "responsibilities", "domains", "methods", "platforms", "leadership", "collaboration", "communication", "education", "years_experience", "therapeutic_areas", "modalities", "translational_context", "clinical_context", "regulatory_context", "recurring_terms", "screen_out_requirement_ids", "differentiator_requirement_ids"],
+      "properties": {
+        "job_description_source_id": { "$ref": "#/$defs/identifier" },
+        "job_description_hash": { "$ref": "#/$defs/hash" },
+        "job_title": { "$ref": "#/$defs/nonEmptyString" },
+        "seniority": { "$ref": "#/$defs/nullableString" },
+        "function": { "$ref": "#/$defs/nullableString" },
+        "required_requirement_ids": { "$ref": "#/$defs/identifierArray" },
+        "preferred_requirement_ids": { "$ref": "#/$defs/identifierArray" },
+        "responsibilities": { "$ref": "#/$defs/stringArray" },
+        "domains": { "$ref": "#/$defs/stringArray" },
+        "methods": { "$ref": "#/$defs/stringArray" },
+        "platforms": { "$ref": "#/$defs/stringArray" },
+        "leadership": { "$ref": "#/$defs/stringArray" },
+        "collaboration": { "$ref": "#/$defs/stringArray" },
+        "communication": { "$ref": "#/$defs/stringArray" },
+        "education": { "$ref": "#/$defs/stringArray" },
+        "years_experience": { "$ref": "#/$defs/nullableString" },
+        "therapeutic_areas": { "$ref": "#/$defs/stringArray" },
+        "modalities": { "$ref": "#/$defs/stringArray" },
+        "translational_context": { "$ref": "#/$defs/stringArray" },
+        "clinical_context": { "$ref": "#/$defs/stringArray" },
+        "regulatory_context": { "$ref": "#/$defs/stringArray" },
+        "recurring_terms": { "$ref": "#/$defs/stringArray" },
+        "screen_out_requirement_ids": { "$ref": "#/$defs/identifierArray" },
+        "differentiator_requirement_ids": { "$ref": "#/$defs/identifierArray" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_type",
+        "label",
+        "relative_path",
+        "sha256",
+        "extracted_text_relative_path",
+        "extracted_text_sha256",
+        "is_current",
+        "content_authority",
+        "candidate_evidence_allowed",
+        "visible_to_ai_recruiter"
+      ],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/identifier" },
+        "source_type": {
+          "enum": ["JOB_DESCRIPTION", "BASELINE_RESUME", "CURRENT_RESUME", "CV", "CANDIDATE_PROFILE", "PUBLICATION", "PROJECT_FILE", "USER_VERIFIED_FACTS", "OTHER"]
+        },
+        "label": { "$ref": "#/$defs/nonEmptyString" },
+        "relative_path": { "$ref": "#/$defs/nonEmptyString" },
+        "sha256": { "$ref": "#/$defs/hash" },
+        "extracted_text_relative_path": { "$ref": "#/$defs/nullableString" },
+        "extracted_text_sha256": { "$ref": "#/$defs/nullableHash" },
+        "is_current": { "type": "boolean" },
+        "content_authority": { "type": "boolean" },
+        "candidate_evidence_allowed": { "type": "boolean" },
+        "visible_to_ai_recruiter": { "type": "boolean" }
+      }
+    },
+    "candidateFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_id",
+        "statement",
+        "domain",
+        "source_id",
+        "source_hash",
+        "source_location",
+        "confidence",
+        "direct_experience",
+        "notes"
+      ],
+      "properties": {
+        "fact_id": { "$ref": "#/$defs/identifier" },
+        "statement": { "$ref": "#/$defs/nonEmptyString" },
+        "domain": { "$ref": "#/$defs/nonEmptyString" },
+        "source_id": { "$ref": "#/$defs/identifier" },
+        "source_hash": { "$ref": "#/$defs/hash" },
+        "source_location": { "$ref": "#/$defs/nonEmptyString" },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "direct_experience": { "type": "boolean" },
+        "notes": { "$ref": "#/$defs/nullableString" }
+      }
+    },
+    "jobRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_id",
+        "source_hash",
+        "source_location",
+        "source_text",
+        "normalized_requirement",
+        "category",
+        "priority",
+        "screenable",
+        "compound",
+        "parent_requirement_id",
+        "facet_ids",
+        "concepts",
+        "exact_terms",
+        "acceptable_synonyms",
+        "evidence_expected",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "source_id": { "$ref": "#/$defs/identifier" },
+        "source_hash": { "$ref": "#/$defs/hash" },
+        "source_location": { "$ref": "#/$defs/nonEmptyString" },
+        "source_text": { "$ref": "#/$defs/nonEmptyString" },
+        "normalized_requirement": { "$ref": "#/$defs/nonEmptyString" },
+        "category": {
+          "enum": ["basic_qualification", "preferred_qualification", "responsibility", "domain", "method", "platform", "leadership", "communication", "education", "years_experience", "regulatory", "other"]
+        },
+        "priority": { "enum": ["required", "preferred", "contextual"] },
+        "screenable": { "type": "boolean" },
+        "compound": { "type": "boolean" },
+        "parent_requirement_id": { "$ref": "#/$defs/nullableIdentifier" },
+        "facet_ids": { "$ref": "#/$defs/identifierArray" },
+        "concepts": { "$ref": "#/$defs/stringArray" },
+        "exact_terms": { "$ref": "#/$defs/stringArray" },
+        "acceptable_synonyms": { "$ref": "#/$defs/stringArray" },
+        "evidence_expected": {
+          "type": "array",
+          "items": {
+            "enum": ["role_history", "accomplishment", "method", "publication", "education", "leadership", "collaboration", "domain_experience", "quantitative_outcome", "other"]
+          },
+          "uniqueItems": true
+        },
+        "notes": { "$ref": "#/$defs/nullableString" }
+      }
+    },
+    "evidenceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "requirement_id",
+        "candidate_fact_ids",
+        "status",
+        "evidence_level",
+        "relationship_to_requirement",
+        "source_type",
+        "source_id",
+        "source_hash",
+        "source_location",
+        "source_excerpt",
+        "reasoning_summary",
+        "resume_visibility",
+        "recommended_action",
+        "confidence"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "requirement_id": { "$ref": "#/$defs/identifier" },
+        "candidate_fact_ids": { "$ref": "#/$defs/identifierArray" },
+        "status": { "enum": ["strong", "partial", "implied", "absent"] },
+        "evidence_level": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "relationship_to_requirement": { "enum": ["DIRECT", "ADJACENT", "NONE"] },
+        "source_type": { "enum": ["resume", "cv", "candidate_profile", "publication", "project_file", "user_verified_fact", "other", "none"] },
+        "source_id": { "$ref": "#/$defs/nullableIdentifier" },
+        "source_hash": { "$ref": "#/$defs/nullableHash" },
+        "source_location": { "$ref": "#/$defs/nullableString" },
+        "source_excerpt": { "$ref": "#/$defs/nullableString" },
+        "reasoning_summary": { "$ref": "#/$defs/nonEmptyString" },
+        "resume_visibility": { "enum": ["explicit", "implicit", "missing"] },
+        "recommended_action": { "enum": ["keep", "clarify", "strengthen_wording", "move_higher", "add_if_true", "leave_as_gap"] },
+        "confidence": { "enum": ["high", "medium", "low"] }
+      }
+    },
+    "eligibilityResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirement_id", "classification", "evidence_item_ids", "true_gap", "explanation"],
+      "properties": {
+        "requirement_id": { "$ref": "#/$defs/identifier" },
+        "classification": { "enum": ["met", "probably_met_but_not_explicit", "partial", "not_met"] },
+        "evidence_item_ids": { "$ref": "#/$defs/identifierArray" },
+        "true_gap": { "type": "boolean" },
+        "explanation": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "semanticAlignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alignment_id", "requirement_id", "jd_terms", "candidate_term", "industry_wording", "relationship", "evidence_item_ids", "approved_for_revision", "rationale"],
+      "properties": {
+        "alignment_id": { "$ref": "#/$defs/identifier" },
+        "requirement_id": { "$ref": "#/$defs/identifier" },
+        "jd_terms": { "$ref": "#/$defs/stringArray" },
+        "candidate_term": { "$ref": "#/$defs/nullableString" },
+        "industry_wording": { "$ref": "#/$defs/nullableString" },
+        "relationship": { "enum": ["EXACT", "SUPPORTED_SYNONYM", "CONTEXTUAL_ONLY", "NOT_EQUIVALENT"] },
+        "evidence_item_ids": { "$ref": "#/$defs/identifierArray" },
+        "approved_for_revision": { "type": "boolean" },
+        "rationale": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "qualificationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirement_id", "classification", "evidence_item_ids", "evidence_excerpt", "evidence_location", "confidence", "explanation", "evaluated_resume_source_id", "evaluated_resume_hash"],
+      "properties": {
+        "requirement_id": { "$ref": "#/$defs/identifier" },
+        "classification": { "enum": ["MET", "PARTIAL", "NOT_FOUND"] },
+        "evidence_item_ids": { "$ref": "#/$defs/identifierArray" },
+        "evidence_excerpt": { "$ref": "#/$defs/nullableString" },
+        "evidence_location": { "$ref": "#/$defs/nullableString" },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "explanation": { "$ref": "#/$defs/nonEmptyString" },
+        "evaluated_resume_source_id": { "$ref": "#/$defs/identifier" },
+        "evaluated_resume_hash": { "$ref": "#/$defs/hash" }
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gap_id", "requirement_id", "category", "resolution_status", "evidence_item_ids", "explanation", "recommended_action"],
+      "properties": {
+        "gap_id": { "$ref": "#/$defs/identifier" },
+        "requirement_id": { "$ref": "#/$defs/identifier" },
+        "category": { "enum": ["TRUE_GAP", "RESUME_GAP", "POSITIONING_GAP"] },
+        "resolution_status": { "enum": ["OPEN", "RESOLVED"] },
+        "evidence_item_ids": { "$ref": "#/$defs/identifierArray" },
+        "explanation": { "$ref": "#/$defs/nonEmptyString" },
+        "recommended_action": { "enum": ["keep", "clarify", "strengthen_wording", "move_higher", "add_if_true", "leave_as_gap"] }
+      }
+    },
+    "gateResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gate_id", "name", "enabled", "status", "blocking", "findings"],
+      "properties": {
+        "gate_id": { "enum": ["GATE_0", "GATE_1", "GATE_2", "GATE_3", "GATE_4", "GATE_5", "GATE_6", "GATE_7", "GATE_8"] },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "enabled": { "type": "boolean" },
+        "status": { "enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL", "NOT_RUN"] },
+        "blocking": { "type": "boolean" },
+        "findings": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "evaluatorRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evaluator_run_id", "gate_id", "status", "attempt_count", "retry_count", "schema_repair_attempted", "schema_repair_count", "completed_artifacts_preserved", "failure_type", "failure_reason"],
+      "properties": {
+        "evaluator_run_id": { "$ref": "#/$defs/identifier" },
+        "gate_id": { "enum": ["GATE_0", "GATE_2", "GATE_3", "GATE_4", "GATE_5", "GATE_6", "GATE_7", "GATE_8"] },
+        "status": { "enum": ["SUCCEEDED", "FAILED", "INCOMPLETE"] },
+        "attempt_count": { "type": "integer", "minimum": 1 },
+        "retry_count": { "type": "integer", "minimum": 0 },
+        "schema_repair_attempted": { "type": "boolean" },
+        "schema_repair_count": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "completed_artifacts_preserved": { "type": "boolean" },
+        "failure_type": { "enum": ["NONE", "MODEL_CALL", "STRUCTURED_OUTPUT", "OTHER"] },
+        "failure_reason": { "$ref": "#/$defs/nullableString" }
+      }
+    },
+    "statusCount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["met", "partial", "not_found", "total"],
+      "properties": {
+        "met": { "type": "integer", "minimum": 0 },
+        "partial": { "type": "integer", "minimum": 0 },
+        "not_found": { "type": "integer", "minimum": 0 },
+        "total": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_qualifications", "preferred_qualifications", "evidence_strength", "critical_missing_requirement_ids", "overall_match_percentage"],
+      "properties": {
+        "required_qualifications": { "$ref": "#/$defs/statusCount" },
+        "preferred_qualifications": { "$ref": "#/$defs/statusCount" },
+        "evidence_strength": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["level_3_4", "level_2", "level_0_1", "total"],
+          "properties": {
+            "level_3_4": { "type": "integer", "minimum": 0 },
+            "level_2": { "type": "integer", "minimum": 0 },
+            "level_0_1": { "type": "integer", "minimum": 0 },
+            "total": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "critical_missing_requirement_ids": { "$ref": "#/$defs/identifierArray" },
+        "overall_match_percentage": { "type": "null" }
+      }
+    },
+    "recoveryMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_name", "contact_information", "section_headings", "employers", "job_titles", "dates", "education", "skills", "publications"],
+      "properties": {
+        "candidate_name": { "enum": ["RECOVERED", "MISSING", "NOT_APPLICABLE"] },
+        "contact_information": { "enum": ["RECOVERED", "MISSING", "NOT_APPLICABLE"] },
+        "section_headings": { "enum": ["RECOVERED", "MISSING", "NOT_APPLICABLE"] },
+        "employers": { "enum": ["RECOVERED", "MISSING", "NOT_APPLICABLE"] },
+        "job_titles": { "enum": ["RECOVERED", "MISSING", "NOT_APPLICABLE"] },
+        "dates": { "enum": ["RECOVERED", "MISSING", "NOT_APPLICABLE"] },
+        "education": { "enum": ["RECOVERED", "MISSING", "NOT_APPLICABLE"] },
+        "skills": { "enum": ["RECOVERED", "MISSING", "NOT_APPLICABLE"] },
+        "publications": { "enum": ["RECOVERED", "MISSING", "NOT_APPLICABLE"] }
+      }
+    },
+    "atsAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "resume_source_id", "resume_hash", "actual_extraction_performed", "logical_order_compared", "extraction_method", "ocr_used", "ocr_reason", "recovery", "chronology", "reading_order", "critical_text_lost", "anomalies"],
+      "properties": {
+        "status": { "enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"] },
+        "resume_source_id": { "$ref": "#/$defs/identifier" },
+        "resume_hash": { "$ref": "#/$defs/hash" },
+        "actual_extraction_performed": { "type": "boolean" },
+        "logical_order_compared": { "type": "boolean" },
+        "extraction_method": { "enum": ["DIGITAL_TEXT", "DOCX_TEXT", "OCR", "TEXT_INPUT"] },
+        "ocr_used": { "type": "boolean" },
+        "ocr_reason": { "$ref": "#/$defs/nullableString" },
+        "recovery": { "$ref": "#/$defs/recoveryMap" },
+        "chronology": { "enum": ["PASS", "WARN", "FAIL"] },
+        "reading_order": { "enum": ["PASS", "WARN", "FAIL"] },
+        "critical_text_lost": { "$ref": "#/$defs/stringArray" },
+        "anomalies": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "aiRecruiterAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evaluated_resume_source_id", "evaluated_resume_hash", "hidden_context_used", "qualification_requirement_ids"],
+      "properties": {
+        "status": { "enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"] },
+        "evaluated_resume_source_id": { "$ref": "#/$defs/identifier" },
+        "evaluated_resume_hash": { "$ref": "#/$defs/hash" },
+        "hidden_context_used": { "const": false },
+        "qualification_requirement_ids": { "$ref": "#/$defs/identifierArray" }
+      }
+    },
+    "readerAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evaluated_resume_source_id", "evaluated_resume_hash", "rating", "target_role_recovered", "seniority_recovered", "top_capabilities", "target_connection_obvious", "wrong_identity_signal", "relevant_terms_visible_early", "easy_to_skim", "evidence"],
+      "properties": {
+        "status": { "enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"] },
+        "evaluated_resume_source_id": { "$ref": "#/$defs/identifier" },
+        "evaluated_resume_hash": { "$ref": "#/$defs/hash" },
+        "rating": { "enum": ["STRONG", "ACCEPTABLE", "WEAK"] },
+        "target_role_recovered": { "type": "boolean" },
+        "seniority_recovered": { "type": "boolean" },
+        "top_capabilities": { "$ref": "#/$defs/stringArray" },
+        "target_connection_obvious": { "type": "boolean" },
+        "wrong_identity_signal": { "type": "boolean" },
+        "relevant_terms_visible_early": { "type": "boolean" },
+        "easy_to_skim": { "type": "boolean" },
+        "evidence": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "topThirdAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evaluated_resume_source_id", "evaluated_resume_hash", "rating", "target_role_represented", "scientific_identity", "top_domains", "evidence"],
+      "properties": {
+        "status": { "enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"] },
+        "evaluated_resume_source_id": { "$ref": "#/$defs/identifier" },
+        "evaluated_resume_hash": { "$ref": "#/$defs/hash" },
+        "rating": { "enum": ["STRONG", "ACCEPTABLE", "WEAK"] },
+        "target_role_represented": { "type": "boolean" },
+        "scientific_identity": { "$ref": "#/$defs/nonEmptyString" },
+        "top_domains": { "$ref": "#/$defs/stringArray" },
+        "evidence": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "roleDimensionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dimension", "applicability", "rating", "evidence"],
+      "properties": {
+        "dimension": {
+          "enum": ["depth", "specificity", "mechanistic_thinking", "ownership", "development", "rigor", "innovation", "translation", "collaboration", "independence", "leadership", "output_relevance", "claim_credibility"]
+        },
+        "applicability": { "enum": ["APPLICABLE", "NOT_APPLICABLE"] },
+        "rating": {
+          "anyOf": [
+            { "enum": ["STRONG", "ACCEPTABLE", "WEAK"] },
+            { "type": "null" }
+          ]
+        },
+        "evidence": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "hiringManagerAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evaluated_resume_source_id", "evaluated_resume_hash", "rating", "target_context", "technical_depth", "ownership_clear", "claims_credible", "generic_after_optimization", "dimension_results", "evidence"],
+      "properties": {
+        "status": { "enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"] },
+        "evaluated_resume_source_id": { "$ref": "#/$defs/identifier" },
+        "evaluated_resume_hash": { "$ref": "#/$defs/hash" },
+        "rating": { "enum": ["STRONG", "ACCEPTABLE", "WEAK"] },
+        "target_context": { "enum": ["SCIENTIFIC_TECHNICAL", "NON_RESEARCH"] },
+        "technical_depth": {
+          "anyOf": [
+            { "enum": ["STRONG", "ACCEPTABLE", "WEAK"] },
+            { "type": "null" }
+          ]
+        },
+        "ownership_clear": { "type": "boolean" },
+        "claims_credible": { "type": "boolean" },
+        "generic_after_optimization": { "type": "boolean" },
+        "dimension_results": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/roleDimensionResult" }
+        },
+        "evidence": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "integrityAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evaluated_resume_source_id", "evaluated_resume_hash", "unsupported_claim_ids", "inflated_ownership_claim_ids", "inflated_seniority_claim_ids", "invented_metric_claim_ids", "unsupported_direct_experience_claim_ids", "semantic_drift_claim_ids", "caveat_loss_claim_ids", "keyword_stuffing", "jd_mimicry_concerns", "duplicated_concept_findings", "related_vs_direct_ambiguities"],
+      "properties": {
+        "status": { "enum": ["PASS", "PASS_WITH_WARNINGS", "FAIL"] },
+        "evaluated_resume_source_id": { "$ref": "#/$defs/identifier" },
+        "evaluated_resume_hash": { "$ref": "#/$defs/hash" },
+        "unsupported_claim_ids": { "$ref": "#/$defs/identifierArray" },
+        "inflated_ownership_claim_ids": { "$ref": "#/$defs/identifierArray" },
+        "inflated_seniority_claim_ids": { "$ref": "#/$defs/identifierArray" },
+        "invented_metric_claim_ids": { "$ref": "#/$defs/identifierArray" },
+        "unsupported_direct_experience_claim_ids": { "$ref": "#/$defs/identifierArray" },
+        "semantic_drift_claim_ids": { "$ref": "#/$defs/identifierArray" },
+        "caveat_loss_claim_ids": { "$ref": "#/$defs/identifierArray" },
+        "keyword_stuffing": { "type": "boolean" },
+        "jd_mimicry_concerns": { "$ref": "#/$defs/stringArray" },
+        "duplicated_concept_findings": { "$ref": "#/$defs/stringArray" },
+        "related_vs_direct_ambiguities": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "auditBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ats_parse", "ai_recruiter", "human_recruiter", "top_third", "hiring_manager", "integrity"],
+      "properties": {
+        "ats_parse": { "anyOf": [{ "$ref": "#/$defs/atsAudit" }, { "type": "null" }] },
+        "ai_recruiter": { "anyOf": [{ "$ref": "#/$defs/aiRecruiterAudit" }, { "type": "null" }] },
+        "human_recruiter": { "anyOf": [{ "$ref": "#/$defs/readerAudit" }, { "type": "null" }] },
+        "top_third": { "anyOf": [{ "$ref": "#/$defs/topThirdAudit" }, { "type": "null" }] },
+        "hiring_manager": { "anyOf": [{ "$ref": "#/$defs/hiringManagerAudit" }, { "type": "null" }] },
+        "integrity": { "anyOf": [{ "$ref": "#/$defs/integrityAudit" }, { "type": "null" }] }
+      }
+    },
+    "claimProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resume_claim_id", "requirement_ids", "resume_source_id", "resume_hash", "resume_location", "resume_excerpt", "candidate_fact_ids", "evidence_item_ids", "support_status", "represents_requirement_as_met", "revision_relationship", "baseline_resume_source_id", "baseline_resume_hash", "baseline_resume_excerpt"],
+      "properties": {
+        "resume_claim_id": { "$ref": "#/$defs/identifier" },
+        "requirement_ids": { "$ref": "#/$defs/identifierArray" },
+        "resume_source_id": { "$ref": "#/$defs/identifier" },
+        "resume_hash": { "$ref": "#/$defs/hash" },
+        "resume_location": { "$ref": "#/$defs/nonEmptyString" },
+        "resume_excerpt": { "$ref": "#/$defs/nonEmptyString" },
+        "candidate_fact_ids": { "$ref": "#/$defs/identifierArray" },
+        "evidence_item_ids": { "$ref": "#/$defs/identifierArray" },
+        "support_status": { "enum": ["SUPPORTED", "NEEDS_CONFIRMATION", "BLOCKED"] },
+        "represents_requirement_as_met": { "type": "boolean" },
+        "revision_relationship": { "enum": ["UNCHANGED", "INTRODUCED", "STRENGTHENED"] },
+        "baseline_resume_source_id": { "$ref": "#/$defs/nullableIdentifier" },
+        "baseline_resume_hash": { "$ref": "#/$defs/nullableHash" },
+        "baseline_resume_excerpt": { "$ref": "#/$defs/nullableString" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "revision_relationship": { "const": "INTRODUCED" } },
+            "required": ["revision_relationship"]
+          },
+          "then": {
+            "properties": {
+              "baseline_resume_source_id": { "type": "null" },
+              "baseline_resume_hash": { "type": "null" },
+              "baseline_resume_excerpt": { "type": "null" }
+            }
+          },
+          "else": {
+            "properties": {
+              "baseline_resume_source_id": { "$ref": "#/$defs/identifier" },
+              "baseline_resume_hash": { "$ref": "#/$defs/hash" },
+              "baseline_resume_excerpt": { "$ref": "#/$defs/nonEmptyString" }
+            }
+          }
+        }
+      ]
+    },
+    "removedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["removal_id", "requirement_ids", "baseline_resume_source_id", "baseline_resume_hash", "baseline_excerpt", "reason", "authorization_verified"],
+      "properties": {
+        "removal_id": { "$ref": "#/$defs/identifier" },
+        "requirement_ids": { "$ref": "#/$defs/identifierArray" },
+        "baseline_resume_source_id": { "$ref": "#/$defs/identifier" },
+        "baseline_resume_hash": { "$ref": "#/$defs/hash" },
+        "baseline_excerpt": { "$ref": "#/$defs/nonEmptyString" },
+        "reason": { "$ref": "#/$defs/nonEmptyString" },
+        "authorization_verified": { "type": "boolean" }
+      }
+    },
+    "outputArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_type", "relative_path", "format", "sha256", "status"],
+      "properties": {
+        "artifact_type": {
+          "enum": ["FINAL_RESUME", "MARKDOWN_AUDIT_PACKAGE", "DASHBOARD", "JD_ANALYSIS", "REQUIREMENT_EVIDENCE_MATRIX", "AI_RECRUITER_AUDIT", "ATS_PARSE_AUDIT", "HUMAN_RECRUITER_AUDIT", "HIRING_MANAGER_AUDIT", "INTEGRITY_AUDIT", "FINAL_GAP_REPORT", "REQUIREMENTS_JSON", "EVIDENCE_MATRIX_JSON", "AUDIT_SUMMARY_JSON"]
+        },
+        "relative_path": { "$ref": "#/$defs/nonEmptyString" },
+        "format": { "enum": ["DOCX", "PDF", "TXT", "MD", "JSON", "OTHER"] },
+        "sha256": { "$ref": "#/$defs/nullableHash" },
+        "status": { "enum": ["CREATED", "INCOMPLETE", "NOT_CREATED"] }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "artifact_type": {
+                "enum": ["MARKDOWN_AUDIT_PACKAGE", "DASHBOARD"]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "format": { "const": "MD" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "artifact_type": {
+                "enum": ["REQUIREMENTS_JSON", "EVIDENCE_MATRIX_JSON", "AUDIT_SUMMARY_JSON"]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "format": { "const": "JSON" }
+            }
+          }
+        }
+      ]
+    },
+    "logging": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "summary_only", "resume_content_logged", "candidate_evidence_logged", "local_paths_logged", "event_codes"],
+      "properties": {
+        "level": { "enum": ["INFO", "WARNING", "ERROR"] },
+        "summary_only": { "const": true },
+        "resume_content_logged": { "const": false },
+        "candidate_evidence_logged": { "const": false },
+        "local_paths_logged": { "const": false },
+        "event_codes": { "$ref": "#/$defs/stringArray" }
+      }
+    }
+  }
+}

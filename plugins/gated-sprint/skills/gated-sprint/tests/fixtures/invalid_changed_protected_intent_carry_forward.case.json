@@ -1,0 +1,14 @@
+{
+  "description": "An unchanged source carry-forward cannot silently mutate the decision's protected intent while retaining its binding hash.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {
+      "op": "replace",
+      "path": "/decisions/0/protected_intent",
+      "value": "Silently changed protected intent that was never reapproved."
+    }
+  ],
+  "expected_check_ids": ["STATE.SOURCE_BINDING"]
+}

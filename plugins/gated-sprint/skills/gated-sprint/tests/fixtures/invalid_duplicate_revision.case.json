@@ -1,0 +1,12 @@
+{
+  "description": "Decision identity is unique on the stable ID and proposal revision pair.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "copy", "from": "/decisions/0", "path": "/decisions/-"}
+  ],
+  "expected_check_ids": ["STATE.DECISION_UNIQUE"]
+}

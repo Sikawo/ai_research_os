@@ -1,0 +1,12 @@
+{
+  "description": "A carried-forward approval requires a matching SOURCE_REVALIDATED event.",
+  "state": "valid_ready_to_implement_revalidated.json",
+  "baseline": "revalidated_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "ready-to-implement",
+  "state_mutations": [
+    {"op": "replace", "path": "/decisions/0/source_bindings/1/event_id", "value": "EVT-MISSING"}
+  ],
+  "expected_check_ids": ["STATE.SOURCE_REVALIDATION"]
+}

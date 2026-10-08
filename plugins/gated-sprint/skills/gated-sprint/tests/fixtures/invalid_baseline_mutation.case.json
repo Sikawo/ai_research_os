@@ -1,0 +1,12 @@
+{
+  "description": "A diagnostic run must preserve the immutable source baseline.",
+  "state": "valid_diagnostic_state.json",
+  "baseline": "diagnostic_baseline.json",
+  "candidate": null,
+  "diff_map": null,
+  "check": "diagnostic",
+  "baseline_mutations": [
+    {"op": "replace", "path": "/sources/0/observed_after_byte_hash", "value": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"}
+  ],
+  "expected_check_ids": ["STATE.BASELINE_IMMUTABLE"]
+}

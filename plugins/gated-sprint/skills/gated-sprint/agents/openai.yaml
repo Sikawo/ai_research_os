@@ -1,0 +1,6 @@
+interface:
+  display_name: "GatedSprint"
+  short_description: "Gated or self-driving application and resume review"
+  default_prompt: "Use $gated-sprint to diagnose this scientific application and stop at the approval gate."
+policy:
+  allow_implicit_invocation: true

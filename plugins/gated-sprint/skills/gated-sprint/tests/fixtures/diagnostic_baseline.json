@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "RUN-DIAGNOSTIC",
+  "sources": [
+    {
+      "source_id": "SRC-DRAFT",
+      "path": "fixtures/current-draft.docx",
+      "byte_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "extracted_text_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "user_designated_role": "CURRENT_DRAFT",
+      "content_authority": true,
+      "layout_authority": false,
+      "editable_target": true,
+      "equivalence_status": "NOT_APPLICABLE",
+      "version_designation": "EXPLICIT_CURRENT",
+      "observed_after_byte_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "observed_after_text_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ]
+}

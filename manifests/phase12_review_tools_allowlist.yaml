@@ -1,0 +1,946 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase12a-gated-sprint-public-plugin",
+  "status": "ported_offline",
+  "deny_by_default": true,
+  "license": "Apache-2.0",
+  "license_authority": "user-owned generic implementation approved for Apache-2.0 publication on 2026-10-07",
+  "target": {
+    "repository": "Sikawo/ai_research_os",
+    "base_commit": "e09dd53414d6c1bab9c70e8294808e51af3c70ba"
+  },
+  "sources": {
+    "gated_sprint_v2_reviewed_package": {
+      "repository": "Sikawo/personal_research_brain",
+      "commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "package_root": "Application_Review_OS/gated_sprint/v2",
+      "access_class": "explicitly_authorized_user_owned_generic_implementation",
+      "source_package_hash": "be575a09f2d0961598daf4edc0238b7192f87651978e750e2cdbeb5254fd2a29",
+      "destination_package_hash": "3463283f18a5f21d4d5a787136fb212c0de687fe2f90ecdb4bc6ddf2bd1b2535"
+    }
+  },
+  "rules": {
+    "exact_paths_only": true,
+    "synthetic_fixtures_only": true,
+    "copy_git_history": false,
+    "copy_private_values": false,
+    "copy_runtime_state": false,
+    "copy_connector_bindings": false,
+    "copy_scheduled_tasks": false,
+    "live_cutover": false
+  },
+  "expected_transfer_count": 89,
+  "expected_target_path_count": 97,
+  "integration_paths": [
+    ".agents/plugins/marketplace.json",
+    ".github/workflows/gated-sprint-tests.yml",
+    "README.md",
+    "Scripts/validate_repository_safety.py",
+    "manifests/phase12_review_tools_allowlist.yaml",
+    "plugins/gated-sprint/.codex-plugin/plugin.json",
+    "tests/test_phase12_review_tools.py",
+    "tests/test_repository_safety.py"
+  ],
+  "allowed_target_paths": [
+    ".agents/plugins/marketplace.json",
+    ".github/workflows/gated-sprint-tests.yml",
+    "README.md",
+    "Scripts/validate_repository_safety.py",
+    "manifests/phase12_review_tools_allowlist.yaml",
+    "plugins/gated-sprint/.codex-plugin/plugin.json",
+    "plugins/gated-sprint/skills/gated-sprint/README.md",
+    "plugins/gated-sprint/skills/gated-sprint/SKILL.md",
+    "plugins/gated-sprint/skills/gated-sprint/agents/openai.yaml",
+    "plugins/gated-sprint/skills/gated-sprint/evals/cases.json",
+    "plugins/gated-sprint/skills/gated-sprint/evals/fixtures/file-versioning-scenarios.json",
+    "plugins/gated-sprint/skills/gated-sprint/evals/fixtures/scenarios.json",
+    "plugins/gated-sprint/skills/gated-sprint/references/core-invariants.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/decision-state.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/deliverable-routing.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/diagnostic-phase.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/figures-and-layout.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/file-versioning.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/finalization.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/industry-resume.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/negotiation-and-implementation.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/retrospective.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/review-rubrics.md",
+    "plugins/gated-sprint/skills/gated-sprint/references/sprint-mode.md",
+    "plugins/gated-sprint/skills/gated-sprint/schemas/eval-case.schema.json",
+    "plugins/gated-sprint/skills/gated-sprint/schemas/gatedsprint-state.schema.json",
+    "plugins/gated-sprint/skills/gated-sprint/schemas/industry-resume-analysis.schema.json",
+    "plugins/gated-sprint/skills/gated-sprint/scripts/build_skill_manifest.py",
+    "plugins/gated-sprint/skills/gated-sprint/scripts/run_gatedsprint_evals.py",
+    "plugins/gated-sprint/skills/gated-sprint/scripts/validate_gatedsprint_state.py",
+    "plugins/gated-sprint/skills/gated-sprint/scripts/validate_industry_resume_analysis.py",
+    "plugins/gated-sprint/skills/gated-sprint/skill-package-manifest.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/approved-source.txt",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/diagnostic_baseline.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/outputs/final-resume.txt",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/outputs/industry-resume-audit.md",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/sources/baseline-resume.txt",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/sources/candidate-evidence-profile.txt",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/sources/job-description.txt",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_artifact_hash_binding.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_assistant_self_authorization.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_baseline_mutation.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_blocked_authorized.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_changed_anchor_carry_forward.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_changed_protected_intent_carry_forward.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_collapsed_confirmation_approval.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_conflict_resolution_orientation.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_cross_artifact_decision.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_dependency.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_dependency_cycle.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_diagnostic_authority_opt_out.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_diff_authorization.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_docx_layout_authority.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_duplicate_revision.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_duplicate_source_id.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_empty_candidate_manifest.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_generic_implementation_before_creation.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_generic_verification_after_final_verification.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_historical_source_attestation.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_late_edit.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_later_fail_same_timestamp.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_layout_verification.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_local_fix_category.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_local_fix_mapping.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_local_fix_reverse_mapping.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_mandatory_gate_not_applicable.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_needs_confirmation_approved.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_non_object_diff_map.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_orphaned_supersession.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_pdf_layout_opt_out.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_post_verification_attestation.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_source_fingerprint.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_source_impact_obsolete.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_source_impact_revalidation.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_source_revalidation.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_stale_source_event_after_revalidation.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_transition.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_unauthorized_implementation_result.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_unresolved_conflict.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/non_object_diff_map.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/release_baseline.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/release_candidate.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/release_diff_map.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/revalidated_baseline.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/submission-final.txt",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_blocked_diagnostic.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_diagnostic_state.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_ready_to_implement_revalidated.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_ready_to_release.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_release_with_superseded_history.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_unresolved_content_authority.case.json",
+    "plugins/gated-sprint/skills/gated-sprint/tests/test_eval_harness.py",
+    "plugins/gated-sprint/skills/gated-sprint/tests/test_industry_resume_validation.py",
+    "plugins/gated-sprint/skills/gated-sprint/tests/test_state_validation.py",
+    "tests/test_phase12_review_tools.py",
+    "tests/test_repository_safety.py"
+  ],
+  "transfers": [
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/README.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/README.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/SKILL.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/SKILL.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/agents/openai.yaml",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/agents/openai.yaml",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/evals/cases.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/evals/cases.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/evals/fixtures/file-versioning-scenarios.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/evals/fixtures/file-versioning-scenarios.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/evals/fixtures/scenarios.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/evals/fixtures/scenarios.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/core-invariants.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/core-invariants.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/decision-state.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/decision-state.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/deliverable-routing.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/deliverable-routing.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/diagnostic-phase.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/diagnostic-phase.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/figures-and-layout.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/figures-and-layout.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/file-versioning.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/file-versioning.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/finalization.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/finalization.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/industry-resume.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/industry-resume.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/negotiation-and-implementation.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/negotiation-and-implementation.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/retrospective.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/retrospective.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/review-rubrics.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/review-rubrics.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/references/sprint-mode.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/references/sprint-mode.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/schemas/eval-case.schema.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/schemas/eval-case.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/schemas/gatedsprint-state.schema.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/schemas/gatedsprint-state.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/schemas/industry-resume-analysis.schema.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/schemas/industry-resume-analysis.schema.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/scripts/build_skill_manifest.py",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/scripts/build_skill_manifest.py",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/scripts/run_gatedsprint_evals.py",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/scripts/run_gatedsprint_evals.py",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/scripts/validate_gatedsprint_state.py",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/scripts/validate_gatedsprint_state.py",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/scripts/validate_industry_resume_analysis.py",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/scripts/validate_industry_resume_analysis.py",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/approved-source.txt",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/approved-source.txt",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/diagnostic_baseline.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/diagnostic_baseline.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/industry-resume-e2e-files/outputs/final-resume.txt",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/outputs/final-resume.txt",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/industry-resume-e2e-files/outputs/industry-resume-audit.md",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/outputs/industry-resume-audit.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/industry-resume-e2e-files/sources/baseline-resume.txt",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/sources/baseline-resume.txt",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/industry-resume-e2e-files/sources/candidate-evidence-profile.txt",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/sources/candidate-evidence-profile.txt",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/industry-resume-e2e-files/sources/job-description.txt",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e-files/sources/job-description.txt",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/industry-resume-e2e.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/industry-resume-e2e.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_artifact_hash_binding.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_artifact_hash_binding.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_assistant_self_authorization.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_assistant_self_authorization.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_baseline_mutation.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_baseline_mutation.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_blocked_authorized.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_blocked_authorized.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_changed_anchor_carry_forward.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_changed_anchor_carry_forward.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_changed_protected_intent_carry_forward.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_changed_protected_intent_carry_forward.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_collapsed_confirmation_approval.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_collapsed_confirmation_approval.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_conflict_resolution_orientation.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_conflict_resolution_orientation.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_cross_artifact_decision.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_cross_artifact_decision.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_dependency.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_dependency.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_dependency_cycle.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_dependency_cycle.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_diagnostic_authority_opt_out.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_diagnostic_authority_opt_out.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_diff_authorization.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_diff_authorization.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_docx_layout_authority.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_docx_layout_authority.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_duplicate_revision.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_duplicate_revision.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_duplicate_source_id.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_duplicate_source_id.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_empty_candidate_manifest.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_empty_candidate_manifest.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_generic_implementation_before_creation.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_generic_implementation_before_creation.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_generic_verification_after_final_verification.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_generic_verification_after_final_verification.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_historical_source_attestation.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_historical_source_attestation.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_late_edit.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_late_edit.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_later_fail_same_timestamp.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_later_fail_same_timestamp.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_layout_verification.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_layout_verification.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_local_fix_category.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_local_fix_category.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_local_fix_mapping.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_local_fix_mapping.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_local_fix_reverse_mapping.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_local_fix_reverse_mapping.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_mandatory_gate_not_applicable.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_mandatory_gate_not_applicable.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_needs_confirmation_approved.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_needs_confirmation_approved.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_non_object_diff_map.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_non_object_diff_map.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_orphaned_supersession.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_orphaned_supersession.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_pdf_layout_opt_out.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_pdf_layout_opt_out.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_post_verification_attestation.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_post_verification_attestation.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_source_fingerprint.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_source_fingerprint.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_source_impact_obsolete.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_source_impact_obsolete.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_source_impact_revalidation.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_source_impact_revalidation.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_source_revalidation.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_source_revalidation.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_stale_source_event_after_revalidation.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_stale_source_event_after_revalidation.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_transition.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_transition.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_unauthorized_implementation_result.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_unauthorized_implementation_result.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/invalid_unresolved_conflict.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/invalid_unresolved_conflict.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/non_object_diff_map.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/non_object_diff_map.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/release_baseline.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/release_baseline.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/release_candidate.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/release_candidate.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/release_diff_map.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/release_diff_map.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/revalidated_baseline.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/revalidated_baseline.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/submission-final.txt",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/submission-final.txt",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/valid_blocked_diagnostic.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_blocked_diagnostic.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/valid_diagnostic_state.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_diagnostic_state.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/valid_ready_to_implement_revalidated.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_ready_to_implement_revalidated.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/valid_ready_to_release.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_ready_to_release.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/valid_release_with_superseded_history.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_release_with_superseded_history.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/fixtures/valid_unresolved_content_authority.case.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/fixtures/valid_unresolved_content_authority.case.json",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/test_eval_harness.py",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/test_eval_harness.py",
+      "transfer_mode": "exact_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/test_industry_resume_validation.py",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/test_industry_resume_validation.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/tests/test_state_validation.py",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/tests/test_state_validation.py",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12A",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "gated_sprint_v2_reviewed_package",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/gated_sprint/v2/skill-package-manifest.json",
+      "destination_path": "plugins/gated-sprint/skills/gated-sprint/skill-package-manifest.json",
+      "transfer_mode": "regenerated_manifest",
+      "phase": "12A",
+      "status": "ported_offline"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "description": "Diagnostic validation may proceed with explicit NOT_ASSESSABLE authority while implementation remains blocked.",
+  "state": "valid_diagnostic_state.json",
+  "baseline": "diagnostic_baseline.json",
+  "check": "diagnostic",
+  "state_mutations": [
+    {"op": "replace", "path": "/sources/0/content_authority", "value": false},
+    {"op": "replace", "path": "/sources/0/equivalence_status", "value": "UNRESOLVED"},
+    {"op": "replace", "path": "/sources/0/version_designation", "value": "UNRESOLVED"},
+    {"op": "replace", "path": "/gate_applicability/1/applicability", "value": "NOT_ASSESSABLE"},
+    {"op": "replace", "path": "/gate_applicability/1/reason", "value": "The user has not designated which supplied version controls content."},
+    {"op": "replace", "path": "/gate_applicability/2/applicability", "value": "NOT_ASSESSABLE"},
+    {"op": "replace", "path": "/gate_applicability/2/reason", "value": "Opening-surface motivation cannot be finalized until content authority is resolved."},
+    {"op": "replace", "path": "/gate_applicability/3/applicability", "value": "NOT_ASSESSABLE"},
+    {"op": "replace", "path": "/gate_applicability/3/reason", "value": "Logical simplicity cannot be finalized until content authority is resolved."},
+    {"op": "remove", "path": "/attestations/3"},
+    {"op": "remove", "path": "/attestations/2"},
+    {"op": "remove", "path": "/attestations/1"}
+  ],
+  "baseline_mutations": [
+    {"op": "replace", "path": "/sources/0/content_authority", "value": false},
+    {"op": "replace", "path": "/sources/0/equivalence_status", "value": "UNRESOLVED"},
+    {"op": "replace", "path": "/sources/0/version_designation", "value": "UNRESOLVED"}
+  ],
+  "expected_warning_ids": ["STATE.ATTESTATION"]
+}
