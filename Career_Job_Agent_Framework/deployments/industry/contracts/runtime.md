@@ -40,4 +40,27 @@ Run once each morning in the user's local time zone.
 - Provisional employer stability cannot be confirmed: keep it provisional and report the uncertainty.
 - Missing evidence: ask one concise question; never infer it.
 - Closed role: stop document generation and mark closed.
-- Output-adapter failure: report the error and retry on the next run.
+- Output-adapter failure: record that logical action independently and do not
+  claim delivery without confirmed connector success. If connector dispatch
+  may have occurred or reachability is unknown, classify the result as
+  `uncertain` and reconcile it before retrying; never blindly retry it on the
+  next run. Retry without reconciliation only when the failure is confirmed
+  pre-dispatch and explicitly marked retryable.
+
+## External-write sequence and evidence
+
+1. Commit canonical state and the report body through their configured
+   adapters, then perform the available readback checks.
+2. Attempt each configured notification or report-location action separately
+   and in deployment order; do not collapse multiple writes into one opaque
+   result.
+3. Before an account-backed write, require the host to resolve exactly one
+   account. Record only a redacted selector and whether selection was unique;
+   never store connector link IDs or credentials in the public framework.
+4. For every action, record run ID, logical action, destination type,
+   attempted state, connector reachability, outcome, sanitized failure class
+   and code, retryability, result reference, readback status, and idempotency
+   key when supported.
+5. Continue to later independent outputs after a channel-specific failure,
+   while reporting that failure truthfully. A successful channel does not turn
+   another channel's failed or uncertain result into success.
