@@ -75,3 +75,27 @@ Record Apply, Maybe, Skip, interview, rejection, location rejection, salary reje
 ## Error handling
 
 Continue past one employer or data-source failure. Mark missing information explicitly. Do not invent active status, salary, commute time, rent, school quality, tuition, childcare cost, or candidate experience. A transient reverification failure excludes a role only from that run's current-active snapshot; it does not by itself erase prior durable status.
+
+### External-delivery observability
+
+Treat every external write as a separate logical action. The host records the
+run ID and timestamp, logical action, destination type, redacted account
+selector when available, whether account selection was unique, whether the
+action was attempted, whether the connector was reached (`yes`, `no`, or
+`unknown`), outcome (`success`, `failure`, or `uncertain`), sanitized failure
+class and error code, retryability, result reference, readback status, and an
+idempotency key when supported. Never persist credentials, connector link IDs,
+full email bodies, or other sensitive payloads in delivery diagnostics.
+
+Report an output as delivered only after the connector returns confirmed
+success. A blocked or missing result is not success. If dispatch may have
+occurred, or connector reachability is unknown, record the outcome as
+`uncertain` and reconcile through a safe readback or status lookup before any
+retry. Blind retry is allowed only for a confirmed pre-dispatch failure marked
+retryable; otherwise require reconciliation or explicit human review.
+
+Complete and verify canonical state and report-body persistence before
+notification actions. Execute configured notification adapters one at a time
+and record each result independently so one delivery failure does not hide or
+rewrite another result. Delivery failures must not corrupt canonical state or
+be reported as successful merely because another channel succeeded.

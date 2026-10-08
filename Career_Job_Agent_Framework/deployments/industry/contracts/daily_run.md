@@ -94,3 +94,18 @@ Ask only about:
 - If evidence is missing, ask or mark the requirement as a gap; never fabricate it.
 - If commute, rent, childcare, school, tuition, or tax data are unavailable, label the estimate incomplete instead of substituting unsupported values.
 - If document generation fails, preserve the completed fit report, QOL report, and question packet and report the failure clearly.
+- Treat Drive report persistence, canonical-state persistence, report-location
+  actions, Gmail delivery, Slack delivery, and any other external write as
+  separate logical actions. Record and evaluate each result independently.
+- Never report an output as delivered unless the connector returns confirmed
+  success. A `safety_checks` block, missing response, or unknown dispatch state
+  is `uncertain`, not success.
+- Resolve exactly one account before an account-backed write. If account
+  selection is ambiguous, do not attempt the write; record a confirmed
+  pre-dispatch failure without storing account-specific connector identifiers.
+- An uncertain or possibly dispatched write requires readback or reconciliation
+  before retry. Blind next-run retry is permitted only for a confirmed
+  pre-dispatch failure explicitly marked retryable.
+- Preserve canonical state, deduplication, run history, and report-body
+  evidence when an external delivery action fails. Continue later independent
+  outputs and expose each failure without silently suppressing it.
