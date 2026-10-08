@@ -1,0 +1,472 @@
+{
+  "schema_version": 1,
+  "purpose": "Synthetic behavioral cases for argument review; this is an answer-key case pack, not a validator report or evidence of an executed review.",
+  "extraction_instructions": [
+    "For a source-only first pass, supply only the opaque case ID, document_type, review_brief, and source. Hide coverage, expected, other cases, and review_context.",
+    "Resolve only explicit fixture references. Extract the named Proposal Text section through its Aim 3 paragraph and stop before the closing commentary paragraph beginning These aims do not overlap. Exclude the fixture title, preamble, Expected Audit Results, and all audit commentary. Do not duplicate the fixture in this case pack.",
+    "Supply review_context only after recording the source-only findings, except SC13: its explicitly pre-exposed context must accompany that case and its reviewer must report the isolation limitation.",
+    "A mixed package is a list of separately identified source documents. Review routing must be decided per document function.",
+    "Do not open an unavailable source or figure or discover replacements. These examples contain no real application, external citations, measured results, or private scientific context.",
+    "Compare the actual findings with expected only after the reviewer has returned its review. An expected result is not an observed smoke-test result."
+  ],
+  "cases": [
+    {
+      "id": "SC01",
+      "document_type": "grant_proposal",
+      "review_brief": "Assess the supplied excerpt's scientific argument. Report limits of excerpt-only coverage; other grant compliance checks remain separate.",
+      "source": {
+        "document_id": "synthetic-actuator-grant",
+        "version": "v1",
+        "fixture_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/aims_clear_but_significance_missing.md",
+        "section": "Proposal Text",
+        "stop_before": "These aims do not overlap."
+      },
+      "coverage": [1],
+      "expected": {
+        "readiness": "REVISION_REQUIRED",
+        "required_findings": [
+          "Overall significance is absent from the supplied source.",
+          "Each of the three Aims lacks an explicit reason its knowledge gain matters.",
+          "Concrete and measurable activities do not establish significance."
+        ],
+        "forbidden_findings": [
+          "READY because all three Aims are feasible or clearly worded.",
+          "A claim that the entire grant or its inaccessible sections were reviewed."
+        ]
+      }
+    },
+    {
+      "id": "SC02",
+      "document_type": "research_statement",
+      "review_brief": "Assess the supplied research-statement excerpt's scientific argument for a generic faculty search. No institution-specific requirements have been supplied.",
+      "source": {
+        "document_id": "synthetic-actuator-statement",
+        "version": "v1",
+        "fixture_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/aims_clear_but_significance_missing.md",
+        "section": "Proposal Text",
+        "stop_before": "These aims do not overlap."
+      },
+      "coverage": [1, 10],
+      "expected": {
+        "readiness": "REVISION_REQUIRED",
+        "required_findings": [
+          "Apply the shared argument gate and identify missing overall and per-Aim significance.",
+          "Keep the scientific career-document route distinct from grant scoring and grant section requirements."
+        ],
+        "forbidden_findings": [
+          "Require a grant rubric, mini-R01 format, or clinical relevance to pass this research-statement review.",
+          "Ignore significance because this is a career document."
+        ]
+      }
+    },
+    {
+      "id": "SC03",
+      "document_type": "research_statement",
+      "review_brief": "Assess the entire supplied text. No additional author explanation is available during the first pass.",
+      "source": {
+        "document_id": "synthetic-actuator-program",
+        "version": "v2",
+        "text": "Program overview, paragraph 1: This ambitious and timely program will transform our understanding of soft actuators. Its primary goal is to characterize and compensate for response-time variation across actuator surfaces and fabrication routes. Our coordinated strategy combines precise measurements, rigorous comparison, and elegant control.\n\nAim 1, paragraph 1: We will map the relationship between interface roughness and actuator response time using a controlled roughness series. This innovative work will produce a high-resolution response-time map.\n\nAim 2, paragraph 1: We will compare three fabrication routes while holding the actuator geometry fixed. This exciting comparison will reveal route-specific response-time differences.\n\nAim 3, paragraph 1: We will build a controller that compensates for response-time differences measured in standardized trials. This important development will deliver a benchmarked controller.\n\nIntegration, paragraph 1: The map, fabrication comparison, and controller address the same response-time variation from complementary measurement, manufacturing, and control perspectives."
+      },
+      "review_context": {
+        "delivery": "after_source_only_review",
+        "previous_version": "v1",
+        "previous_findings": [
+          {
+            "id": "ACT-SIG-P",
+            "criterion": "program.significance",
+            "status": "EDITED_PENDING_REVIEW",
+            "origin": "v1 source review",
+            "finding": "No reason is given why uncertainty about response-time variation matters.",
+            "resolution_condition": "The current text must identify the important uncertainty or limitation that remains without this work and explain how the program's knowledge gain addresses it."
+          },
+          {
+            "id": "ACT-SIG-AIMS",
+            "criterion": "aims.significance",
+            "status": "REPAIR_PROPOSED",
+            "origin": "v1 source review",
+            "finding": "Aim-level outputs have no explanation of why each matters.",
+            "resolution_condition": "Each of Aims 1, 2, and 3 must connect its expected knowledge gain to a stated scientific or enabling limitation."
+          }
+        ],
+        "revision_note": "The author accepted the advice and polished all paragraphs."
+      },
+      "coverage": [2, 7],
+      "expected": {
+        "readiness": "REVISION_REQUIRED",
+        "unresolved_ids": ["ACT-SIG-P", "ACT-SIG-AIMS"],
+        "required_findings": [
+          "Ambitious, timely, innovative, exciting, and important do not supply the missing significance chain.",
+          "Retain both prior significance findings after reviewing v2; accepted advice and polished wording do not satisfy either resolution condition.",
+          "Propose a concrete minimum repair connecting the stated outputs to an author-supported uncertainty or limitation; do not invent that limitation as fact."
+        ],
+        "forbidden_findings": [
+          "Treat the changed version or revision note as verified resolution.",
+          "Assign a maximum quality score to either unresolved significance criterion."
+        ]
+      }
+    },
+    {
+      "id": "SC04",
+      "document_type": "research_plan",
+      "review_brief": "Assess the full text and identify any author decisions needed before structural editing.",
+      "source": {
+        "document_id": "synthetic-shared-robotics-platform",
+        "version": "v1",
+        "text": "Program, paragraph 1: Our shared robotic test platform enables three equally central goals: minimizing warehouse delivery time, explaining how abrasive contact alters ceramic wear, and developing a mathematical taxonomy of collective motion. Each direction will occupy one third of the program.\n\nProject A, paragraph 1: Congestion makes delivery schedules unreliable. We do not know when local routing rules create network-wide queues. Controlled robot traffic will identify those conditions, enabling scheduling rules that avoid queue formation and advancing the delivery-time goal.\n\nProject B, paragraph 1: Wear models do not distinguish the contribution of repeated contact from that of surface geometry. Robotic abrasion trials will isolate these contributions, improving explanations of material degradation and advancing the ceramic-wear goal.\n\nProject C, paragraph 1: Similar group trajectories can arise from different local interaction rules. We will classify which observable trajectory features distinguish those rules, clarifying the relation between local interaction and collective order and advancing the taxonomy goal.\n\nShared resources, paragraph 1: All projects use the same robots, tracking cameras, and analysis workstation."
+      },
+      "coverage": [3],
+      "expected": {
+        "readiness": "REVISION_REQUIRED",
+        "required_findings": [
+          "A common tool platform does not establish a single shared scientific objective.",
+          "The three equally central objectives lack a stated primary goal or priority relation.",
+          "Request an author priority decision and compare a minimum explanatory repair with a materially different prioritization option, retaining Candidate 0 and tradeoffs."
+        ],
+        "forbidden_findings": [
+          "Invent that delivery optimization, ceramic wear, or collective motion is the author's real primary goal.",
+          "Order deletion of scientifically valuable directions solely because their topics differ."
+        ]
+      }
+    },
+    {
+      "id": "SC05",
+      "document_type": "research_statement",
+      "review_brief": "Assess the argument in the full text. The present program is the two named Aims; the last paragraph states its longer-term scope. No clinical impact is requested.",
+      "source": {
+        "document_id": "synthetic-elastic-network-theory",
+        "version": "v1",
+        "text": "Program, paragraph 1: Similar elastic networks can relax at different rates, limiting a general explanation of how local structure produces macroscopic dynamics. The unresolved gap is whether connectivity and boundary constraints explain distinct parts of that variation or merely substitute for one another in effective models. The primary goal is to identify which features determine relaxation laws and the conditions under which those laws generalize. Closing this gap matters for fundamental statistical mechanics: without it, models with different microscopic explanations can remain indistinguishable at the bulk level, and their claimed generality cannot be assessed.\n\nAim 1, paragraph 1: We will establish how connectivity changes relaxation scaling at fixed boundary conditions. This isolates the connectivity contribution that current effective descriptions cannot distinguish. The expected knowledge gain is a map of which connectivity properties preserve a scaling law and which change it. That distinction matters because it separates a general law from a fit to one network family. Aim 1 contributes the local-structure component of the program's explanation.\n\nAim 2, paragraph 1: We will establish how boundary constraints change relaxation scaling at fixed connectivity. This isolates boundary effects that could otherwise be mistaken for a microscopic law. The expected knowledge gain is a set of conditions under which bulk behavior is insensitive or sensitive to the boundary. These conditions matter because they define when a finite-network observation supports a general theoretical claim. Aim 2 contributes the boundary-condition component of the same explanation.\n\nIntegration, paragraph 1: Both Aims have equal priority and can proceed independently using predefined network ensembles. Neither requires the other's success. Their complementary comparisons jointly distinguish connectivity-driven and boundary-driven explanations of the same relaxation laws; integration consists of comparing their domains of validity within a common theoretical description.\n\nFuture horizon, paragraph 1: A later extension could ask whether driven networks obey analogous principles. That question is outside the current program's deliverables and resource allocation; it is a future horizon after the present theory is assessed, not a third current Aim. No immediate application or clinical outcome is claimed."
+      },
+      "coverage": [4, 5, 6],
+      "expected": {
+        "readiness": "READY",
+        "assessment_complete": true,
+        "aim_inventory": ["Aim 1", "Aim 2"],
+        "program_checks": {
+          "problem": "EXPLICIT",
+          "knowledge_gap": "EXPLICIT",
+          "significance": "EXPLICIT",
+          "primary_goal": "EXPLICIT",
+          "integration_focus": "EXPLICIT"
+        },
+        "per_aim_checks": {
+          "Aim 1": {
+            "rationale": "EXPLICIT",
+            "significance": "EXPLICIT",
+            "expected_knowledge_gain": "EXPLICIT",
+            "contribution_to_primary_goal": "EXPLICIT"
+          },
+          "Aim 2": {
+            "rationale": "EXPLICIT",
+            "significance": "EXPLICIT",
+            "expected_knowledge_gain": "EXPLICIT",
+            "contribution_to_primary_goal": "EXPLICIT"
+          }
+        },
+        "required_findings": [
+          "The two independent Aims explicitly make complementary contributions to one goal.",
+          "Fundamental-science significance is explicit and sufficient for this argument scope.",
+          "The future horizon is not an immediate third deliverable.",
+          "READY is limited to the argument scope and does not predict a hiring result."
+        ],
+        "forbidden_findings": [
+          "Require serial dependency, removal of one Aim, immediate clinical relevance, or an additional significance heading.",
+          "Manufacture a substantive defect solely to avoid a positive verdict."
+        ]
+      }
+    },
+    {
+      "id": "SC06",
+      "document_type": "research_plan",
+      "review_brief": "Assess the entire current version first, then assess any separately supplied revision history.",
+      "source": {
+        "document_id": "synthetic-sensor-drift",
+        "version": "v3",
+        "text": "Program, paragraph 1: Sensor offsets change during extended use. The unresolved question is how offset depends on temperature history and housing stiffness. The primary goal is to characterize these two sources of offset variation.\n\nAim 1, paragraph 1: We will cycle temperature to isolate the effect of temperature history and record the resulting sensor traces.\n\nAim 2, paragraph 1: We will compare housing stiffnesses to isolate their effect on offset, learning how the offset-stiffness relationship changes at fixed temperature.\n\nIntegration, paragraph 1: The two Aims independently characterize temperature and housing contributions to the same offset variation. Both have equal priority."
+      },
+      "review_context": {
+        "delivery": "after_source_only_review",
+        "previous_version": "v2",
+        "previous_findings": [
+          {
+            "id": "DRIFT-P-SIG",
+            "criterion": "program.significance",
+            "status": "DEFERRED",
+            "origin": "v1 review; repeated in v2",
+            "resolution_condition": "Explain the important limitation that remains if the two offset dependencies stay unknown.",
+            "last_reviewed_version": "v2"
+          },
+          {
+            "id": "DRIFT-A1-SIG",
+            "criterion": "Aim 1.significance",
+            "status": "ACCEPTED_RISK",
+            "origin": "v2 review",
+            "resolution_condition": "Explain why resolving the temperature-history contribution matters to the program's knowledge claim.",
+            "last_reviewed_version": "v2"
+          },
+          {
+            "id": "DRIFT-A2-SIG",
+            "criterion": "Aim 2.significance",
+            "status": "EDITED_PENDING_REVIEW",
+            "origin": "v2 review",
+            "resolution_condition": "Explain why resolving the stiffness contribution matters to the program's knowledge claim.",
+            "last_reviewed_version": "v2"
+          },
+          {
+            "id": "DRIFT-A1-GAIN",
+            "criterion": "Aim 1.expected_knowledge_gain",
+            "status": "OPEN",
+            "origin": "v1 review; advice already supplied",
+            "resolution_condition": "State what will be learned from the temperature traces beyond collecting them.",
+            "last_reviewed_version": "v2"
+          }
+        ],
+        "author_decision": "Accept the Aim 1 significance risk, defer the program-level explanation, and avoid repeating previous advice. The Aim 2 sentence has been edited."
+      },
+      "coverage": [7],
+      "expected": {
+        "readiness": "REVISION_REQUIRED",
+        "unresolved_ids": ["DRIFT-P-SIG", "DRIFT-A1-SIG", "DRIFT-A2-SIG", "DRIFT-A1-GAIN"],
+        "required_findings": [
+          "Account for all four prior IDs and test their resolution conditions against v3.",
+          "Human acceptance and deferral do not make the missing explanation explicit.",
+          "Carry forward concise current concerns and next repairs without repeating the entire prior advice.",
+          "Preserve the human decision while retaining its readiness and score consequences."
+        ],
+        "forbidden_findings": [
+          "Drop a finding because it was mentioned previously.",
+          "Treat EDITED_PENDING_REVIEW as RESOLVED_VERIFIED without a successful re-review.",
+          "Award maximum significance scores while their substantive concerns remain unresolved."
+        ]
+      }
+    },
+    {
+      "id": "SC07",
+      "document_type": "research_statement",
+      "review_brief": "Assess the entire current text first. Compare any prior findings only after recording that source-only assessment.",
+      "source": {
+        "document_id": "synthetic-actuator-program",
+        "version": "v3",
+        "text": "Program, paragraph 1: Actuator response-time variation can reflect interface physics, fabrication differences, or limitations of a control model. These explanations are not yet separated in a common account of response timing. Our primary goal is to determine when response timing can be predicted and compensated across surface and fabrication variation. This matters because otherwise a timing model that fits one actuator may be mistaken for a general explanation, and the conditions limiting its transfer remain unknown.\n\nAim 1, paragraph 1: We will vary interface roughness at fixed geometry and fabrication route to isolate the surface contribution. The expected gain is the relationship between roughness and response timing, including where that relationship changes. This matters because it distinguishes surface-dependent timing from a route-dependent artifact. Aim 1 supplies the surface component of the program's account of predictable timing.\n\nAim 2, paragraph 1: We will compare fabrication routes at matched geometry and roughness to isolate fabrication-dependent variation. The expected gain is knowledge of which timing relationships persist across routes. This matters because persistence or failure across routes defines the scope of a general timing explanation. Aim 2 supplies the transfer conditions for the program's predictive account.\n\nAim 3, paragraph 1: We will test a compensating controller across prespecified timing variations to distinguish variation representable by a shared model from variation that needs route-specific parameters. The expected gain is the boundary between transferable and route-specific compensation. This matters because successful compensation on one device alone cannot establish that its model captures variation across devices. Aim 3 contributes a functional test of the program's claim about predictable and compensable timing.\n\nIntegration, paragraph 1: These equally prioritized Aims examine surface effects, fabrication transfer, and model sufficiency within one objective. Standardized actuator sets let each Aim produce an interpretable result independently; together their comparisons delimit where a shared timing model applies."
+      },
+      "review_context": {
+        "delivery": "after_source_only_review",
+        "previous_case_id": "SC03",
+        "previous_version": "v2",
+        "previous_findings": [
+          {
+            "id": "ACT-SIG-P",
+            "criterion": "program.significance",
+            "status": "EDITED_PENDING_REVIEW",
+            "origin": "v1 source review",
+            "resolution_condition": "The current text must identify the important uncertainty or limitation that remains without this work and explain how the program's knowledge gain addresses it.",
+            "last_reviewed_version": "v2"
+          },
+          {
+            "id": "ACT-SIG-AIMS",
+            "criterion": "aims.significance",
+            "status": "EDITED_PENDING_REVIEW",
+            "origin": "v1 source review",
+            "resolution_condition": "Each of Aims 1, 2, and 3 must connect its expected knowledge gain to a stated scientific or enabling limitation.",
+            "last_reviewed_version": "v2"
+          }
+        ]
+      },
+      "coverage": [8],
+      "expected": {
+        "readiness": "READY",
+        "assessment_complete": true,
+        "resolvable_ids": ["ACT-SIG-P", "ACT-SIG-AIMS"],
+        "required_findings": [
+          "Verify ACT-SIG-P against Program paragraph 1 and ACT-SIG-AIMS against all three Aim paragraphs, recording current excerpts and the re-review result.",
+          "Permit RESOLVED_VERIFIED only after that passage-based verification; the new version alone is insufficient.",
+          "Permit an improved argument-readiness verdict because the revised text now explains the relevant limitations and knowledge contributions."
+        ],
+        "forbidden_findings": [
+          "Keep a repaired concern open solely because it was serious in an earlier version.",
+          "Claim that consistency validation proves the scientific claims true."
+        ]
+      }
+    },
+    {
+      "id": "SC08",
+      "document_type": "research_plan",
+      "review_brief": "The named synthetic source and its figure were not supplied. Do not discover or substitute another document.",
+      "source": {
+        "document_id": "synthetic-unavailable-plan",
+        "version": "v1",
+        "availability": "unavailable",
+        "text": null,
+        "figures": [{"id": "Figure 1", "availability": "unavailable"}]
+      },
+      "coverage": [9],
+      "expected": {
+        "readiness": "NOT_ASSESSABLE",
+        "assessment_complete": false,
+        "required_findings": [
+          "Report unavailable source coverage and unknown Aim inventory.",
+          "Record NOT_ASSESSABLE essential checks rather than treating unavailable text as evidence of author omission.",
+          "No visual pass or numeric score is supported."
+        ],
+        "forbidden_findings": [
+          "Invent excerpts, Aims, figure content, or a source-based critique.",
+          "Claim READY or visual PASS."
+        ]
+      }
+    },
+    {
+      "id": "SC09",
+      "document_type": "research_plan",
+      "review_brief": "Assess the complete supplied text. Figure 1 is an optional illustration outside this textual argument scope and is unavailable; any separate visual review must remain unassessed.",
+      "source": {
+        "document_id": "synthetic-clock-measurement",
+        "version": "v1",
+        "text": "Program, paragraph 1: A measured timing difference can arise from the clock or from the measurement setup, limiting interpretation of small timing variations. The unresolved gap is how to separate these contributions when the setup changes. Our primary goal is to identify timing differences that persist across independent measurement arrangements. This matters because, without that distinction, setup artifacts and properties of the clock remain competing explanations of the same observation.\n\nProject, paragraph 1: We will compare the same clock under two independently configured readout arrangements. Varying the arrangement while preserving the clock isolates the setup contribution. The expected knowledge gain is which timing differences are invariant to the readout and which depend on it. That distinction matters because invariance constrains whether a timing claim can be attributed to the clock. This single project directly supplies the invariant-versus-setup-dependent distinction needed by the primary goal.\n\nScope, paragraph 1: Figure 1 would illustrate the two arrangements; the argument and project definition are fully stated above and make no evidential claim about an unseen result.",
+        "figures": [{"id": "Figure 1", "availability": "unavailable"}]
+      },
+      "coverage": [9],
+      "expected": {
+        "readiness": "READY",
+        "assessment_complete": true,
+        "aim_inventory": ["Project"],
+        "required_findings": [
+          "The textual argument is assessable and complete within the declared scope.",
+          "Record figure access as unavailable and any visual review as not assessed, separately from textual argument readiness."
+        ],
+        "forbidden_findings": [
+          "Claim visual PASS or describe the unseen figure.",
+          "Fail textual argument readiness solely because the optional out-of-scope figure is unavailable."
+        ]
+      }
+    },
+    {
+      "id": "SC10",
+      "document_type": "mixed_package",
+      "review_brief": "Route each supplied document by function. Assess eligible scientific text through the argument gate; retain the ordinary review contracts for the other documents. No institution-specific requirements are supplied.",
+      "source": {
+        "document_id": "synthetic-mixed-package",
+        "version": "v1",
+        "documents": [
+          {"document_id": "synthetic-cv", "document_type": "cv", "text": "Curriculum vitae: Research role in measurement engineering. Experience in instrument calibration, project coordination, and student supervision. Skills: data analysis and technical writing."},
+          {"document_id": "synthetic-resume", "document_type": "resume", "text": "Resume: Measurement engineer with experience maintaining calibration schedules, documenting instrument checks, and coordinating equipment use."},
+          {"document_id": "synthetic-cover-letter", "document_type": "cover_letter", "text": "Dear Search Committee, I am applying for the advertised research position. My training in measurement engineering and experience supervising projects fit the described role. Please find my research statement and curriculum vitae enclosed."},
+          {"document_id": "synthetic-reference-letter", "document_type": "reference_letter", "text": "Dear Search Committee, I recommend the candidate based on direct supervision of a measurement engineering project. The candidate documented assumptions clearly, coordinated shared equipment, and responded constructively to review."},
+          {"document_id": "synthetic-personal-statement", "document_type": "personal_statement", "text": "My interest in engineering grew through repairing classroom instruments. I value collaborative learning and clear explanations, and I hope to develop as a mentor while contributing to an inclusive research environment."},
+          {"document_id": "synthetic-research-statement", "document_type": "research_statement", "text": "Program, paragraph 1: Calibration results can vary with the sequence of applied loads, obstructing a consistent interpretation of sensor response. The knowledge gap is whether this history dependence reflects reversible lag or persistent change. My primary goal is to distinguish those two explanations. The distinction matters because they imply different conditions under which a calibration relation can be generalized beyond one load sequence.\n\nResearch direction, paragraph 1: I will compare responses to reordered load sequences with defined recovery intervals. This comparison separates order effects from changes that persist after recovery. The expected knowledge gain is the boundary between reversible and persistent history effects; that boundary matters because it determines when a history-independent calibration claim is justified. This single direction directly addresses the primary goal by discriminating the two explanations."}
+        ]
+      },
+      "coverage": [10],
+      "expected": {
+        "readiness": "PER_DOCUMENT",
+        "argument_gate_documents": ["synthetic-research-statement"],
+        "outside_argument_gate_documents": ["synthetic-cv", "synthetic-resume", "synthetic-cover-letter", "synthetic-reference-letter", "synthetic-personal-statement"],
+        "scientific_document_readiness": "READY",
+        "required_findings": [
+          "Apply the argument gate only to the research statement and inventory its unnumbered research direction.",
+          "Ordinary prose documents retain their own review contracts; not having Aims is not a defect in those documents."
+        ],
+        "forbidden_findings": [
+          "Require scientific Aims, grant scoring, significance sections, or clinical impact in every package document.",
+          "Treat a research statement as exempt merely because its direction is not numbered."
+        ]
+      }
+    },
+    {
+      "id": "SC11",
+      "document_type": "research_statement",
+      "review_brief": "Assess the full source first, then audit the consistency of the separate prior assessment against that source.",
+      "source": {
+        "document_id": "synthetic-contact-map",
+        "version": "v1",
+        "text": "Program, paragraph 1: Contact forces vary across printed lattice junctions. Their dependence on print orientation is unknown. The primary goal is to map this dependence.\n\nProject, paragraph 1: We will compare junctions printed in several orientations, isolating orientation at fixed geometry. We expect to learn how force distributions change with orientation. This single project supplies the map required by the program goal."
+      },
+      "review_context": {
+        "delivery": "after_source_only_review",
+        "prior_assessment": {
+          "document_id": "synthetic-contact-map",
+          "version": "v1",
+          "findings": [{"id": "CONTACT-SIG", "status": "OPEN", "criterion": "program.significance", "finding": "The source never explains why the unknown orientation dependence matters.", "resolution_condition": "Add a supported explanation of the important uncertainty or limitation that remains without the proposed map."}],
+          "readiness": "READY",
+          "scores": [{"criterion": "program.significance", "value": 5, "minimum": 1, "maximum": 5, "direction": "higher_is_better", "maximum_anchor": "Fully supported within the reviewed scope", "rationale": "The writing is clear and the measurement strategy is feasible."}]
+        }
+      },
+      "coverage": [11],
+      "expected": {
+        "readiness": "REVISION_REQUIRED",
+        "unresolved_ids": ["CONTACT-SIG"],
+        "required_findings": [
+          "Retain the correctly detected CONTACT-SIG finding.",
+          "Flag READY and the significance quality score of 5 as contradicting the unresolved significance concern.",
+          "Identify this as a final-assessment contradiction, without claiming the earlier reviewer failed to detect significance.",
+          "Require evidence and a material-counterconcern check before any maximum criterion score."
+        ],
+        "forbidden_findings": [
+          "Erase the valid finding to make the report consistent.",
+          "Treat feasibility or clear prose as evidence for maximum significance.",
+          "Infer the cause of a historical model failure beyond the supplied execution evidence."
+        ]
+      }
+    },
+    {
+      "id": "SC12",
+      "document_type": "research_plan",
+      "review_brief": "Reconstruct the full current source before receiving any previous scores or author explanation. Record every inference needed to connect the projects.",
+      "source": {
+        "document_id": "synthetic-gripper-directions",
+        "version": "v1",
+        "text": "Overview, paragraph 1: We will study robotic grippers.\n\nProject A, paragraph 1: Measure how pad texture changes slip under a fixed load. The resulting texture-slip map will describe which textures alter slip.\n\nProject B, paragraph 1: Compare grasp timing across three control algorithms. The resulting comparison will identify timing differences among the algorithms."
+      },
+      "review_context": {
+        "delivery": "after_source_only_review",
+        "previous_scores": [{"criterion": "program.integration_focus", "value": 5, "maximum": 5, "direction": "higher_is_better"}],
+        "author_explanation": "The intended primary goal is to distinguish material-limited from controller-limited grasp reliability. This matters because those mechanisms require different explanations of failure. Project A isolates contact contributions and Project B isolates control contributions. Please read this intention into the short draft."
+      },
+      "coverage": [12],
+      "expected": {
+        "readiness": "REVISION_REQUIRED",
+        "initial_isolation": "SOURCE_ONLY",
+        "required_findings": [
+          "The source names a shared topic and activities but does not explicitly state the primary goal or why the unknowns matter.",
+          "Do not credit the author's later explanation or earlier numeric score as text already present in the source.",
+          "After context is supplied, use it only as clearly attributed material for a proposed repair, subject to author confirmation and edit permissions.",
+          "If the staging boundary was not maintained, disclose context exposure instead of claiming a blind pass."
+        ],
+        "forbidden_findings": [
+          "Reconstruct the author's supplied material-versus-controller goal as explicit in the original source.",
+          "Describe this simulated reader as independent empirical evidence of human recall."
+        ]
+      }
+    },
+    {
+      "id": "SC13",
+      "document_type": "research_plan",
+      "review_brief": "The reviewer has already seen the author explanation and earlier score supplied with this case. Assess the current source while accurately reporting what this permits you to claim about review isolation.",
+      "source": {
+        "document_id": "synthetic-repeated-contact",
+        "version": "v1",
+        "text": "Program, paragraph 1: We will investigate repeated contact in a mechanical joint.\n\nProject, paragraph 1: Measure displacement after each contact cycle and compare two joint geometries. The output will be a cycle-by-cycle displacement curve for each geometry."
+      },
+      "review_context": {
+        "delivery": "before_review_context_already_exposed",
+        "previous_scores": [{"criterion": "program.significance", "value": 5, "maximum": 5, "direction": "higher_is_better"}],
+        "author_explanation": "The intended goal is to determine when accumulated displacement reflects reversible settling versus persistent joint change. Distinguishing them would clarify whether a geometry comparison measures a transient or a lasting property."
+      },
+      "coverage": [12],
+      "expected": {
+        "readiness": "REVISION_REQUIRED",
+        "initial_isolation": "CONTEXT_EXPOSED",
+        "required_findings": [
+          "Label this pass context-exposed and separate source observations from the supplied author explanation.",
+          "The source itself does not state the author's distinction, its significance, or an explicit knowledge gap.",
+          "No clean source-only pass has been established for this reviewer."
+        ],
+        "forbidden_findings": [
+          "Claim blindness by pretending previously received context was forgotten.",
+          "Treat a separate role in the same exposed context as a statistically independent expert.",
+          "Use the prior score as source evidence."
+        ]
+      }
+    }
+  ]
+}

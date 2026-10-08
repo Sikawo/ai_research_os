@@ -39,8 +39,12 @@ origin, branch boundary, public tree, and transfer manifest.
   exact bare `Sprint` self-driving route from one reviewed skill package. Its
   bundled fixtures are synthetic, and its deterministic runtime uses only the
   Python standard library.
+- **Review Tools 1.0.0** provides focused application review, calibrated
+  reviewer critique, and professional communication review. It deliberately
+  defers exact bare `Sprint` and every `GatedSprint` route to the GatedSprint
+  plugin, and it contains no target-specific profiles or application context.
 
-Both plugins are registered in `.agents/plugins/marketplace.json` and licensed
+All plugins are registered in `.agents/plugins/marketplace.json` and licensed
 under Apache-2.0 with the rest of this repository.
 
 ## License

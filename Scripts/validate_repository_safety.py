@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -88,6 +89,25 @@ PHASE12_EXPECTED_INTEGRATION_PATHS = {
     "tests/test_phase12_review_tools.py",
     "tests/test_repository_safety.py",
 }
+PHASE12B_MANIFEST_PATH = "manifests/phase12b_review_tools_allowlist.yaml"
+PHASE12B_MANIFEST_ID = "phase12b-review-tools-public-plugin"
+PHASE12B_SOURCE_COMMIT = "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f"
+PHASE12B_TARGET_BASE = "2b807abdfe7a841c489d4c0309f50252cc117ed1"
+PHASE12B_EXPECTED_TRANSFER_COUNT = 102
+PHASE12B_EXPECTED_TARGET_COUNT = 110
+PHASE12B_CLASSIFICATION_SHA256 = (
+    "5e74c36142b32876b1fdc1c7030ae05f4b700d7e32aebc200294acab68d90a7d"
+)
+PHASE12B_EXPECTED_INTEGRATION_PATHS = {
+    ".agents/plugins/marketplace.json",
+    ".github/workflows/review-tools-tests.yml",
+    "README.md",
+    "Scripts/validate_repository_safety.py",
+    PHASE12B_MANIFEST_PATH,
+    "plugins/review-tools/.codex-plugin/plugin.json",
+    "tests/test_phase12b_review_tools.py",
+    "tests/test_repository_safety.py",
+}
 MAX_FILE_BYTES = 200_000
 
 FORBIDDEN_SUFFIXES = {
@@ -153,6 +173,28 @@ def load_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
 
 def load_phase12_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
     return load_json_manifest(root, PHASE12_MANIFEST_PATH, "Phase 12A transfer manifest")
+
+
+def load_phase12b_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
+    return load_json_manifest(root, PHASE12B_MANIFEST_PATH, "Phase 12B transfer manifest")
+
+
+def phase12b_classification_sha256(
+    transfers: list[Any], excluded_source_paths: set[str]
+) -> str:
+    """Return the canonical digest for the reviewed Phase 12B classification."""
+    lines = []
+    for transfer in transfers:
+        if not isinstance(transfer, dict):
+            lines.append(f"invalid\t{type(transfer).__name__}")
+            continue
+        lines.append(
+            f"{transfer.get('transfer_mode')}\t{transfer.get('source_path')}\t"
+            f"{transfer.get('destination_path')}"
+        )
+    lines.extend(f"excluded\t{path}" for path in excluded_source_paths)
+    payload = "\n".join(sorted(lines)) + "\n"
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def load_json_manifest(
@@ -411,6 +453,170 @@ def validate_phase12_manifest(
     return errors, allowed_targets, destinations
 
 
+def validate_phase12b_manifest(
+    manifest: dict[str, Any],
+) -> tuple[list[str], set[str], set[str]]:
+    errors: list[str] = []
+    if manifest.get("schema_version") != 1:
+        errors.append("Phase 12B manifest schema_version must be 1")
+    if manifest.get("manifest_id") != PHASE12B_MANIFEST_ID:
+        errors.append("unexpected Phase 12B manifest id")
+    if manifest.get("status") != "ported_offline":
+        errors.append("Phase 12B manifest must be ported_offline")
+    if manifest.get("deny_by_default") is not True:
+        errors.append("Phase 12B manifest must deny by default")
+    if manifest.get("license") != "Apache-2.0":
+        errors.append("Phase 12B manifest license must be Apache-2.0")
+    if manifest.get("expected_transfer_count") != PHASE12B_EXPECTED_TRANSFER_COUNT:
+        errors.append(
+            f"Phase 12B expected_transfer_count must be {PHASE12B_EXPECTED_TRANSFER_COUNT}"
+        )
+    if manifest.get("expected_target_path_count") != PHASE12B_EXPECTED_TARGET_COUNT:
+        errors.append(
+            f"Phase 12B expected_target_path_count must be {PHASE12B_EXPECTED_TARGET_COUNT}"
+        )
+    if manifest.get("classification_sha256") != PHASE12B_CLASSIFICATION_SHA256:
+        errors.append("Phase 12B classification_sha256 does not match the reviewed inventory")
+
+    target = manifest.get("target")
+    if not isinstance(target, dict) or target.get("repository") != "Sikawo/ai_research_os":
+        errors.append("Phase 12B target repository is invalid")
+    elif target.get("base_commit") != PHASE12B_TARGET_BASE:
+        errors.append("Phase 12B target base commit is invalid")
+
+    sources = manifest.get("sources")
+    source = (
+        sources.get("phase12b_review_tools_classified")
+        if isinstance(sources, dict)
+        else None
+    )
+    if not isinstance(source, dict):
+        errors.append("Phase 12B classified source is missing")
+    else:
+        expected_source = {
+            "repository": "Sikawo/personal_research_brain",
+            "commit": PHASE12B_SOURCE_COMMIT,
+            "candidate_count": 113,
+            "exact_copy_count": 16,
+            "adapted_public_copy_count": 86,
+            "excluded_count": 11,
+        }
+        for name, expected in expected_source.items():
+            if source.get(name) != expected:
+                errors.append(f"Phase 12B source {name} must be {expected!r}")
+
+    required_rules = {
+        "exact_paths_only": True,
+        "synthetic_fixtures_only": True,
+        "copy_git_history": False,
+        "copy_private_values": False,
+        "copy_runtime_state": False,
+        "copy_connector_bindings": False,
+        "copy_scheduled_tasks": False,
+        "live_cutover": False,
+        "sprint_authority_owner": "plugins/gated-sprint/skills/gated-sprint",
+    }
+    rules = manifest.get("rules")
+    if not isinstance(rules, dict):
+        errors.append("Phase 12B rules must be an object")
+    else:
+        for name, expected in required_rules.items():
+            if rules.get(name) != expected:
+                errors.append(f"Phase 12B rule {name} must be {expected!r}")
+
+    integration_value = manifest.get("integration_paths")
+    integration_paths = (
+        set(integration_value)
+        if isinstance(integration_value, list)
+        and all(is_safe_relative_path(value) for value in integration_value)
+        else set()
+    )
+    if integration_paths != PHASE12B_EXPECTED_INTEGRATION_PATHS:
+        errors.append("Phase 12B integration paths do not match the reviewed scope")
+
+    allowed_value = manifest.get("allowed_target_paths")
+    allowed_targets = (
+        set(allowed_value)
+        if isinstance(allowed_value, list)
+        and all(is_safe_relative_path(value) for value in allowed_value)
+        else set()
+    )
+    if len(allowed_targets) != PHASE12B_EXPECTED_TARGET_COUNT:
+        errors.append(
+            f"Phase 12B must allow {PHASE12B_EXPECTED_TARGET_COUNT} exact target paths; "
+            f"found {len(allowed_targets)}"
+        )
+
+    excluded_value = manifest.get("excluded_source_paths")
+    excluded = (
+        set(excluded_value)
+        if isinstance(excluded_value, list)
+        and all(is_safe_relative_path(value) for value in excluded_value)
+        else set()
+    )
+    if len(excluded) != 11:
+        errors.append("Phase 12B must record exactly 11 excluded source paths")
+
+    transfers = manifest.get("transfers")
+    if not isinstance(transfers, list):
+        return errors + ["Phase 12B transfers must be a list"], allowed_targets, set()
+    if len(transfers) != PHASE12B_EXPECTED_TRANSFER_COUNT:
+        errors.append(
+            f"Phase 12B manifest must contain {PHASE12B_EXPECTED_TRANSFER_COUNT} transfers; "
+            f"found {len(transfers)}"
+        )
+
+    source_paths: set[str] = set()
+    destinations: set[str] = set()
+    mode_counts: dict[str, int] = {}
+    for index, transfer in enumerate(transfers):
+        label = f"Phase 12B transfer[{index}]"
+        if not isinstance(transfer, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        source_path = transfer.get("source_path")
+        destination_path = transfer.get("destination_path")
+        mode = transfer.get("transfer_mode")
+        if transfer.get("source_id") != "phase12b_review_tools_classified":
+            errors.append(f"{label} has unknown source_id")
+        if transfer.get("source_commit") != PHASE12B_SOURCE_COMMIT:
+            errors.append(f"{label} source_commit is invalid")
+        if not is_safe_relative_path(source_path):
+            errors.append(f"{label} has unsafe source_path")
+        if not is_safe_relative_path(destination_path) or not str(destination_path).startswith(
+            "plugins/review-tools/skills/"
+        ):
+            errors.append(f"{label} has unsafe destination_path")
+        if mode not in {"exact_copy", "adapted_public_copy"}:
+            errors.append(f"{label} has unsupported transfer_mode")
+        if transfer.get("phase") != "12B":
+            errors.append(f"{label} has unsupported phase")
+        if transfer.get("status") != "ported_offline":
+            errors.append(f"{label} must be ported_offline")
+        if isinstance(source_path, str):
+            if source_path in source_paths:
+                errors.append(f"duplicate Phase 12B source path: {source_path}")
+            if source_path in excluded:
+                errors.append(f"excluded Phase 12B source was transferred: {source_path}")
+            source_paths.add(source_path)
+        if isinstance(destination_path, str):
+            if destination_path in destinations:
+                errors.append(f"duplicate Phase 12B destination path: {destination_path}")
+            destinations.add(destination_path)
+        if isinstance(mode, str):
+            mode_counts[mode] = mode_counts.get(mode, 0) + 1
+
+    expected_modes = {"exact_copy": 16, "adapted_public_copy": 86}
+    if mode_counts != expected_modes:
+        errors.append(f"Phase 12B transfer modes must be {expected_modes!r}")
+    classification_digest = phase12b_classification_sha256(transfers, excluded)
+    if classification_digest != PHASE12B_CLASSIFICATION_SHA256:
+        errors.append("Phase 12B source classification does not match the reviewed inventory")
+    if allowed_targets != destinations | integration_paths:
+        errors.append("Phase 12B allowed targets must equal transfers plus integration paths")
+    return errors, allowed_targets, destinations
+
+
 def validate_tree(root: Path) -> list[str]:
     errors: list[str] = []
     files = repository_files(root)
@@ -455,10 +661,22 @@ def validate_tree(root: Path) -> list[str]:
             if package_manifest.get("file_count") != 88:
                 errors.append("GatedSprint package manifest must contain 88 files")
 
-    required = BASELINE_PATHS | GOVERNANCE_PATHS | phase12_allowed
+    phase12b_manifest, phase12b_load_errors = load_phase12b_manifest(root)
+    errors.extend(phase12b_load_errors)
+    phase12b_allowed: set[str] = set()
+    phase12b_ported: set[str] = set()
+    if phase12b_manifest is not None:
+        phase12b_errors, phase12b_allowed, phase12b_ported = validate_phase12b_manifest(
+            phase12b_manifest
+        )
+        errors.extend(phase12b_errors)
+
+    required = BASELINE_PATHS | GOVERNANCE_PATHS | phase12_allowed | phase12b_allowed
     missing = sorted(required - files)
-    extra = sorted(files - (BASELINE_PATHS | destinations | phase12_allowed))
-    missing_ported = sorted((ported | phase12_ported) - files)
+    extra = sorted(
+        files - (BASELINE_PATHS | destinations | phase12_allowed | phase12b_allowed)
+    )
+    missing_ported = sorted((ported | phase12_ported | phase12b_ported) - files)
     if missing:
         errors.append(f"missing required paths: {', '.join(missing)}")
     if extra:

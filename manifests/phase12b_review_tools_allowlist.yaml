@@ -1,0 +1,1092 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase12b-review-tools-public-plugin",
+  "status": "ported_offline",
+  "deny_by_default": true,
+  "license": "Apache-2.0",
+  "license_authority": "user-owned generic implementation approved for Apache-2.0 publication on 2026-10-07",
+  "target": {
+    "repository": "Sikawo/ai_research_os",
+    "base_commit": "2b807abdfe7a841c489d4c0309f50252cc117ed1"
+  },
+  "sources": {
+    "phase12b_review_tools_classified": {
+      "repository": "Sikawo/personal_research_brain",
+      "commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "access_class": "explicitly_authorized_user_owned_generic_implementation",
+      "candidate_count": 113,
+      "exact_copy_count": 16,
+      "adapted_public_copy_count": 86,
+      "excluded_count": 11
+    }
+  },
+  "rules": {
+    "exact_paths_only": true,
+    "synthetic_fixtures_only": true,
+    "copy_git_history": false,
+    "copy_private_values": false,
+    "copy_runtime_state": false,
+    "copy_connector_bindings": false,
+    "copy_scheduled_tasks": false,
+    "live_cutover": false,
+    "sprint_authority_owner": "plugins/gated-sprint/skills/gated-sprint"
+  },
+  "expected_transfer_count": 102,
+  "expected_target_path_count": 110,
+  "classification_sha256": "5e74c36142b32876b1fdc1c7030ae05f4b700d7e32aebc200294acab68d90a7d",
+  "integration_paths": [
+    ".agents/plugins/marketplace.json",
+    ".github/workflows/review-tools-tests.yml",
+    "README.md",
+    "Scripts/validate_repository_safety.py",
+    "manifests/phase12b_review_tools_allowlist.yaml",
+    "plugins/review-tools/.codex-plugin/plugin.json",
+    "tests/test_phase12b_review_tools.py",
+    "tests/test_repository_safety.py"
+  ],
+  "allowed_target_paths": [
+    ".agents/plugins/marketplace.json",
+    ".github/workflows/review-tools-tests.yml",
+    "README.md",
+    "Scripts/validate_repository_safety.py",
+    "manifests/phase12b_review_tools_allowlist.yaml",
+    "plugins/review-tools/.codex-plugin/plugin.json",
+    "plugins/review-tools/skills/application-review/SKILL.md",
+    "plugins/review-tools/skills/application-review/assets/templates/application_profile_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/application_sprint_adapter_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/architect_output_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/architecture_candidates_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/career_document_change_report_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/career_document_review_report_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/career_human_decision_proposals_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/career_target_requirements_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/change_ledger_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/content_portfolio_matrix_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/do_not_change_registry_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/evaluation_rubric_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/human_decision_proposals_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/repeated_advice_memory_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/reviewer_background_layer_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/reviewer_comparison_scorecard_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/reviewer_output_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/revision_decision_log_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/rubric_qc_output_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/scientific_argument_review_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/scientific_model_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/serendipity_candidate_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/serendipity_memory_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/sprint_output_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/word_figure_placeholder_template.md",
+    "plugins/review-tools/skills/application-review/assets/templates/writer_output_template.md",
+    "plugins/review-tools/skills/application-review/references/career-documents/README.md",
+    "plugins/review-tools/skills/application-review/references/career-documents/career_document_review_checklist.md",
+    "plugins/review-tools/skills/application-review/references/career-documents/document_type_router.md",
+    "plugins/review-tools/skills/application-review/references/career-documents/mode_config.md",
+    "plugins/review-tools/skills/application-review/references/career-documents/recommendation_letter_profile.md",
+    "plugins/review-tools/skills/application-review/references/career-documents/sprint_adapter.md",
+    "plugins/review-tools/skills/application-review/references/career-documents/target_requirement_register.md",
+    "plugins/review-tools/skills/application-review/references/core/architecture_candidate_engine.md",
+    "plugins/review-tools/skills/application-review/references/core/artifact_versioning_policy.md",
+    "plugins/review-tools/skills/application-review/references/core/auto_edit_policy.md",
+    "plugins/review-tools/skills/application-review/references/core/change_budget_policy.md",
+    "plugins/review-tools/skills/application-review/references/core/change_memory_policy.md",
+    "plugins/review-tools/skills/application-review/references/core/citation_style_audit.md",
+    "plugins/review-tools/skills/application-review/references/core/content_portfolio_gate.md",
+    "plugins/review-tools/skills/application-review/references/core/cross_domain_analogy_engine.md",
+    "plugins/review-tools/skills/application-review/references/core/decision_gate_policy.md",
+    "plugins/review-tools/skills/application-review/references/core/engine.md",
+    "plugins/review-tools/skills/application-review/references/core/evidence_and_integrity_rules.md",
+    "plugins/review-tools/skills/application-review/references/core/mode_router.md",
+    "plugins/review-tools/skills/application-review/references/core/output_contract.md",
+    "plugins/review-tools/skills/application-review/references/core/proposal_completeness_significance_citation_gate.md",
+    "plugins/review-tools/skills/application-review/references/core/reviewer_comparison_engine.md",
+    "plugins/review-tools/skills/application-review/references/core/scientific_argument_gate.md",
+    "plugins/review-tools/skills/application-review/references/core/scientific_coherence_firewall.md",
+    "plugins/review-tools/skills/application-review/references/core/scientific_model_contract.md",
+    "plugins/review-tools/skills/application-review/references/core/scientific_serendipity_engine.md",
+    "plugins/review-tools/skills/application-review/references/core/serendipity_adapter_contract.md",
+    "plugins/review-tools/skills/application-review/references/core/serendipity_memory_policy.md",
+    "plugins/review-tools/skills/application-review/references/core/sprint_engine.md",
+    "plugins/review-tools/skills/application-review/references/core/tired_brilliant_outsider_test.md",
+    "plugins/review-tools/skills/application-review/references/core/word_output_format_policy.md",
+    "plugins/review-tools/skills/application-review/references/modes/grant_architect_mode.md",
+    "plugins/review-tools/skills/application-review/references/modes/reviewer_mode.md",
+    "plugins/review-tools/skills/application-review/references/modes/rubric_qc_mode.md",
+    "plugins/review-tools/skills/application-review/references/modes/writer_mode.md",
+    "plugins/review-tools/skills/application-review/references/rubrics/generic_academic_job_rubric.md",
+    "plugins/review-tools/skills/application-review/references/rubrics/generic_fellowship_rubric.md",
+    "plugins/review-tools/skills/application-review/references/rubrics/generic_grant_rubric.md",
+    "plugins/review-tools/skills/application-review/references/rubrics/generic_manuscript_rubric.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/aims_clear_but_significance_missing.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/foundational_concept_treated_as_given.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/gated_sprint_explicit_approval_cases.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/hypothesis_without_citation_should_not_flag.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/materials_science_prior_knowledge_without_citation.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/missing_background_significance_references.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/paragraph_level_citation_support_should_pass.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/preliminary_data_without_external_citation_should_not_flag.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/prior_knowledge_block_without_citation.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/scientific_argument_review_cases.json",
+    "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/README.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/adapter_behavior_cases.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/anomaly_and_convergence_cases.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/cross_domain_analogy_cases.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/human_position_and_change_budget_cases.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/memory_and_privacy_cases.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/quadrant_and_coherence_cases.md",
+    "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/user_burden_and_output_cases.md",
+    "plugins/review-tools/skills/communication-lens/SKILL.md",
+    "plugins/review-tools/skills/communication-lens/assets/templates/message_request_template.md",
+    "plugins/review-tools/skills/communication-lens/assets/templates/message_review_output_template.md",
+    "plugins/review-tools/skills/communication-lens/references/core/communication_lens_engine.md",
+    "plugins/review-tools/skills/reviewer-lens/SKILL.md",
+    "plugins/review-tools/skills/reviewer-lens/assets/templates/chat_invocation_prompt.md",
+    "plugins/review-tools/skills/reviewer-lens/assets/templates/project_instructions_snippet.md",
+    "plugins/review-tools/skills/reviewer-lens/assets/templates/review_response_format.md",
+    "plugins/review-tools/skills/reviewer-lens/assets/templates/reviewer_output_template.md",
+    "plugins/review-tools/skills/reviewer-lens/assets/templates/reviewer_profile_template.md",
+    "plugins/review-tools/skills/reviewer-lens/examples/pushback_handling_demo.md",
+    "plugins/review-tools/skills/reviewer-lens/references/core/anti_appeasement_rules.md",
+    "plugins/review-tools/skills/reviewer-lens/references/core/application_writing_check.md",
+    "plugins/review-tools/skills/reviewer-lens/references/core/calibration_check.md",
+    "plugins/review-tools/skills/reviewer-lens/references/core/reviewer_engine.md",
+    "plugins/review-tools/skills/reviewer-lens/references/core/reviewer_lens_locked_mode.md",
+    "plugins/review-tools/skills/reviewer-lens/references/core/reviewer_roles.md",
+    "plugins/review-tools/skills/reviewer-lens/references/core/verdict_update_protocol.md",
+    "tests/test_phase12b_review_tools.py",
+    "tests/test_repository_safety.py"
+  ],
+  "excluded_source_paths": [
+    "Application_Review_OS/CHANGELOG.md",
+    "Application_Review_OS/adapters/career_documents/gated_sprint_adapter.md",
+    "Application_Review_OS/core/gated_sprint_engine.md",
+    "Application_Review_OS/sprints/sprint.md",
+    "Application_Review_OS/templates/gated_sprint_output_template.md",
+    "Application_Review_OS/templates/industry_resume_audit_package_template.md",
+    "Presentation_Style/README.md",
+    "Presentation_Style/kojiro_default_research_slide_style.yaml",
+    "Presentation_Style/kojiro_grid_card_style_invocation.md",
+    "Presentation_Style/popp_ai_slide_style_guide.md",
+    "Reviewer_Lens/routing/reviewer_aliases.md"
+  ],
+  "transfers": [
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/README.md",
+      "destination_path": "plugins/review-tools/skills/application-review/SKILL.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/application_profile_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/application_profile_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/application_sprint_adapter_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/application_sprint_adapter_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/architect_output_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/architect_output_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/architecture_candidates_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/architecture_candidates_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/career_document_change_report_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/career_document_change_report_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/career_document_review_report_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/career_document_review_report_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/career_human_decision_proposals_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/career_human_decision_proposals_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/career_target_requirements_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/career_target_requirements_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/change_ledger_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/change_ledger_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/content_portfolio_matrix_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/content_portfolio_matrix_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/do_not_change_registry_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/do_not_change_registry_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/evaluation_rubric_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/evaluation_rubric_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/human_decision_proposals_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/human_decision_proposals_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/repeated_advice_memory_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/repeated_advice_memory_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/reviewer_background_layer_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/reviewer_background_layer_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/reviewer_comparison_scorecard_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/reviewer_comparison_scorecard_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/reviewer_output_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/reviewer_output_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/revision_decision_log_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/revision_decision_log_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/rubric_qc_output_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/rubric_qc_output_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/scientific_argument_review_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/scientific_argument_review_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/scientific_model_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/scientific_model_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/serendipity_candidate_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/serendipity_candidate_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/serendipity_memory_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/serendipity_memory_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/sprint_output_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/sprint_output_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/word_figure_placeholder_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/word_figure_placeholder_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/templates/writer_output_template.md",
+      "destination_path": "plugins/review-tools/skills/application-review/assets/templates/writer_output_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/adapters/career_documents/README.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/career-documents/README.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/adapters/career_documents/career_document_review_checklist.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/career-documents/career_document_review_checklist.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/adapters/career_documents/document_type_router.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/career-documents/document_type_router.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/adapters/career_documents/mode_config.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/career-documents/mode_config.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/adapters/career_documents/recommendation_letter_profile.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/career-documents/recommendation_letter_profile.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/adapters/career_documents/sprint_adapter.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/career-documents/sprint_adapter.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/adapters/career_documents/target_requirement_register.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/career-documents/target_requirement_register.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/architecture_candidate_engine.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/architecture_candidate_engine.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/artifact_versioning_policy.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/artifact_versioning_policy.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/auto_edit_policy.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/auto_edit_policy.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/change_budget_policy.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/change_budget_policy.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/change_memory_policy.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/change_memory_policy.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/citation_style_audit.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/citation_style_audit.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/content_portfolio_gate.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/content_portfolio_gate.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/cross_domain_analogy_engine.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/cross_domain_analogy_engine.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/decision_gate_policy.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/decision_gate_policy.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/engine.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/engine.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/evidence_and_integrity_rules.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/evidence_and_integrity_rules.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/mode_router.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/mode_router.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/output_contract.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/output_contract.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/proposal_completeness_significance_citation_gate.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/proposal_completeness_significance_citation_gate.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/reviewer_comparison_engine.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/reviewer_comparison_engine.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/scientific_argument_gate.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/scientific_argument_gate.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/scientific_coherence_firewall.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/scientific_coherence_firewall.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/scientific_model_contract.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/scientific_model_contract.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/scientific_serendipity_engine.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/scientific_serendipity_engine.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/serendipity_adapter_contract.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/serendipity_adapter_contract.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/serendipity_memory_policy.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/serendipity_memory_policy.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/sprint_engine.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/sprint_engine.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/tired_brilliant_outsider_test.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/tired_brilliant_outsider_test.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/core/word_output_format_policy.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/core/word_output_format_policy.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/modes/grant_architect_mode.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/modes/grant_architect_mode.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/modes/reviewer_mode.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/modes/reviewer_mode.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/modes/rubric_qc_mode.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/modes/rubric_qc_mode.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/modes/writer_mode.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/modes/writer_mode.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/rubrics/generic_academic_job_rubric.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/rubrics/generic_academic_job_rubric.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/rubrics/generic_fellowship_rubric.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/rubrics/generic_fellowship_rubric.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/rubrics/generic_grant_rubric.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/rubrics/generic_grant_rubric.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/rubrics/generic_manuscript_rubric.md",
+      "destination_path": "plugins/review-tools/skills/application-review/references/rubrics/generic_manuscript_rubric.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/aims_clear_but_significance_missing.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/aims_clear_but_significance_missing.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/foundational_concept_treated_as_given.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/foundational_concept_treated_as_given.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/gated_sprint_explicit_approval_cases.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/gated_sprint_explicit_approval_cases.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/hypothesis_without_citation_should_not_flag.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/hypothesis_without_citation_should_not_flag.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/materials_science_prior_knowledge_without_citation.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/materials_science_prior_knowledge_without_citation.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/missing_background_significance_references.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/missing_background_significance_references.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/paragraph_level_citation_support_should_pass.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/paragraph_level_citation_support_should_pass.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/preliminary_data_without_external_citation_should_not_flag.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/preliminary_data_without_external_citation_should_not_flag.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/prior_knowledge_block_without_citation.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/prior_knowledge_block_without_citation.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/failure_cases/scientific_argument_review_cases.json",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/failure-cases/scientific_argument_review_cases.json",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/serendipity_cases/README.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/README.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/serendipity_cases/adapter_behavior_cases.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/adapter_behavior_cases.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/serendipity_cases/anomaly_and_convergence_cases.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/anomaly_and_convergence_cases.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/serendipity_cases/cross_domain_analogy_cases.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/cross_domain_analogy_cases.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/serendipity_cases/human_position_and_change_budget_cases.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/human_position_and_change_budget_cases.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/serendipity_cases/memory_and_privacy_cases.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/memory_and_privacy_cases.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/serendipity_cases/quadrant_and_coherence_cases.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/quadrant_and_coherence_cases.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Application_Review_OS/tests/serendipity_cases/user_burden_and_output_cases.md",
+      "destination_path": "plugins/review-tools/skills/application-review/tests/fixtures/serendipity/user_burden_and_output_cases.md",
+      "transfer_mode": "exact_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Communication_Lens/README.md",
+      "destination_path": "plugins/review-tools/skills/communication-lens/SKILL.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Communication_Lens/templates/message_request_template.md",
+      "destination_path": "plugins/review-tools/skills/communication-lens/assets/templates/message_request_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Communication_Lens/templates/message_review_output_template.md",
+      "destination_path": "plugins/review-tools/skills/communication-lens/assets/templates/message_review_output_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Communication_Lens/core/communication_lens_engine.md",
+      "destination_path": "plugins/review-tools/skills/communication-lens/references/core/communication_lens_engine.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/README.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/SKILL.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/templates/chat_invocation_prompt.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/assets/templates/chat_invocation_prompt.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/templates/project_instructions_snippet.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/assets/templates/project_instructions_snippet.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/templates/review_response_format.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/assets/templates/review_response_format.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/templates/reviewer_output_template.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/assets/templates/reviewer_output_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/templates/reviewer_profile_template.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/assets/templates/reviewer_profile_template.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/examples/pushback_handling_demo.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/examples/pushback_handling_demo.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/core/anti_appeasement_rules.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/references/core/anti_appeasement_rules.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/core/application_writing_check.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/references/core/application_writing_check.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/core/calibration_check.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/references/core/calibration_check.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/core/reviewer_engine.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/references/core/reviewer_engine.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/core/reviewer_lens_locked_mode.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/references/core/reviewer_lens_locked_mode.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/core/reviewer_roles.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/references/core/reviewer_roles.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    },
+    {
+      "source_id": "phase12b_review_tools_classified",
+      "source_commit": "d1fc6462fcc5dbdafb527d4ee318d12f84b65a1f",
+      "source_path": "Reviewer_Lens/core/verdict_update_protocol.md",
+      "destination_path": "plugins/review-tools/skills/reviewer-lens/references/core/verdict_update_protocol.md",
+      "transfer_mode": "adapted_public_copy",
+      "phase": "12B",
+      "status": "ported_offline"
+    }
+  ]
+}
