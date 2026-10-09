@@ -32,7 +32,9 @@ ACTIVE_CHANGE_SPEC_PATH_PARTS = ("exports", "active_change", "CHANGE_SPEC.md")
 CHANGE_SPEC_NAME = "CHANGE_SPEC.md"
 MAX_UNTRACKED_TEXT_BYTES = 200_000
 MAX_DIFF_CHARS = 160_000
-PYTEST_TIMEOUT_SECONDS = 120
+DEFAULT_PYTEST_TIMEOUT_SECONDS = 300
+MAX_PYTEST_TIMEOUT_SECONDS = 3600
+PYTEST_TIMEOUT_ENV = "AI_RESEARCH_OS_FINAL_REVIEW_PYTEST_TIMEOUT_SECONDS"
 BROAD_CHANGE_FILE_THRESHOLD = 5
 
 RAW_DATA_MARKERS = (
@@ -460,12 +462,41 @@ def pytest_available(repo_root: Path) -> bool:
     return result.returncode == 0
 
 
+def resolve_pytest_timeout(
+    environment: dict[str, str] | None = None,
+) -> tuple[int | None, str | None]:
+    """Resolve a positive pytest timeout without weakening fail-closed review."""
+
+    source = os.environ if environment is None else environment
+    raw_value = source.get(PYTEST_TIMEOUT_ENV)
+    if raw_value is None:
+        return DEFAULT_PYTEST_TIMEOUT_SECONDS, None
+
+    try:
+        timeout_seconds = int(raw_value)
+    except ValueError:
+        return None, (
+            f"{PYTEST_TIMEOUT_ENV} must be an integer between 1 and "
+            f"{MAX_PYTEST_TIMEOUT_SECONDS}"
+        )
+    if timeout_seconds <= 0 or timeout_seconds > MAX_PYTEST_TIMEOUT_SECONDS:
+        return None, (
+            f"{PYTEST_TIMEOUT_ENV} must be an integer between 1 and "
+            f"{MAX_PYTEST_TIMEOUT_SECONDS}"
+        )
+    return timeout_seconds, None
+
+
 def run_pytest_if_available(repo_root: Path) -> str:
     if not appears_to_have_tests(repo_root):
         return "Pytest was not run because this repository does not appear to have tests."
 
     if not pytest_available(repo_root):
         return "Pytest was not run because pytest does not appear to be available."
+
+    timeout_seconds, timeout_error = resolve_pytest_timeout()
+    if timeout_error is not None or timeout_seconds is None:
+        return "FAIL: invalid pytest timeout configuration. " + str(timeout_error)
 
     env = os.environ.copy()
     env["PYTHONDONTWRITEBYTECODE"] = "1"
@@ -484,7 +515,7 @@ def run_pytest_if_available(repo_root: Path) -> str:
                 repo_root,
                 command,
                 "pytest",
-                timeout=PYTEST_TIMEOUT_SECONDS,
+                timeout=timeout_seconds,
                 env=env,
             )
         except subprocess.TimeoutExpired as error:
@@ -496,7 +527,7 @@ def run_pytest_if_available(repo_root: Path) -> str:
             output = "\n".join(part for part in output_parts if part)
             return "\n".join(
                 [
-                    f"FAIL: pytest timed out after {PYTEST_TIMEOUT_SECONDS} seconds.",
+                    f"FAIL: pytest timed out after {timeout_seconds} seconds.",
                     "Command: " + " ".join(command),
                     output or "(no output before timeout)",
                 ]
