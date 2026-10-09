@@ -40,6 +40,38 @@ def handoff() -> ModuleType:
     return load_script_module("handoff.py")
 
 
+def test_repository_safety_validation_uses_working_tree_phase(
+    finish_change: ModuleType,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: list[list[str]] = []
+
+    def fake_run_command(
+        repo_root: Path,
+        command: list[str],
+        label: str,
+        timeout: int | None = None,
+        env: dict[str, str] | None = None,
+    ) -> object:
+        del repo_root, timeout, env
+        captured.append(command)
+        return finish_change.CommandResult(label, command, 0, "PASS\n", "")
+
+    monkeypatch.setattr(finish_change, "run_command", fake_run_command)
+
+    result = finish_change.run_repository_safety_validation(REPO_ROOT)
+
+    assert result.returncode == 0
+    assert captured == [
+        [
+            "python3",
+            "Scripts/validate_repository_safety.py",
+            "--phase",
+            "working-tree",
+        ]
+    ]
+
+
 def test_parse_change_spec_metadata_from_markdown_labels(finish_change: ModuleType) -> None:
     spec_text = "\n".join(
         [

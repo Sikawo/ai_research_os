@@ -412,6 +412,29 @@ def run_safety_check(repo_root: Path) -> CommandResult:
     )
 
 
+def run_repository_safety_validation(repo_root: Path) -> CommandResult:
+    script = repo_root / "Scripts" / "validate_repository_safety.py"
+    command = [
+        "python3",
+        "Scripts/validate_repository_safety.py",
+        "--phase",
+        "working-tree",
+    ]
+    if not script.is_file():
+        return CommandResult(
+            label="Repository safety validation",
+            command=command,
+            returncode=127,
+            stdout="Scripts/validate_repository_safety.py not found; validation was not run.\n",
+            stderr="",
+        )
+    return run_command(
+        repo_root,
+        command,
+        "Repository safety validation",
+    )
+
+
 def appears_to_have_tests(repo_root: Path) -> bool:
     config_names = ("pytest.ini", "tox.ini", "setup.cfg", "pyproject.toml")
     if any((repo_root / name).is_file() for name in config_names):
@@ -1202,6 +1225,7 @@ def build_packet(
     lanes: dict[str, list[str]],
     human_summary: str,
     expected_behavior: str,
+    repository_safety_output: str,
     safety_output: str,
     syntax_output: str,
     pytest_output: str,
@@ -1307,6 +1331,10 @@ def build_packet(
             "",
             "### high_risk_lane",
             "\n".join(lanes["high_risk_lane"]),
+            "",
+            "## Repository Safety Validation Output",
+            "",
+            markdown_code_block(repository_safety_output),
             "",
             "## Safety Check Output",
             "",
@@ -1515,6 +1543,15 @@ def main() -> int:
         )
         relevant_diff = truncate_text(relevant_diff, MAX_DIFF_CHARS, "relevant diff")
 
+        repository_safety_result = run_repository_safety_validation(repo_root)
+        repository_safety_output = "\n".join(
+            [
+                f"Command: {' '.join(repository_safety_result.command)}",
+                f"Exit code: {repository_safety_result.returncode}",
+                repository_safety_result.combined_output() or "(no output)",
+            ]
+        )
+
         safety_result = run_safety_check(repo_root)
         safety_output = "\n".join(
             [
@@ -1552,6 +1589,7 @@ def main() -> int:
             lanes=lanes,
             human_summary=build_human_readable_summary(changed, lanes, safety_output, syntax_output, pytest_output),
             expected_behavior=build_expected_behavior(changed),
+            repository_safety_output=repository_safety_output,
             safety_output=safety_output,
             syntax_output=syntax_output,
             pytest_output=pytest_output,

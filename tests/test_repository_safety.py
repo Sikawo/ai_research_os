@@ -38,6 +38,16 @@ from Scripts.validate_repository_safety import (
 
 
 class RepositorySafetyTests(unittest.TestCase):
+    def test_baseline_includes_exact_ci_security_controls(self) -> None:
+        self.assertTrue(
+            {
+                ".github/dependabot.yml",
+                ".github/workflows/codeql.yml",
+                "HANDOFF.md",
+                "tests/test_workflow_security.py",
+            }.issubset(BASELINE_PATHS)
+        )
+
     def test_effective_branch_name_uses_github_pr_head_for_detached_checkout(self) -> None:
         environment = {
             "GITHUB_ACTIONS": "true",
