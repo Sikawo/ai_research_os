@@ -56,7 +56,11 @@ from .models import (
 from .institution_monitor import is_authoritative_target_url, plan_target_scan
 from .queries import generate_academic_queries
 from .qol import build_qol_assessment, qol_refresh_reasons, requires_full_qol
-from .reports import render_daily_report, render_weekly_report
+from .reports import (
+    render_configuration_blocking_diagnostic,
+    render_daily_report,
+    render_weekly_report,
+)
 from .scoring import score_academic_fit
 from .titles import infer_independence, normalize_academic_title
 
@@ -1399,6 +1403,51 @@ class AcademicPiService:
                 return False
         return True
 
+    def _email_label_mutation_enabled(self) -> bool:
+        """Return true only for an explicit, bounded active-mode declaration."""
+
+        section = self.config.get("connectors", {})
+        if not isinstance(section, Mapping):
+            return False
+        bindings = section.get("bindings", {})
+        plugins = section.get("plugins", ())
+        if not isinstance(bindings, Mapping) or not isinstance(plugins, Sequence):
+            return False
+        binding = bindings.get("email")
+        if not isinstance(binding, str) or not binding:
+            return False
+        for plugin in plugins:
+            if not isinstance(plugin, Mapping) or plugin.get("id") != binding:
+                continue
+            options = plugin.get("options", {})
+            if not isinstance(options, Mapping):
+                return False
+            return bool(
+                plugin.get("enabled") is True
+                and str(options.get("processing_mode", "shadow")).casefold()
+                == "active"
+                and options.get("label_mutation_enabled") is True
+                and options.get("archive_enabled") is False
+                and options.get("delete_enabled") is False
+            )
+        return False
+
+    def _configuration_provenance(self) -> Mapping[str, Any] | None:
+        value = self.config.get("configuration_provenance")
+        return value if isinstance(value, Mapping) else None
+
+    def _configuration_provenance_passes(self) -> bool:
+        provenance = self._configuration_provenance()
+        return bool(
+            isinstance(provenance, Mapping)
+            and str(provenance.get("framework_resolution", "")).upper() == "PASS"
+            and str(
+                provenance.get("deployment_config_resolution", "")
+            ).upper()
+            == "PASS"
+            and str(provenance.get("fallback_used", "")).casefold() == "no"
+        )
+
     def _discover_from_connectors(
         self,
         run_id: str,
@@ -1932,10 +1981,12 @@ class AcademicPiService:
         mark_email: bool = True,
         ingest_email: bool = True,
         discover: bool = True,
+        allow_unresolved_provenance: bool = False,
     ) -> WorkflowResult:
         config_errors = self.validate_config(strict_contracts=False)
         if config_errors:
             raise ValueError("Invalid Academic PI configuration: " + "; ".join(config_errors))
+        mark_email = bool(mark_email and self._email_label_mutation_enabled())
         started = _now()
         run_id = f"academic-pi-{run_type}-{started.strftime('%Y%m%dT%H%M%SZ')}-{uuid4().hex[:8]}"
         metric_names = (
@@ -1948,6 +1999,23 @@ class AcademicPiService:
         )
         metrics = {name: 0 for name in metric_names}
         errors: list[dict[str, Any]] = []
+        if (
+            not allow_unresolved_provenance
+            and not self._configuration_provenance_passes()
+        ):
+            message = "configuration provenance is unresolved; workflow stopped before side effects"
+            return WorkflowResult(
+                run_id=run_id,
+                run_type=run_type,
+                metrics=metrics,
+                report=render_configuration_blocking_diagnostic(
+                    self._configuration_provenance()
+                ),
+                jobs=[],
+                label_plans=[],
+                errors=[message],
+                submitted_applications=0,
+            )
         email_candidates, email_results = (
             self._ingest_email(metrics, errors) if ingest_email else ([], [])
         )
@@ -2397,6 +2465,8 @@ class AcademicPiService:
                 applications=applications,
                 blind_spots=blind_spots,
                 metrics=metrics,
+                configuration_provenance=self._configuration_provenance(),
+                label_mutation_enabled=mark_email,
             )
         else:
             report = render_daily_report(
@@ -2409,6 +2479,10 @@ class AcademicPiService:
                 deadline_alerts=deadline_jobs,
                 metrics=metrics,
                 applications=applications,
+                configuration_provenance=self.config.get(
+                    "configuration_provenance", self.config.get("_provenance")
+                ),
+                label_mutation_enabled=mark_email,
             )
         if deliver:
             self._deliver(report, run_id, run_type, metrics, errors)
@@ -2720,7 +2794,12 @@ class AcademicPiService:
             report_connectors=(),
             email_connector=self._clone_connector_for_dry_run(self.email_connector),
         )
-        return service._run(run_type, deliver=False, mark_email=False)
+        return service._run(
+            run_type,
+            deliver=False,
+            mark_email=False,
+            allow_unresolved_provenance=True,
+        )
 
 
 AcademicPIService = AcademicPiService

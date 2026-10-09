@@ -211,6 +211,13 @@ def test_rss_connector_cannot_claim_direct_target_institution_coverage() -> None
                     }
                 ]
             },
+            "configuration_provenance": {
+                "framework_source": "synthetic/public-framework",
+                "framework_resolution": "PASS",
+                "deployment_config_source": "synthetic/private-overlay",
+                "deployment_config_resolution": "PASS",
+                "fallback_used": "no",
+            },
         },
         state_store=state,
         discovery_connectors=[adapter],

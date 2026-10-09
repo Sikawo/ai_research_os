@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase11-academic-pi-production-contract",
+  "status": "approved_for_offline_development",
+  "deny_by_default": true,
+  "license": "Apache-2.0",
+  "rules": {
+    "exact_paths_only": true,
+    "synthetic_tests_only": true,
+    "private_values": false,
+    "resource_bindings": false,
+    "runtime_changes": false,
+    "scheduled_task_changes": false,
+    "live_cutover": false
+  },
+  "expected_target_path_count": 19,
+  "allowed_target_paths": [
+    "Career_Job_Agent_Framework/deployments/academic_pi/README.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/cli.py",
+    "Career_Job_Agent_Framework/deployments/academic_pi/config/report_defaults.yaml",
+    "Career_Job_Agent_Framework/deployments/academic_pi/contracts/daily_run.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/contracts/runtime.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/docs/GMAIL_ALERTS.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/prompts/daily_scan.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/reports.py",
+    "Career_Job_Agent_Framework/deployments/academic_pi/service.py",
+    "HANDOFF.md",
+    "Scripts/validate_repository_safety.py",
+    "manifests/phase11_academic_pi_allowlist.yaml",
+    "tests/test_academic_pi_daily_contract.py",
+    "tests/test_academic_pi_job_agent.py",
+    "tests/test_academic_pi_production_upgrade.py",
+    "tests/test_academic_pi_rss.py",
+    "tests/test_academic_pi_service_correctness.py",
+    "tests/test_academic_pi_service_hardening.py",
+    "tests/test_repository_safety.py"
+  ]
+}
