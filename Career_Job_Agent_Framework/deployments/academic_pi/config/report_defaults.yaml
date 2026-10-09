@@ -31,8 +31,16 @@ daily:
     - tier
     - strongest_fit
     - main_gap
+    - salary
+    - economic_qol
+    - household_qol
+    - independence
+    - tenure_or_faculty_track
+    - startup_or_lab_space
+    - teaching_expectation
     - official_url
     - verification_date
+    - verification_confidence
   empty_application_activity_text: No applications submitted.
   include_unchanged_current_active: true
 
