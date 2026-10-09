@@ -17,6 +17,35 @@
 13. After explicit document-generation approval, produce final files and return the official application URL and output location.
 14. Never submit an application automatically.
 
+## Configuration provenance gate
+
+Before search, canonical-state mutation, or any external write, resolve the
+requested framework and deployment-configuration inputs for the current run.
+A path copied from the saved task prompt is not resolution evidence by itself:
+the host must successfully read the required framework contracts and the
+requested deployment configuration.
+
+Every ChatGPT-visible run result, including a blocking diagnostic, must contain
+this value-free block:
+
+```text
+CONFIGURATION PROVENANCE
+framework_source: <repository/subtree selector>
+framework_resolution: PASS | FAIL | UNKNOWN
+deployment_config_source: <repository/subtree selector>
+deployment_config_resolution: PASS | FAIL | UNKNOWN
+fallback_used: no | yes | unknown
+```
+
+Source fields may contain only the stable repository/subtree selector used for
+the run. Never include configuration values, external resource IDs, account
+details, connector IDs, credentials, secrets, or fetched file contents.
+
+Continue only when both resolution fields are `PASS` and `fallback_used` is
+`no`. Otherwise render a `BLOCKING CONFIGURATION DIAGNOSTIC` with the value-free
+status fields and stop before search, state mutation, report persistence, or
+notification attempts. Do not silently substitute another deployment source.
+
 ## Two-layer report contract
 
 Every enabled daily user-facing output contains two independent layers in this order:
