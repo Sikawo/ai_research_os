@@ -20,18 +20,29 @@ framework_resolution: PASS | FAIL | UNKNOWN
 deployment_config_source: <repository/subtree selector>
 deployment_config_resolution: PASS | FAIL | UNKNOWN
 fallback_used: no | yes | unknown
+deployment_activation: PASS | FAIL | UNKNOWN
+output_binding_mode: existing_task_external_bindings | repository_bindings | unknown
+external_bindings_resolution: PASS | FAIL | UNKNOWN
 ```
 
 Report only value-free repository/subtree selectors and statuses. Never expose
 private configuration values, resource IDs, account information, connector
 IDs, credentials, secrets, or fetched file contents.
 
-Proceed to search only when both resolution fields are `PASS` and
-`fallback_used` is `no`. If either resolution is `FAIL` or `UNKNOWN`, or
-fallback is `yes` or `unknown`, render a `BLOCKING CONFIGURATION DIAGNOSTIC`
-and stop before search, canonical-state mutation, report persistence, or any
-external write. Do not silently fall back to the Brain or any other deployment
-configuration.
+Proceed to search only when both resolution fields, `deployment_activation`,
+and `external_bindings_resolution` are `PASS`, and `fallback_used` is `no`.
+If any required status is `FAIL` or `UNKNOWN`, or fallback is `yes` or
+`unknown`, render a `BLOCKING CONFIGURATION DIAGNOSTIC` and stop before search,
+canonical-state mutation, report persistence, or any external write. Do not
+silently fall back to the Brain or any other deployment configuration.
+
+The private overlay may use `existing_task_external_bindings`. In that mode,
+the Git repository intentionally keeps concrete resource IDs null and the
+existing Industry scheduled task remains the authority for Drive, Sheet,
+Gmail, and Slack bindings. Treat this as bound only after confirming that the
+same task still exposes every required binding class unchanged. Record only
+the mode and PASS/FAIL/UNKNOWN result; never emit an identifier, connector ID,
+account detail, or private value.
 
 ## Daily sequence
 
