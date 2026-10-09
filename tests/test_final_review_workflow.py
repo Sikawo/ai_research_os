@@ -132,6 +132,79 @@ def test_pytest_timeout_remains_fail_closed(
     assert result.startswith("FAIL: pytest timed out after 300 seconds.")
 
 
+def test_generated_handoff_is_classified_from_pre_refresh_snapshot(
+    finish_change: ModuleType,
+) -> None:
+    changed_after = {
+        "HANDOFF.md": finish_change.ChangedFile(path="HANDOFF.md"),
+        "Scripts/finish_change.py": finish_change.ChangedFile(
+            path="Scripts/finish_change.py"
+        ),
+    }
+
+    artifacts = finish_change.workflow_generated_artifact_paths(
+        {}, changed_after, None
+    )
+    review_changed = finish_change.exclude_workflow_generated_artifacts(
+        changed_after, artifacts
+    )
+
+    assert artifacts == {"HANDOFF.md"}
+    assert sorted(review_changed) == ["Scripts/finish_change.py"]
+    summary = finish_change.format_workflow_generated_artifacts(artifacts)
+    assert "generated after the pre-review snapshot" in summary
+    assert "commit-candidate and scope calculations" in summary
+
+
+def test_preexisting_handoff_change_is_not_hidden(
+    finish_change: ModuleType,
+) -> None:
+    changed_before = {
+        "HANDOFF.md": finish_change.ChangedFile(path="HANDOFF.md")
+    }
+    changed_after = {
+        "HANDOFF.md": finish_change.ChangedFile(path="HANDOFF.md")
+    }
+
+    artifacts = finish_change.workflow_generated_artifact_paths(
+        changed_before, changed_after, None
+    )
+
+    assert artifacts == set()
+    assert sorted(
+        finish_change.exclude_workflow_generated_artifacts(changed_after, artifacts)
+    ) == ["HANDOFF.md"]
+
+
+def test_explicitly_scoped_handoff_change_is_not_hidden(
+    finish_change: ModuleType,
+    tmp_path: Path,
+) -> None:
+    spec_text = "\n".join(
+        [
+            "## Positive file list",
+            "",
+            "- `HANDOFF.md`",
+            "- `Scripts/finish_change.py`",
+        ]
+    )
+    change_spec = finish_change.ChangeSpec(
+        source_path=tmp_path / "CHANGE_SPEC.md",
+        content=spec_text,
+        sha256="0" * 64,
+        metadata={},
+    )
+    changed_after = {
+        "HANDOFF.md": finish_change.ChangedFile(path="HANDOFF.md")
+    }
+
+    artifacts = finish_change.workflow_generated_artifact_paths(
+        {}, changed_after, change_spec
+    )
+
+    assert artifacts == set()
+
+
 def test_parse_change_spec_metadata_from_markdown_labels(finish_change: ModuleType) -> None:
     spec_text = "\n".join(
         [
