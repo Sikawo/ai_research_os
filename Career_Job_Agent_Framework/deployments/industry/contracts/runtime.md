@@ -12,15 +12,25 @@ the saved prompt is not sufficient evidence.
 The ChatGPT-visible result must always include the fixed value-free
 `CONFIGURATION PROVENANCE` block with `framework_source`,
 `framework_resolution`, `deployment_config_source`,
-`deployment_config_resolution`, and `fallback_used`. Resolution values are
-`PASS`, `FAIL`, or `UNKNOWN`; fallback values are `no`, `yes`, or `unknown`.
+`deployment_config_resolution`, `fallback_used`, `deployment_activation`,
+`output_binding_mode`, and `external_bindings_resolution`. Resolution values
+are `PASS`, `FAIL`, or `UNKNOWN`; fallback values are `no`, `yes`, or `unknown`.
 Do not include private values, resource IDs, account details, connector IDs,
 credentials, secrets, or fetched file contents.
 
-Continue only when both sources resolve as `PASS` and `fallback_used` is `no`.
-Otherwise emit a `BLOCKING CONFIGURATION DIAGNOSTIC` and stop before search,
-state mutation, report persistence, or external writes. Never silently use the
-Brain or another configuration source as a fallback.
+Continue only when both sources, deployment activation, and external bindings
+resolve as `PASS` and `fallback_used` is `no`. Otherwise emit a
+`BLOCKING CONFIGURATION DIAGNOSTIC` and stop before search, state mutation, report
+persistence, or external writes. Never silently use the Brain or another
+configuration source as a fallback.
+
+When `output_binding_mode` is `existing_task_external_bindings`, null resource
+IDs in Git are intentional. Confirm the required Drive, Sheet, Gmail, and Slack
+binding classes from the existing task without copying or displaying their
+identifiers. The mode is not active unless the private deployment declares an
+enabled activation and a non-secret live-consumer selector, and the host
+confirms those existing bindings unchanged. Missing or ambiguous confirmation
+is `UNKNOWN`, not success.
 
 ## Daily sequence
 

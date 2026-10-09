@@ -66,6 +66,9 @@ def test_industry_contracts_require_value_free_configuration_provenance() -> Non
         "deployment_config_source",
         "deployment_config_resolution",
         "fallback_used",
+        "deployment_activation",
+        "output_binding_mode",
+        "external_bindings_resolution",
         "PASS",
         "FAIL",
         "UNKNOWN",
@@ -98,6 +101,26 @@ def test_industry_provenance_gate_rejects_prompt_only_evidence_and_fallback() ->
         assert "stop before search" in normalized
         assert "private" in normalized
         assert "connector IDs" in normalized
+
+
+def test_industry_contracts_support_external_task_bindings_without_git_ids() -> None:
+    shared = (FRAMEWORK / "contracts" / "daily_run.md").read_text(encoding="utf-8")
+    industry_daily = (
+        FRAMEWORK / "deployments" / "industry" / "contracts" / "daily_run.md"
+    ).read_text(encoding="utf-8")
+    industry_runtime = (
+        FRAMEWORK / "deployments" / "industry" / "contracts" / "runtime.md"
+    ).read_text(encoding="utf-8")
+
+    for contract in (shared, industry_daily, industry_runtime):
+        normalized = " ".join(contract.split())
+        assert "existing_task_external_bindings" in normalized
+        assert "resource IDs" in normalized
+        assert "existing" in normalized
+        assert "unchanged" in normalized
+        assert "UNKNOWN" in normalized
+
+    assert "does not change deployments" in " ".join(shared.split())
 
 
 def test_delivery_result_preserves_legacy_confirmed_success() -> None:
