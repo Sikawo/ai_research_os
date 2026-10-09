@@ -2,6 +2,26 @@
 
 Run once each morning in the user's local time zone.
 
+## Configuration provenance gate
+
+Before step 1, resolve the exact framework and deployment-configuration
+selectors supplied by the host. Resolution is `PASS` only after the required
+files for the current run have been read successfully; a selector present in
+the saved prompt is not sufficient evidence.
+
+The ChatGPT-visible result must always include the fixed value-free
+`CONFIGURATION PROVENANCE` block with `framework_source`,
+`framework_resolution`, `deployment_config_source`,
+`deployment_config_resolution`, and `fallback_used`. Resolution values are
+`PASS`, `FAIL`, or `UNKNOWN`; fallback values are `no`, `yes`, or `unknown`.
+Do not include private values, resource IDs, account details, connector IDs,
+credentials, secrets, or fetched file contents.
+
+Continue only when both sources resolve as `PASS` and `fallback_used` is `no`.
+Otherwise emit a `BLOCKING CONFIGURATION DIAGNOSTIC` and stop before search,
+state mutation, report persistence, or external writes. Never silently use the
+Brain or another configuration source as a fallback.
+
 ## Daily sequence
 
 1. Read approved-company, search, fit-rubric, question-policy, and output-location configuration through the deployment's private overlay.

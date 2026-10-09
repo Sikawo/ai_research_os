@@ -52,6 +52,54 @@ def test_framework_readme_prevents_new_jobs_only_regression() -> None:
     assert "never changes today's headline" in readme
 
 
+def test_industry_contracts_require_value_free_configuration_provenance() -> None:
+    contracts = (
+        FRAMEWORK / "contracts" / "daily_run.md",
+        FRAMEWORK / "deployments" / "industry" / "contracts" / "daily_run.md",
+        FRAMEWORK / "deployments" / "industry" / "contracts" / "runtime.md",
+    )
+
+    required_tokens = (
+        "CONFIGURATION PROVENANCE",
+        "framework_source",
+        "framework_resolution",
+        "deployment_config_source",
+        "deployment_config_resolution",
+        "fallback_used",
+        "PASS",
+        "FAIL",
+        "UNKNOWN",
+        "BLOCKING CONFIGURATION DIAGNOSTIC",
+    )
+    for path in contracts:
+        contract = path.read_text(encoding="utf-8")
+        for token in required_tokens:
+            assert token in contract, f"{path.relative_to(REPO_ROOT)} missing {token}"
+
+
+def test_industry_provenance_gate_rejects_prompt_only_evidence_and_fallback() -> None:
+    shared = (FRAMEWORK / "contracts" / "daily_run.md").read_text(encoding="utf-8")
+    industry_daily = (
+        FRAMEWORK / "deployments" / "industry" / "contracts" / "daily_run.md"
+    ).read_text(encoding="utf-8")
+    industry_runtime = (
+        FRAMEWORK / "deployments" / "industry" / "contracts" / "runtime.md"
+    ).read_text(encoding="utf-8")
+
+    assert "saved task prompt is not resolution evidence" in " ".join(shared.split())
+    assert "saved task prompt is not proof" in " ".join(industry_daily.split())
+    assert "saved prompt is not sufficient evidence" in " ".join(
+        industry_runtime.split()
+    )
+
+    for contract in (shared, industry_daily, industry_runtime):
+        normalized = " ".join(contract.split())
+        assert "fallback_used` is `no`" in normalized
+        assert "stop before search" in normalized
+        assert "private" in normalized
+        assert "connector IDs" in normalized
+
+
 def test_delivery_result_preserves_legacy_confirmed_success() -> None:
     result = DeliveryResult.from_dict(
         {

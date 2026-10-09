@@ -4,6 +4,35 @@
 
 Produce a daily report that separates today's newly discovered or materially changed jobs from the current active Tier 1 / Tier 2 portfolio; estimate family quality of life for every Tier 2 or better role; surface unusually strong-fit roles at credible employers that are not yet allowlisted; and prepare application materials for Tier 1 roles with the least possible human interaction.
 
+## Configuration provenance gate
+
+Before the daily sequence begins, successfully read the requested clean public
+framework contracts and the requested private deployment-configuration files
+for this run. Merely repeating source paths from the saved task prompt is not
+proof that either source resolved.
+
+Every ChatGPT-visible result, including an early failure, must include:
+
+```text
+CONFIGURATION PROVENANCE
+framework_source: <repository/subtree selector>
+framework_resolution: PASS | FAIL | UNKNOWN
+deployment_config_source: <repository/subtree selector>
+deployment_config_resolution: PASS | FAIL | UNKNOWN
+fallback_used: no | yes | unknown
+```
+
+Report only value-free repository/subtree selectors and statuses. Never expose
+private configuration values, resource IDs, account information, connector
+IDs, credentials, secrets, or fetched file contents.
+
+Proceed to search only when both resolution fields are `PASS` and
+`fallback_used` is `no`. If either resolution is `FAIL` or `UNKNOWN`, or
+fallback is `yes` or `unknown`, render a `BLOCKING CONFIGURATION DIAGNOSTIC`
+and stop before search, canonical-state mutation, report persistence, or any
+external write. Do not silently fall back to the Brain or any other deployment
+configuration.
+
 ## Daily sequence
 
 1. Load the reusable framework contracts and deployment configuration through the configured private overlay. Public framework defaults must never contain candidate records or connector bindings.
