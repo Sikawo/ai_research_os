@@ -55,6 +55,9 @@ profile.
   Gmail-shadow, delivery, and activation gates used by scheduled hosts.
 - `templates/` contains synthetic starting points for private configuration.
 - `docs/` explains setup, alert ingestion, sources, scoring, state, and sharing.
+- `source_registry.py` defines offline source batching, official-domain checks,
+  cross-lane deduplication, and truthful per-source health evidence for staged
+  10 → 25 → 50 → 100 institution expansion.
 
 All public configuration is versioned. Private overrides may change scientific
 terms, geography, target institutions, source cadence, and scoring weights

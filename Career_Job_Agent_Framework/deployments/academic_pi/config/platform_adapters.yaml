@@ -1,0 +1,16 @@
+version: 1
+execution: trusted_runtime_only
+network_access_default: disabled
+adapters:
+  - {id: unassigned, source_modes: [discovery_pending], parser_contract: none_until_verified}
+  - {id: rss, source_modes: [official_rss], parser_contract: rss_feed_v1}
+  - {id: api, source_modes: [official_api], parser_contract: json_api_v1}
+  - {id: workday, source_modes: [common_ats], parser_contract: workday_public_jobs_v1}
+  - {id: interfolio, source_modes: [common_ats], parser_contract: interfolio_faculty_search_v1}
+  - {id: taleo, source_modes: [common_ats], parser_contract: taleo_public_jobs_v1}
+  - {id: successfactors, source_modes: [common_ats], parser_contract: successfactors_public_jobs_v1}
+  - {id: peopleadmin, source_modes: [common_ats], parser_contract: peopleadmin_public_jobs_v1}
+  - {id: pageup, source_modes: [common_ats], parser_contract: pageup_public_jobs_v1}
+  - {id: oracle_hcm, source_modes: [common_ats], parser_contract: oracle_hcm_public_jobs_v1}
+  - {id: generic_html, source_modes: [official_page], parser_contract: bounded_html_listing_v1}
+  - {id: institution_custom, source_modes: [official_page, official_api], parser_contract: separately_reviewed_institution_adapter}
