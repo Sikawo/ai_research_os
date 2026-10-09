@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import sys
 from pathlib import Path
 from types import ModuleType
@@ -70,6 +71,65 @@ def test_repository_safety_validation_uses_working_tree_phase(
             "working-tree",
         ]
     ]
+
+
+def test_pytest_timeout_defaults_to_clean_environment_margin(
+    finish_change: ModuleType,
+) -> None:
+    timeout, error = finish_change.resolve_pytest_timeout({})
+
+    assert timeout == 300
+    assert timeout > 2 * 120
+    assert error is None
+
+
+def test_pytest_timeout_accepts_explicit_positive_override(
+    finish_change: ModuleType,
+) -> None:
+    timeout, error = finish_change.resolve_pytest_timeout(
+        {finish_change.PYTEST_TIMEOUT_ENV: "480"}
+    )
+
+    assert timeout == 480
+    assert error is None
+
+
+@pytest.mark.parametrize("value", ["0", "-1", "3601", "not-an-integer"])
+def test_pytest_timeout_rejects_invalid_override(
+    finish_change: ModuleType,
+    value: str,
+) -> None:
+    timeout, error = finish_change.resolve_pytest_timeout(
+        {finish_change.PYTEST_TIMEOUT_ENV: value}
+    )
+
+    assert timeout is None
+    assert "between 1 and 3600" in str(error)
+
+
+def test_pytest_timeout_remains_fail_closed(
+    finish_change: ModuleType,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv(finish_change.PYTEST_TIMEOUT_ENV, raising=False)
+    monkeypatch.setattr(finish_change, "appears_to_have_tests", lambda _root: True)
+    monkeypatch.setattr(finish_change, "pytest_available", lambda _root: True)
+
+    def fake_run_command(
+        repo_root: Path,
+        command: list[str],
+        label: str,
+        timeout: int | None = None,
+        env: dict[str, str] | None = None,
+    ) -> object:
+        del repo_root, label, env
+        raise subprocess.TimeoutExpired(command, timeout or 0)
+
+    monkeypatch.setattr(finish_change, "run_command", fake_run_command)
+
+    result = finish_change.run_pytest_if_available(REPO_ROOT)
+
+    assert result.startswith("FAIL: pytest timed out after 300 seconds.")
 
 
 def test_parse_change_spec_metadata_from_markdown_labels(finish_change: ModuleType) -> None:
