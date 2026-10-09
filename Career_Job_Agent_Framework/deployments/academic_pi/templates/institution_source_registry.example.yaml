@@ -1,0 +1,42 @@
+version: 1
+registry_mode: offline_only
+institutions:
+  - id: synthetic_us_institute
+    name: Synthetic US Institute
+    region_bucket: US
+    country: US
+    official_domains: [us-institute.example]
+    priority_tier: 1
+    rollout_wave: 10
+    batch_id: batch_01
+    cadence_hours: 24
+    enabled: false
+    verification_status: pending
+    sources:
+      - {source_id: synthetic_us_careers, mode: common_ats, adapter: workday, url: "https://us-institute.example/careers", verification_status: pending}
+  - id: synthetic_europe_university
+    name: Synthetic Europe University
+    region_bucket: EUROPE
+    country: GB
+    official_domains: [europe-university.example]
+    priority_tier: 1
+    rollout_wave: 10
+    batch_id: batch_01
+    cadence_hours: 24
+    enabled: false
+    verification_status: pending
+    sources:
+      - {source_id: synthetic_europe_feed, mode: official_rss, adapter: rss, url: "https://europe-university.example/jobs/feed.xml", verification_status: pending}
+  - id: synthetic_japan_center
+    name: Synthetic Japan Center
+    region_bucket: JAPAN
+    country: JP
+    official_domains: [japan-center.example]
+    priority_tier: 2
+    rollout_wave: 25
+    batch_id: batch_02
+    cadence_hours: 48
+    enabled: false
+    verification_status: pending
+    sources:
+      - {source_id: synthetic_japan_jobs, mode: official_page, adapter: generic_html, url: "https://japan-center.example/jobs", verification_status: pending}

@@ -99,3 +99,23 @@ A source definition should expose:
 Keep source-specific parsing isolated from verification, scoring, and state. If
 a source changes, disable or repair that adapter without mutating prior canonical
 jobs or unrelated sources.
+
+## Multi-institution registry
+
+`institution_source_registry.schema.json` defines a machine-readable registry
+that can represent a 100-institution portfolio without embedding personal
+selection in this public repository. `source_registry.py` supplies offline batch
+planning, official-domain checks, URL normalization, cross-lane dedup keys, and
+truthful source-health evidence. Platform families are declared in
+`config/platform_adapters.yaml`.
+`source_health.schema.json` defines the per-attempt evidence record and keeps a
+failed retrieval distinct from a successful zero-result scan.
+
+The exact ownership flow is: public generic contracts and synthetic fixtures
+stay in `ai_research_os`; concrete institution IDs, candidate domains, rollout
+waves, and Gmail filters stay in `personal_config`; live State, Runs, Reports,
+messages, and connector data stay in the existing external Academic state.
+
+See `MULTISOURCE_EXPANSION.md` for the 10 → 25 → 50 → 100 rollout, 24–48 hour
+coverage target, and rollback rules. The public example is synthetic; concrete
+institution selections and permitted domains belong in `personal_config`.

@@ -157,6 +157,23 @@ PHASE11_EXPECTED_TARGET_PATHS = {
     "tests/test_academic_pi_service_hardening.py",
     "tests/test_repository_safety.py",
 }
+PHASE11A_MANIFEST_PATH = "manifests/phase11a_academic_multisource_allowlist.yaml"
+PHASE11A_MANIFEST_ID = "phase11a-academic-multisource-offline-design"
+PHASE11A_EXPECTED_TARGET_PATHS = {
+    "Career_Job_Agent_Framework/deployments/academic_pi/README.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/config/platform_adapters.yaml",
+    "Career_Job_Agent_Framework/deployments/academic_pi/docs/MULTISOURCE_EXPANSION.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/docs/SOURCES.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/schemas/institution_source_registry.schema.json",
+    "Career_Job_Agent_Framework/deployments/academic_pi/schemas/source_health.schema.json",
+    "Career_Job_Agent_Framework/deployments/academic_pi/source_registry.py",
+    "Career_Job_Agent_Framework/deployments/academic_pi/templates/institution_source_registry.example.yaml",
+    "Scripts/validate_repository_safety.py",
+    PHASE11A_MANIFEST_PATH,
+    "tests/test_academic_pi_source_registry.py",
+    "tests/test_repository_safety.py",
+}
+PHASE11A_EXPECTED_TARGET_COUNT = len(PHASE11A_EXPECTED_TARGET_PATHS)
 MAX_FILE_BYTES = 200_000
 
 FORBIDDEN_SUFFIXES = {
@@ -254,6 +271,10 @@ def load_phase13_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]
 
 def load_phase11_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
     return load_json_manifest(root, PHASE11_MANIFEST_PATH, "Phase 11 allowlist manifest")
+
+
+def load_phase11a_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
+    return load_json_manifest(root, PHASE11A_MANIFEST_PATH, "Phase 11A allowlist manifest")
 
 
 def phase12b_classification_sha256(
@@ -935,6 +956,15 @@ def validate_tree(root: Path) -> list[str]:
         )
         errors.extend(phase11_errors)
 
+    phase11a_manifest, phase11a_load_errors = load_phase11a_manifest(root)
+    errors.extend(phase11a_load_errors)
+    phase11a_allowed: set[str] = set()
+    if phase11a_manifest is not None:
+        phase11a_errors, phase11a_allowed = validate_phase11a_manifest(
+            phase11a_manifest
+        )
+        errors.extend(phase11a_errors)
+
     required = (
         BASELINE_PATHS
         | GOVERNANCE_PATHS
@@ -942,6 +972,7 @@ def validate_tree(root: Path) -> list[str]:
         | phase12b_allowed
         | phase13_allowed
         | phase11_allowed
+        | phase11a_allowed
     )
     missing = sorted(required - files)
     extra = sorted(
@@ -953,6 +984,7 @@ def validate_tree(root: Path) -> list[str]:
             | phase12b_allowed
             | phase13_allowed
             | phase11_allowed
+            | phase11a_allowed
         )
     )
     missing_ported = sorted(
@@ -1035,6 +1067,59 @@ def validate_phase11_manifest(
         errors.append("Phase 11 allowed_target_paths contains an unsafe path")
     if allowed != PHASE11_EXPECTED_TARGET_PATHS:
         errors.append("Phase 11 allowed targets do not match the reviewed scope")
+    return errors, allowed
+
+
+def validate_phase11a_manifest(
+    manifest: dict[str, Any],
+) -> tuple[list[str], set[str]]:
+    """Validate the deny-by-default Phase 11A offline design boundary."""
+
+    errors: list[str] = []
+    if manifest.get("schema_version") != 1:
+        errors.append("Phase 11A manifest schema_version must be 1")
+    if manifest.get("manifest_id") != PHASE11A_MANIFEST_ID:
+        errors.append("unexpected Phase 11A manifest id")
+    if manifest.get("status") != "approved_for_offline_development":
+        errors.append("Phase 11A manifest must be approved_for_offline_development")
+    if manifest.get("deny_by_default") is not True:
+        errors.append("Phase 11A manifest must deny by default")
+    if manifest.get("license") != "Apache-2.0":
+        errors.append("Phase 11A manifest license must be Apache-2.0")
+    if manifest.get("expected_target_path_count") != PHASE11A_EXPECTED_TARGET_COUNT:
+        errors.append(
+            f"Phase 11A expected_target_path_count must be {PHASE11A_EXPECTED_TARGET_COUNT}"
+        )
+
+    expected_rules = {
+        "exact_paths_only": True,
+        "synthetic_tests_only": True,
+        "private_values": False,
+        "resource_bindings": False,
+        "network_fetches": False,
+        "gmail_reads": False,
+        "runtime_changes": False,
+        "scheduled_task_changes": False,
+        "live_cutover": False,
+    }
+    rules = manifest.get("rules")
+    if not isinstance(rules, dict):
+        errors.append("Phase 11A manifest rules must be an object")
+    else:
+        for name, expected in expected_rules.items():
+            if rules.get(name) is not expected:
+                errors.append(f"Phase 11A rule {name} must be {expected!r}")
+
+    raw_paths = manifest.get("allowed_target_paths")
+    if not isinstance(raw_paths, list):
+        return errors + ["Phase 11A allowed_target_paths must be a list"], set()
+    allowed = {str(path) for path in raw_paths if isinstance(path, str)}
+    if len(allowed) != len(raw_paths):
+        errors.append("Phase 11A allowed_target_paths must be unique strings")
+    if any(not is_safe_relative_path(path) for path in allowed):
+        errors.append("Phase 11A allowed_target_paths contains an unsafe path")
+    if allowed != PHASE11A_EXPECTED_TARGET_PATHS:
+        errors.append("Phase 11A allowed targets do not match the reviewed scope")
     return errors, allowed
 
 

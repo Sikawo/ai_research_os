@@ -26,18 +26,23 @@ from Scripts.validate_repository_safety import (
     PHASE11_EXPECTED_TARGET_COUNT,
     PHASE11_EXPECTED_TARGET_PATHS,
     PHASE11_MANIFEST_PATH,
+    PHASE11A_EXPECTED_TARGET_COUNT,
+    PHASE11A_EXPECTED_TARGET_PATHS,
+    PHASE11A_MANIFEST_PATH,
     effective_branch_name,
     load_manifest,
     load_phase12_manifest,
     load_phase12b_manifest,
     load_phase13_manifest,
     load_phase11_manifest,
+    load_phase11a_manifest,
     normalize_origin_url,
     validate_manifest,
     validate_phase12_manifest,
     validate_phase12b_manifest,
     validate_phase13_manifest,
     validate_phase11_manifest,
+    validate_phase11a_manifest,
     validate_tree,
 )
 
@@ -237,6 +242,7 @@ class RepositorySafetyTests(unittest.TestCase):
         phase12b_paths = set(phase12b["allowed_target_paths"])
         phase13_paths = set(phase13["allowed_target_paths"])
         phase11_paths = set(PHASE11_EXPECTED_TARGET_PATHS)
+        phase11a_paths = set(PHASE11A_EXPECTED_TARGET_PATHS)
         for relative in (
             BASELINE_PATHS
             | GOVERNANCE_PATHS
@@ -244,6 +250,7 @@ class RepositorySafetyTests(unittest.TestCase):
             | phase12b_paths
             | phase13_paths
             | phase11_paths
+            | phase11a_paths
         ):
             path = root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -279,6 +286,31 @@ class RepositorySafetyTests(unittest.TestCase):
                     },
                     "expected_target_path_count": PHASE11_EXPECTED_TARGET_COUNT,
                     "allowed_target_paths": sorted(PHASE11_EXPECTED_TARGET_PATHS),
+                }
+            ),
+            encoding="utf-8",
+        )
+        (root / PHASE11A_MANIFEST_PATH).write_text(
+            json.dumps(
+                {
+                    "schema_version": 1,
+                    "manifest_id": "phase11a-academic-multisource-offline-design",
+                    "status": "approved_for_offline_development",
+                    "deny_by_default": True,
+                    "license": "Apache-2.0",
+                    "rules": {
+                        "exact_paths_only": True,
+                        "synthetic_tests_only": True,
+                        "private_values": False,
+                        "resource_bindings": False,
+                        "network_fetches": False,
+                        "gmail_reads": False,
+                        "runtime_changes": False,
+                        "scheduled_task_changes": False,
+                        "live_cutover": False,
+                    },
+                    "expected_target_path_count": PHASE11A_EXPECTED_TARGET_COUNT,
+                    "allowed_target_paths": sorted(PHASE11A_EXPECTED_TARGET_PATHS),
                 }
             ),
             encoding="utf-8",
@@ -343,6 +375,13 @@ class RepositorySafetyTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(len(allowed), PHASE11_EXPECTED_TARGET_COUNT)
 
+        phase11a, phase11a_errors = load_phase11a_manifest(root)
+        self.assertEqual(phase11a_errors, [])
+        self.assertIsNotNone(phase11a)
+        errors, allowed = validate_phase11a_manifest(phase11a or {})
+        self.assertEqual(errors, [])
+        self.assertEqual(len(allowed), PHASE11A_EXPECTED_TARGET_COUNT)
+
     def test_phase11_scope_is_exact_and_deny_by_default(self) -> None:
         root = Path(__file__).resolve().parents[1]
         manifest, load_errors = load_phase11_manifest(root)
@@ -358,6 +397,23 @@ class RepositorySafetyTests(unittest.TestCase):
             "unexpected.txt",
         ]
         errors, _ = validate_phase11_manifest(mutated)
+        self.assertTrue(any("reviewed scope" in error for error in errors))
+
+    def test_phase11a_scope_is_exact_and_deny_by_default(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        manifest, load_errors = load_phase11a_manifest(root)
+        self.assertEqual(load_errors, [])
+        self.assertIsNotNone(manifest)
+        errors, allowed = validate_phase11a_manifest(manifest or {})
+        self.assertEqual(errors, [])
+        self.assertEqual(allowed, PHASE11A_EXPECTED_TARGET_PATHS)
+
+        mutated = dict(manifest or {})
+        mutated["allowed_target_paths"] = [
+            *mutated["allowed_target_paths"],
+            "unexpected.txt",
+        ]
+        errors, _ = validate_phase11a_manifest(mutated)
         self.assertTrue(any("reviewed scope" in error for error in errors))
 
     def test_exact_synthetic_tree_passes(self) -> None:
