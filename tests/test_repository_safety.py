@@ -30,6 +30,7 @@ from Scripts.validate_repository_safety import (
     PHASE11A_EXPECTED_TARGET_PATHS,
     PHASE11A_MANIFEST_PATH,
     effective_branch_name,
+    is_approved_branch_name,
     load_manifest,
     load_phase12_manifest,
     load_phase12b_manifest,
@@ -95,6 +96,52 @@ class RepositorySafetyTests(unittest.TestCase):
                     ),
                     "",
                 )
+
+    def test_approved_branch_name_accepts_trusted_dependabot_pull_request(self) -> None:
+        branch = "dependabot/github_actions/actions/checkout-7"
+        environment = {
+            "GITHUB_ACTIONS": "true",
+            "GITHUB_EVENT_NAME": "pull_request",
+            "GITHUB_REPOSITORY": "Sikawo/ai_research_os",
+            "GITHUB_ACTOR": "dependabot[bot]",
+            "GITHUB_HEAD_REF": branch,
+        }
+
+        self.assertTrue(is_approved_branch_name(branch, environment))
+
+    def test_approved_branch_name_rejects_untrusted_dependabot_contexts(self) -> None:
+        branch = "dependabot/github_actions/actions/checkout-7"
+        trusted = {
+            "GITHUB_ACTIONS": "true",
+            "GITHUB_EVENT_NAME": "pull_request",
+            "GITHUB_REPOSITORY": "Sikawo/ai_research_os",
+            "GITHUB_ACTOR": "dependabot[bot]",
+            "GITHUB_HEAD_REF": branch,
+        }
+        mutations = {
+            "local": {"GITHUB_ACTIONS": "false"},
+            "push": {"GITHUB_EVENT_NAME": "push"},
+            "fork": {"GITHUB_REPOSITORY": "other/ai_research_os"},
+            "actor": {"GITHUB_ACTOR": "other-user"},
+            "head": {"GITHUB_HEAD_REF": "dependabot/pip/other-1"},
+            "missing_head": {"GITHUB_HEAD_REF": ""},
+        }
+
+        for label, mutation in mutations.items():
+            with self.subTest(label=label):
+                environment = {**trusted, **mutation}
+                self.assertFalse(is_approved_branch_name(branch, environment))
+
+    def test_approved_branch_name_preserves_standard_prefixes(self) -> None:
+        for branch in (
+            "main",
+            "agent/repository-safety",
+            "codex/repository-safety",
+        ):
+            with self.subTest(branch=branch):
+                self.assertTrue(is_approved_branch_name(branch, {}))
+
+        self.assertFalse(is_approved_branch_name("feature/untrusted", {}))
 
     def test_origin_normalization_allows_only_optional_dot_git_suffix(self) -> None:
         self.assertEqual(
