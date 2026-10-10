@@ -30,6 +30,7 @@ from Scripts.validate_repository_safety import (
     PHASE11A_EXPECTED_TARGET_PATHS,
     PHASE11A_MANIFEST_PATH,
     effective_branch_name,
+    has_trusted_dependabot_update_payload,
     is_approved_branch_name,
     load_manifest,
     load_phase12_manifest,
@@ -108,6 +109,117 @@ class RepositorySafetyTests(unittest.TestCase):
         }
 
         self.assertTrue(is_approved_branch_name(branch, environment))
+
+    def test_approved_branch_name_accepts_human_dependabot_update_branch(self) -> None:
+        branch = "dependabot/github_actions/actions/checkout-7"
+        payload = {
+            "action": "synchronize",
+            "repository": {"full_name": "Sikawo/ai_research_os"},
+            "pull_request": {
+                "base": {"repo": {"full_name": "Sikawo/ai_research_os"}},
+                "head": {
+                    "ref": branch,
+                    "repo": {"full_name": "Sikawo/ai_research_os"},
+                },
+                "user": {"login": "dependabot[bot]"},
+            },
+            "sender": {"login": "Sikawo", "type": "User"},
+        }
+        with tempfile.TemporaryDirectory() as temp_dir:
+            event_path = Path(temp_dir) / "event.json"
+            event_path.write_text(json.dumps(payload), encoding="utf-8")
+            environment = {
+                "GITHUB_ACTIONS": "true",
+                "GITHUB_EVENT_NAME": "pull_request",
+                "GITHUB_REPOSITORY": "Sikawo/ai_research_os",
+                "GITHUB_ACTOR": "Sikawo",
+                "GITHUB_HEAD_REF": branch,
+                "GITHUB_EVENT_PATH": str(event_path),
+            }
+
+            self.assertTrue(is_approved_branch_name(branch, environment))
+
+    def test_dependabot_update_payload_fails_closed_for_untrusted_evidence(self) -> None:
+        branch = "dependabot/github_actions/actions/checkout-7"
+        trusted_payload = {
+            "action": "synchronize",
+            "repository": {"full_name": "Sikawo/ai_research_os"},
+            "pull_request": {
+                "base": {"repo": {"full_name": "Sikawo/ai_research_os"}},
+                "head": {
+                    "ref": branch,
+                    "repo": {"full_name": "Sikawo/ai_research_os"},
+                },
+                "user": {"login": "dependabot[bot]"},
+            },
+            "sender": {"login": "Sikawo", "type": "User"},
+        }
+        mutations = {
+            "wrong_action": {"action": "opened"},
+            "wrong_repository": {"repository": {"full_name": "other/ai_research_os"}},
+            "wrong_base_repository": {
+                "pull_request": {
+                    **trusted_payload["pull_request"],
+                    "base": {"repo": {"full_name": "other/ai_research_os"}},
+                }
+            },
+            "fork": {
+                "pull_request": {
+                    **trusted_payload["pull_request"],
+                    "head": {
+                        "ref": branch,
+                        "repo": {"full_name": "other/ai_research_os"},
+                    },
+                }
+            },
+            "wrong_head": {
+                "pull_request": {
+                    **trusted_payload["pull_request"],
+                    "head": {
+                        "ref": "dependabot/pip/other-1",
+                        "repo": {"full_name": "Sikawo/ai_research_os"},
+                    },
+                }
+            },
+            "wrong_author": {
+                "pull_request": {
+                    **trusted_payload["pull_request"],
+                    "user": {"login": "other-user"},
+                }
+            },
+            "wrong_sender": {"sender": {"login": "other-user", "type": "User"}},
+            "non_user_sender": {"sender": {"login": "Sikawo", "type": "Bot"}},
+            "missing_pull_request": {"pull_request": None},
+        }
+        environment = {"GITHUB_ACTOR": "Sikawo"}
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            for label, mutation in mutations.items():
+                with self.subTest(label=label):
+                    payload = {**trusted_payload, **mutation}
+                    event_path = temp_path / f"{label}.json"
+                    event_path.write_text(json.dumps(payload), encoding="utf-8")
+                    self.assertFalse(
+                        has_trusted_dependabot_update_payload(
+                            branch,
+                            {**environment, "GITHUB_EVENT_PATH": str(event_path)},
+                        )
+                    )
+
+            malformed_path = temp_path / "malformed.json"
+            malformed_path.write_text("not-json", encoding="utf-8")
+            for label, event_path in (
+                ("missing", temp_path / "missing.json"),
+                ("malformed", malformed_path),
+            ):
+                with self.subTest(label=label):
+                    self.assertFalse(
+                        has_trusted_dependabot_update_payload(
+                            branch,
+                            {**environment, "GITHUB_EVENT_PATH": str(event_path)},
+                        )
+                    )
 
     def test_approved_branch_name_rejects_untrusted_dependabot_contexts(self) -> None:
         branch = "dependabot/github_actions/actions/checkout-7"
