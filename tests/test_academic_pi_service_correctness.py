@@ -53,6 +53,28 @@ def _config(**overrides: Any) -> dict[str, Any]:
         },
         "target_institutions": {"institutions": []},
         "scoring_overrides": {"rubric_version": 9},
+        "connectors": {
+            "plugins": [
+                {
+                    "id": "synthetic_email",
+                    "enabled": True,
+                    "options": {
+                        "processing_mode": "active",
+                        "label_mutation_enabled": True,
+                        "archive_enabled": False,
+                        "delete_enabled": False,
+                    },
+                }
+            ],
+            "bindings": {"email": "synthetic_email"},
+        },
+        "configuration_provenance": {
+            "framework_source": "synthetic/public-framework",
+            "framework_resolution": "PASS",
+            "deployment_config_source": "synthetic/private-overlay",
+            "deployment_config_resolution": "PASS",
+            "fallback_used": "no",
+        },
     }
     config.update(overrides)
     return config

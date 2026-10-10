@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import sys
 from pathlib import Path
 from types import ModuleType
@@ -70,6 +71,138 @@ def test_repository_safety_validation_uses_working_tree_phase(
             "working-tree",
         ]
     ]
+
+
+def test_pytest_timeout_defaults_to_clean_environment_margin(
+    finish_change: ModuleType,
+) -> None:
+    timeout, error = finish_change.resolve_pytest_timeout({})
+
+    assert timeout == 300
+    assert timeout > 2 * 120
+    assert error is None
+
+
+def test_pytest_timeout_accepts_explicit_positive_override(
+    finish_change: ModuleType,
+) -> None:
+    timeout, error = finish_change.resolve_pytest_timeout(
+        {finish_change.PYTEST_TIMEOUT_ENV: "480"}
+    )
+
+    assert timeout == 480
+    assert error is None
+
+
+@pytest.mark.parametrize("value", ["0", "-1", "3601", "not-an-integer"])
+def test_pytest_timeout_rejects_invalid_override(
+    finish_change: ModuleType,
+    value: str,
+) -> None:
+    timeout, error = finish_change.resolve_pytest_timeout(
+        {finish_change.PYTEST_TIMEOUT_ENV: value}
+    )
+
+    assert timeout is None
+    assert "between 1 and 3600" in str(error)
+
+
+def test_pytest_timeout_remains_fail_closed(
+    finish_change: ModuleType,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv(finish_change.PYTEST_TIMEOUT_ENV, raising=False)
+    monkeypatch.setattr(finish_change, "appears_to_have_tests", lambda _root: True)
+    monkeypatch.setattr(finish_change, "pytest_available", lambda _root: True)
+
+    def fake_run_command(
+        repo_root: Path,
+        command: list[str],
+        label: str,
+        timeout: int | None = None,
+        env: dict[str, str] | None = None,
+    ) -> object:
+        del repo_root, label, env
+        raise subprocess.TimeoutExpired(command, timeout or 0)
+
+    monkeypatch.setattr(finish_change, "run_command", fake_run_command)
+
+    result = finish_change.run_pytest_if_available(REPO_ROOT)
+
+    assert result.startswith("FAIL: pytest timed out after 300 seconds.")
+
+
+def test_generated_handoff_is_classified_from_pre_refresh_snapshot(
+    finish_change: ModuleType,
+) -> None:
+    changed_after = {
+        "HANDOFF.md": finish_change.ChangedFile(path="HANDOFF.md"),
+        "Scripts/finish_change.py": finish_change.ChangedFile(
+            path="Scripts/finish_change.py"
+        ),
+    }
+
+    artifacts = finish_change.workflow_generated_artifact_paths(
+        {}, changed_after, None
+    )
+    review_changed = finish_change.exclude_workflow_generated_artifacts(
+        changed_after, artifacts
+    )
+
+    assert artifacts == {"HANDOFF.md"}
+    assert sorted(review_changed) == ["Scripts/finish_change.py"]
+    summary = finish_change.format_workflow_generated_artifacts(artifacts)
+    assert "generated after the pre-review snapshot" in summary
+    assert "commit-candidate and scope calculations" in summary
+
+
+def test_preexisting_handoff_change_is_not_hidden(
+    finish_change: ModuleType,
+) -> None:
+    changed_before = {
+        "HANDOFF.md": finish_change.ChangedFile(path="HANDOFF.md")
+    }
+    changed_after = {
+        "HANDOFF.md": finish_change.ChangedFile(path="HANDOFF.md")
+    }
+
+    artifacts = finish_change.workflow_generated_artifact_paths(
+        changed_before, changed_after, None
+    )
+
+    assert artifacts == set()
+    assert sorted(
+        finish_change.exclude_workflow_generated_artifacts(changed_after, artifacts)
+    ) == ["HANDOFF.md"]
+
+
+def test_explicitly_scoped_handoff_change_is_not_hidden(
+    finish_change: ModuleType,
+    tmp_path: Path,
+) -> None:
+    spec_text = "\n".join(
+        [
+            "## Positive file list",
+            "",
+            "- `HANDOFF.md`",
+            "- `Scripts/finish_change.py`",
+        ]
+    )
+    change_spec = finish_change.ChangeSpec(
+        source_path=tmp_path / "CHANGE_SPEC.md",
+        content=spec_text,
+        sha256="0" * 64,
+        metadata={},
+    )
+    changed_after = {
+        "HANDOFF.md": finish_change.ChangedFile(path="HANDOFF.md")
+    }
+
+    artifacts = finish_change.workflow_generated_artifact_paths(
+        {}, changed_after, change_spec
+    )
+
+    assert artifacts == set()
 
 
 def test_parse_change_spec_metadata_from_markdown_labels(finish_change: ModuleType) -> None:

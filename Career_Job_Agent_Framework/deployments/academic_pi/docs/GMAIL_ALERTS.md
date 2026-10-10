@@ -47,6 +47,11 @@ messages arrive from enabled academic boards, institutions, or societies.
 
 ## Processing contract
 
+Production activation begins in **shadow mode**. Shadow mode may read and
+classify messages, extract candidates, and test cross-source deduplication, but
+it must not delete, archive, or change labels. Label mutation is a later,
+separately approved gate after RSS/Gmail duplicate convergence is demonstrated.
+
 For each run:
 
 1. Find unprocessed messages in the configured alert scope.
@@ -64,6 +69,10 @@ For each run:
 The same message can be retried safely. Idempotency is based on the ingestion
 event plus canonical job identity. Repeated alerts from multiple boards must
 converge on one job record.
+
+While shadow mode is active, steps 6 and 7 produce a label plan only. They do
+not execute Gmail mutations. The run report must say `label_mutation: disabled
+(shadow mode)`.
 
 ## Failure behavior
 

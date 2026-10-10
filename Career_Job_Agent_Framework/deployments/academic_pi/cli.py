@@ -98,6 +98,22 @@ def load_academic_config(
             existing_private_dirs=(existing_private,) if existing_private else (),
             local_dir=Path(__file__).resolve().parents[2] / "profiles" / "local",
         )
+    metadata = config.setdefault("_config", {})
+    if isinstance(metadata, dict):
+        metadata["require_configuration_provenance"] = True
+    overlay_kind = metadata.get("overlay_kind") if isinstance(metadata, Mapping) else None
+    config["configuration_provenance"] = {
+        "framework_source": (
+            "Sikawo/ai_research_os/Career_Job_Agent_Framework/"
+            "deployments/academic_pi"
+        ),
+        "framework_resolution": "PASS",
+        "deployment_config_source": (
+            "configured-private-academic-overlay" if overlay_kind else "unknown"
+        ),
+        "deployment_config_resolution": "PASS" if overlay_kind else "UNKNOWN",
+        "fallback_used": "no" if overlay_kind else "unknown",
+    }
     # Example filenames retain `.example` to make their synthetic nature clear
     # on disk; normalize them to the same runtime keys used by private overlays.
     for key in (

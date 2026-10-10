@@ -34,6 +34,13 @@ def _base_config(**overrides: Any) -> dict[str, Any]:
             "scientific_identity": {"primary_fields": ["virology"]},
         },
         "target_institutions": {"institutions": []},
+        "configuration_provenance": {
+            "framework_source": "synthetic/public-framework",
+            "framework_resolution": "PASS",
+            "deployment_config_source": "synthetic/private-overlay",
+            "deployment_config_resolution": "PASS",
+            "fallback_used": "no",
+        },
     }
     config.update(overrides)
     return config

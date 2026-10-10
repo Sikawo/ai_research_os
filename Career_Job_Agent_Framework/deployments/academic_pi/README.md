@@ -51,8 +51,13 @@ profile.
   and Academic GatedSprint handoff payloads.
 - `prompts/` defines safe daily, weekly, verification, evaluation, and handoff
   behavior for compatible orchestration runtimes.
+- `contracts/` defines the production daily-run, provenance, state-continuity,
+  Gmail-shadow, delivery, and activation gates used by scheduled hosts.
 - `templates/` contains synthetic starting points for private configuration.
 - `docs/` explains setup, alert ingestion, sources, scoring, state, and sharing.
+- `source_registry.py` defines offline source batching, official-domain checks,
+  cross-lane deduplication, and truthful per-source health evidence for staged
+  10 → 25 → 50 → 100 institution expansion.
 
 All public configuration is versioned. Private overrides may change scientific
 terms, geography, target institutions, source cadence, and scoring weights
@@ -123,6 +128,12 @@ it never stores credentials.
 - Application generation and submission are different events. The Job Agent
   never submits an application; only the human does.
 - No report channel is marked successful until its adapter confirms delivery.
+- The ChatGPT-visible report is mandatory; Gmail delivery is an independently
+  recorded, non-blocking external action.
+- Gmail activation starts read-only in shadow mode. Label mutation requires a
+  later explicit gate after RSS/email duplicate convergence is verified.
+- The existing Academic task and canonical Sheet remain the only writer and
+  state owner during production cutover.
 
 ## Start here
 

@@ -27,12 +27,15 @@ from pathlib import Path
 
 OUTPUT_ROOT_PARTS = ("exports", "final_review")
 PACKET_NAME = "FINAL_REVIEW_PACKET.md"
+HANDOFF_NAME = "HANDOFF.md"
 CHANGE_START_ROOT_PARTS = ("exports", "change_start")
 ACTIVE_CHANGE_SPEC_PATH_PARTS = ("exports", "active_change", "CHANGE_SPEC.md")
 CHANGE_SPEC_NAME = "CHANGE_SPEC.md"
 MAX_UNTRACKED_TEXT_BYTES = 200_000
 MAX_DIFF_CHARS = 160_000
-PYTEST_TIMEOUT_SECONDS = 120
+DEFAULT_PYTEST_TIMEOUT_SECONDS = 300
+MAX_PYTEST_TIMEOUT_SECONDS = 3600
+PYTEST_TIMEOUT_ENV = "AI_RESEARCH_OS_FINAL_REVIEW_PYTEST_TIMEOUT_SECONDS"
 BROAD_CHANGE_FILE_THRESHOLD = 5
 
 RAW_DATA_MARKERS = (
@@ -460,12 +463,41 @@ def pytest_available(repo_root: Path) -> bool:
     return result.returncode == 0
 
 
+def resolve_pytest_timeout(
+    environment: dict[str, str] | None = None,
+) -> tuple[int | None, str | None]:
+    """Resolve a positive pytest timeout without weakening fail-closed review."""
+
+    source = os.environ if environment is None else environment
+    raw_value = source.get(PYTEST_TIMEOUT_ENV)
+    if raw_value is None:
+        return DEFAULT_PYTEST_TIMEOUT_SECONDS, None
+
+    try:
+        timeout_seconds = int(raw_value)
+    except ValueError:
+        return None, (
+            f"{PYTEST_TIMEOUT_ENV} must be an integer between 1 and "
+            f"{MAX_PYTEST_TIMEOUT_SECONDS}"
+        )
+    if timeout_seconds <= 0 or timeout_seconds > MAX_PYTEST_TIMEOUT_SECONDS:
+        return None, (
+            f"{PYTEST_TIMEOUT_ENV} must be an integer between 1 and "
+            f"{MAX_PYTEST_TIMEOUT_SECONDS}"
+        )
+    return timeout_seconds, None
+
+
 def run_pytest_if_available(repo_root: Path) -> str:
     if not appears_to_have_tests(repo_root):
         return "Pytest was not run because this repository does not appear to have tests."
 
     if not pytest_available(repo_root):
         return "Pytest was not run because pytest does not appear to be available."
+
+    timeout_seconds, timeout_error = resolve_pytest_timeout()
+    if timeout_error is not None or timeout_seconds is None:
+        return "FAIL: invalid pytest timeout configuration. " + str(timeout_error)
 
     env = os.environ.copy()
     env["PYTHONDONTWRITEBYTECODE"] = "1"
@@ -484,7 +516,7 @@ def run_pytest_if_available(repo_root: Path) -> str:
                 repo_root,
                 command,
                 "pytest",
-                timeout=PYTEST_TIMEOUT_SECONDS,
+                timeout=timeout_seconds,
                 env=env,
             )
         except subprocess.TimeoutExpired as error:
@@ -496,7 +528,7 @@ def run_pytest_if_available(repo_root: Path) -> str:
             output = "\n".join(part for part in output_parts if part)
             return "\n".join(
                 [
-                    f"FAIL: pytest timed out after {PYTEST_TIMEOUT_SECONDS} seconds.",
+                    f"FAIL: pytest timed out after {timeout_seconds} seconds.",
                     "Command: " + " ".join(command),
                     output or "(no output before timeout)",
                 ]
@@ -879,6 +911,48 @@ def intended_commit_candidate_paths(changed: dict[str, ChangedFile]) -> list[str
     return sorted(path for path in changed if not is_generated_export_path(path))
 
 
+def workflow_generated_artifact_paths(
+    changed_before_refresh: dict[str, ChangedFile],
+    changed_after_refresh: dict[str, ChangedFile],
+    change_spec: ChangeSpec | None,
+) -> set[str]:
+    """Identify only HANDOFF changes created by this final-review invocation."""
+
+    if HANDOFF_NAME not in changed_after_refresh:
+        return set()
+    if HANDOFF_NAME in changed_before_refresh:
+        return set()
+
+    if change_spec is not None:
+        scope = parse_change_spec_file_scope(change_spec.content)
+        if any(
+            path_matches_scope_entry(HANDOFF_NAME, entry)
+            for entry in scope.positive
+        ):
+            return set()
+
+    return {HANDOFF_NAME}
+
+
+def exclude_workflow_generated_artifacts(
+    changed: dict[str, ChangedFile],
+    workflow_artifacts: set[str],
+) -> dict[str, ChangedFile]:
+    return {
+        path: entry for path, entry in changed.items() if path not in workflow_artifacts
+    }
+
+
+def format_workflow_generated_artifacts(paths: set[str]) -> str:
+    if not paths:
+        return "- (none)"
+    return "\n".join(
+        f"- `{path}`: generated after the pre-review snapshot; excluded from "
+        "normal commit-candidate and scope calculations"
+        for path in sorted(paths)
+    )
+
+
 def is_secret_or_local_path(path_text: str) -> bool:
     lower = path_text.lower()
     return any(marker.lower() in lower for marker in SECRET_OR_LOCAL_PATH_MARKERS)
@@ -1232,9 +1306,11 @@ def build_packet(
     recent_commits: str,
     diff_summary: str,
     relevant_diff: str,
+    workflow_generated_artifacts: set[str] | None = None,
     original_change_spec: ChangeSpec | None = None,
     spec_based_review_summary: str | None = None,
 ) -> str:
+    workflow_generated_artifacts = workflow_generated_artifacts or set()
     raw_skips = [path for path in sorted(changed) if is_raw_data_path(path)]
     raw_skip_text = "\n".join(f"- `{path}`" for path in raw_skips) if raw_skips else "- (none)"
 
@@ -1305,6 +1381,10 @@ def build_packet(
             "## Git Status",
             "",
             markdown_code_block(status_text),
+            "",
+            "## Workflow-Generated Artifacts",
+            "",
+            format_workflow_generated_artifacts(workflow_generated_artifacts),
             "",
             "## Changed Files",
             "",
@@ -1489,6 +1569,10 @@ def main() -> int:
         original_change_spec = load_original_change_spec(repo_root, args)
         output_dir = create_output_dir(repo_root)
         packet_path = output_dir / PACKET_NAME
+        pre_refresh_status_text = require_success(
+            run_git(repo_root, ["status", "--short"], "pre-refresh status")
+        )
+        changed_before_refresh = parse_status(pre_refresh_status_text)
         try:
             refresh_handoff(repo_root, packet_path)
         except Exception as error:
@@ -1512,12 +1596,21 @@ def main() -> int:
         add_name_status(changed, unstaged_name_status, "unstaged diff")
         add_name_status(changed, staged_name_status, "staged diff")
         add_untracked(changed, untracked)
+        workflow_artifacts = workflow_generated_artifact_paths(
+            changed_before_refresh,
+            changed,
+            original_change_spec,
+        )
+        review_changed = exclude_workflow_generated_artifacts(
+            changed,
+            workflow_artifacts,
+        )
 
         recent_commits = require_success(
             run_git(repo_root, ["log", "-5", "--oneline", "--decorate"], "recent commits")
         )
 
-        safe_paths = diffable_paths(changed)
+        safe_paths = diffable_paths(review_changed)
         unstaged_diff = git_diff_for_paths(repo_root, safe_paths, cached=False)
         staged_diff = git_diff_for_paths(repo_root, safe_paths, cached=True)
         unstaged_stat = git_diff_stat_for_paths(repo_root, safe_paths, cached=False)
@@ -1561,15 +1654,18 @@ def main() -> int:
             ]
         )
 
-        syntax_output = run_python_syntax_checks(repo_root, changed_python_files(repo_root, changed))
+        syntax_output = run_python_syntax_checks(
+            repo_root,
+            changed_python_files(repo_root, review_changed),
+        )
         pytest_output = run_pytest_if_available(repo_root)
-        lanes = classify_changes(changed, relevant_diff)
+        lanes = classify_changes(review_changed, relevant_diff)
         spec_based_review_summary = None
         if original_change_spec is not None:
             spec_facts = build_spec_review_facts(
                 original_change_spec,
                 branch,
-                changed,
+                review_changed,
                 safety_output,
                 syntax_output,
                 pytest_output,
@@ -1585,10 +1681,10 @@ def main() -> int:
             repo_root=repo_root,
             branch=branch,
             status_text=status_text,
-            changed=changed,
+            changed=review_changed,
             lanes=lanes,
-            human_summary=build_human_readable_summary(changed, lanes, safety_output, syntax_output, pytest_output),
-            expected_behavior=build_expected_behavior(changed),
+            human_summary=build_human_readable_summary(review_changed, lanes, safety_output, syntax_output, pytest_output),
+            expected_behavior=build_expected_behavior(review_changed),
             repository_safety_output=repository_safety_output,
             safety_output=safety_output,
             syntax_output=syntax_output,
@@ -1596,6 +1692,7 @@ def main() -> int:
             recent_commits=recent_commits,
             diff_summary=diff_summary,
             relevant_diff=relevant_diff,
+            workflow_generated_artifacts=workflow_artifacts,
             original_change_spec=original_change_spec,
             spec_based_review_summary=spec_based_review_summary,
         )

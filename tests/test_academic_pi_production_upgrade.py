@@ -71,6 +71,15 @@ def test_reports_expose_qol_and_three_discovery_lanes() -> None:
         },
         "status": {"verification_status": "verified_open"},
         "evaluation": {"tier": "Tier 1", "fit_score": 90},
+        "position": {
+            "tenure_status": "tenure_track",
+            "salary_min": 100000,
+            "salary_max": 120000,
+            "salary_currency": "USD",
+            "salary_basis": "annual",
+            "startup_information": "Synthetic startup details",
+            "teaching_expectation": "Synthetic teaching load",
+        },
         "qol_assessment": unknown_qol_assessment("Housing is pending."),
     }
     daily = render_daily_report(
@@ -93,6 +102,12 @@ def test_reports_expose_qol_and_three_discovery_lanes() -> None:
     ):
         assert heading in daily
     assert "Salary: not stated on verified official source" in daily
+    assert "Salary: 100000–120000 USD; basis: annual" in daily
+    assert "tenure/faculty track=tenure_track" in daily
+    assert "startup/lab space=Synthetic startup details" in daily
+    assert "teaching=Synthetic teaching load" in daily
+    assert "Economic QOL: pending/unknown" in daily
+    assert "Household QOL: pending/unknown" in daily
     assert "## COMPENSATION & QOL COMPARISON" in weekly
     assert "## STALE QOL / COMPENSATION ASSUMPTIONS" in weekly
 
@@ -119,3 +134,19 @@ def test_production_cli_commands_are_registered() -> None:
     parser.parse_args(["--state", "synthetic.json", "refresh-qol", "job-1"])
     parser.parse_args(["--state", "synthetic.json", "source-health"])
     parser.parse_args(["--state", "synthetic.json", "target-health"])
+
+
+def test_daily_report_defaults_include_production_role_fields() -> None:
+    contract = load_config_file(DEPLOYMENT / "config" / "report_defaults.yaml")
+    fields = set(contract["daily"]["role_fields"])
+
+    assert {
+        "salary",
+        "economic_qol",
+        "household_qol",
+        "independence",
+        "tenure_or_faculty_track",
+        "startup_or_lab_space",
+        "teaching_expectation",
+        "verification_confidence",
+    } <= fields

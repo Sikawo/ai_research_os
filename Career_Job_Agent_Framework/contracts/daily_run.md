@@ -17,6 +17,61 @@
 13. After explicit document-generation approval, produce final files and return the official application URL and output location.
 14. Never submit an application automatically.
 
+## Configuration provenance gate
+
+Before search, canonical-state mutation, or any external write, resolve the
+requested framework and deployment-configuration inputs for the current run.
+A path copied from the saved task prompt is not resolution evidence by itself:
+the host must successfully read the required framework contracts and the
+requested deployment configuration.
+
+Every ChatGPT-visible run result, including a blocking diagnostic, must contain
+this value-free block:
+
+```text
+CONFIGURATION PROVENANCE
+framework_source: <repository/subtree selector>
+framework_resolution: PASS | FAIL | UNKNOWN
+deployment_config_source: <repository/subtree selector>
+deployment_config_resolution: PASS | FAIL | UNKNOWN
+fallback_used: no | yes | unknown
+```
+
+Continue only when both resolution fields are `PASS` and `fallback_used` is
+`no`. Otherwise render a `BLOCKING CONFIGURATION DIAGNOSTIC` with the value-free
+status fields and stop before search, state mutation, report persistence, or
+notification attempts. Do not silently substitute another deployment source.
+
+### External-task binding extension
+
+A deployment contract that explicitly uses external task bindings extends the
+same block with:
+
+```text
+deployment_activation: PASS | FAIL | UNKNOWN
+output_binding_mode: existing_task_external_bindings | repository_bindings | unknown
+external_bindings_resolution: PASS | FAIL | UNKNOWN
+```
+
+Source fields may contain only the stable repository/subtree selector used for
+the run. Never include configuration values, external resource IDs, account
+details, connector IDs, credentials, secrets, or fetched file contents.
+
+This extension is not enabled by the shared contract alone and does not change
+deployments whose own contract does not declare it. When enabled, continue only
+when both base resolution fields, `deployment_activation`, and
+`external_bindings_resolution` are `PASS`, and `fallback_used` is `no`.
+Otherwise use the same blocking diagnostic and stop boundary.
+
+`existing_task_external_bindings` is a valid value-free output-binding mode.
+It means concrete Drive, Sheet, Gmail, and Slack identifiers remain outside
+Git and the already-existing scheduled task remains their binding authority.
+Repository resource-ID fields may remain null in this mode. Resolution is
+`PASS` only after the host confirms that the same task still has the required
+binding classes available and unchanged. A saved prompt or a non-null selector
+alone is not proof. Never print or persist the identifiers used for that
+confirmation.
+
 ## Two-layer report contract
 
 Every enabled daily user-facing output contains two independent layers in this order:

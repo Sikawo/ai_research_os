@@ -4,6 +4,46 @@
 
 Produce a daily report that separates today's newly discovered or materially changed jobs from the current active Tier 1 / Tier 2 portfolio; estimate family quality of life for every Tier 2 or better role; surface unusually strong-fit roles at credible employers that are not yet allowlisted; and prepare application materials for Tier 1 roles with the least possible human interaction.
 
+## Configuration provenance gate
+
+Before the daily sequence begins, successfully read the requested clean public
+framework contracts and the requested private deployment-configuration files
+for this run. Merely repeating source paths from the saved task prompt is not
+proof that either source resolved.
+
+Every ChatGPT-visible result, including an early failure, must include:
+
+```text
+CONFIGURATION PROVENANCE
+framework_source: <repository/subtree selector>
+framework_resolution: PASS | FAIL | UNKNOWN
+deployment_config_source: <repository/subtree selector>
+deployment_config_resolution: PASS | FAIL | UNKNOWN
+fallback_used: no | yes | unknown
+deployment_activation: PASS | FAIL | UNKNOWN
+output_binding_mode: existing_task_external_bindings | repository_bindings | unknown
+external_bindings_resolution: PASS | FAIL | UNKNOWN
+```
+
+Report only value-free repository/subtree selectors and statuses. Never expose
+private configuration values, resource IDs, account information, connector
+IDs, credentials, secrets, or fetched file contents.
+
+Proceed to search only when both resolution fields, `deployment_activation`,
+and `external_bindings_resolution` are `PASS`, and `fallback_used` is `no`.
+If any required status is `FAIL` or `UNKNOWN`, or fallback is `yes` or
+`unknown`, render a `BLOCKING CONFIGURATION DIAGNOSTIC` and stop before search,
+canonical-state mutation, report persistence, or any external write. Do not
+silently fall back to the Brain or any other deployment configuration.
+
+The private overlay may use `existing_task_external_bindings`. In that mode,
+the Git repository intentionally keeps concrete resource IDs null and the
+existing Industry scheduled task remains the authority for Drive, Sheet,
+Gmail, and Slack bindings. Treat this as bound only after confirming that the
+same task still exposes every required binding class unchanged. Record only
+the mode and PASS/FAIL/UNKNOWN result; never emit an identifier, connector ID,
+account detail, or private value.
+
 ## Daily sequence
 
 1. Load the reusable framework contracts and deployment configuration through the configured private overlay. Public framework defaults must never contain candidate records or connector bindings.

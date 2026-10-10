@@ -90,6 +90,15 @@ def _job_key(job: Any) -> str:
     )
 
 
+def _dedupe_jobs(jobs: Iterable[Any]) -> list[Any]:
+    """Keep one report row per canonical opportunity, preserving first order."""
+
+    unique: dict[str, Any] = {}
+    for job in jobs:
+        unique.setdefault(_job_key(job), job)
+    return list(unique.values())
+
+
 def _pending_verification(job: Any) -> bool:
     if bool(get_value(job, "rejected", default=False)):
         return False
@@ -237,9 +246,31 @@ def _role_lines(job: Any, *, weekly: bool = False) -> list[str]:
     qol_notes = text_values(
         get_value(job, "qol_notes", "evaluation.qol_notes", default=())
     )
+    qol_assessment = get_value(job, "qol_assessment", default={})
+    qol_assessment = qol_assessment if isinstance(qol_assessment, Mapping) else {}
+    qol_verdicts = qol_assessment.get("verdicts", {})
+    qol_verdicts = qol_verdicts if isinstance(qol_verdicts, Mapping) else {}
+    economic_qol = qol_verdicts.get("economic_qol") or "pending/unknown"
+    household_qol = qol_verdicts.get("household_qol") or "pending/unknown"
     eligibility = get_value(
         job, "eligibility_status", "evaluation.eligibility_status", default=None
     )
+    position = get_value(job, "position", default={})
+    position = position if isinstance(position, Mapping) else {}
+    salary_min = position.get("salary_min")
+    salary_max = position.get("salary_max")
+    salary_currency = position.get("salary_currency") or "currency unknown"
+    salary_basis = position.get("salary_basis") or "unknown"
+    if salary_min is None and salary_max is None:
+        salary_text = "not stated on verified official source"
+    else:
+        salary_text = (
+            f"{salary_min if salary_min is not None else '?'}–"
+            f"{salary_max if salary_max is not None else '?'} {salary_currency}"
+        )
+    tenure = position.get("tenure_status") or position.get("faculty_track") or "unknown"
+    startup = position.get("startup_information") or position.get("lab_space_information") or "unknown"
+    teaching = position.get("teaching_expectation") or "unknown"
 
     def display(value: Any, notes: tuple[str, ...], *, unknown: str) -> str:
         if value not in (None, "", [], {}):
@@ -273,12 +304,19 @@ def _role_lines(job: Any, *, weekly: bool = False) -> list[str]:
     if gaps:
         lines.append(f"  - Main gap: {gaps[0]}")
     lines.append(f"  - Independence: {independence}; verified: {verified}")
+    lines.append(f"  - Salary: {salary_text}; basis: {salary_basis}")
+    lines.append(
+        f"  - Academic terms: tenure/faculty track={tenure}; "
+        f"startup/lab space={startup}; teaching={teaching}"
+    )
     lines.extend(
         [
             f"  - Scientific fit: {score:.1f} ({tier}); fit confidence: {fit_confidence_text}",
             "  - Opportunity quality: "
             + display(opportunity, opportunity_notes, unknown="not evaluated"),
             "  - QOL fit: " + display(qol, qol_notes, unknown="not evaluated"),
+            f"  - Economic QOL: {economic_qol}",
+            f"  - Household QOL: {household_qol}",
             f"  - Eligibility: {eligibility_text}",
             f"  - Verification confidence: {verification_confidence_text}",
         ]
@@ -309,6 +347,65 @@ def _role_lines(job: Any, *, weekly: bool = False) -> list[str]:
 
 def _section(title: str, items: Sequence[str], empty: str = "None.") -> list[str]:
     return [f"## {title}", *(items or [empty]), ""]
+
+
+def _configuration_provenance_lines(
+    provenance: Mapping[str, Any] | None,
+) -> list[str]:
+    """Render value-free provenance without leaking paths, IDs, or account data."""
+
+    values = provenance if isinstance(provenance, Mapping) else {}
+
+    def selector(name: str) -> str:
+        value = values.get(name)
+        if not isinstance(value, str):
+            return "unknown"
+        value = value.strip()
+        if (
+            not value
+            or len(value) > 160
+            or value.startswith(("/", "~"))
+            or "@" in value
+            or "://" in value
+            or not all(character.isalnum() or character in "._/-" for character in value)
+        ):
+            return "unknown"
+        return value
+
+    def resolution(name: str) -> str:
+        value = str(values.get(name, "UNKNOWN")).upper()
+        return value if value in {"PASS", "FAIL", "UNKNOWN"} else "UNKNOWN"
+
+    fallback = str(values.get("fallback_used", "unknown")).casefold()
+    if fallback not in {"no", "yes", "unknown"}:
+        fallback = "unknown"
+
+    return [
+        "CONFIGURATION PROVENANCE",
+        f"framework_source: {selector('framework_source')}",
+        f"framework_resolution: {resolution('framework_resolution')}",
+        f"deployment_config_source: {selector('deployment_config_source')}",
+        "deployment_config_resolution: "
+        f"{resolution('deployment_config_resolution')}",
+        f"fallback_used: {fallback}",
+        "",
+    ]
+
+
+def render_configuration_blocking_diagnostic(
+    provenance: Mapping[str, Any] | None,
+) -> str:
+    """Render a no-side-effect diagnostic for an unresolved configuration."""
+
+    lines = ["# Academic PI Job Agent — BLOCKING CONFIGURATION DIAGNOSTIC", ""]
+    lines.extend(_configuration_provenance_lines(provenance))
+    lines.extend(
+        [
+            "No discovery, canonical-state mutation, report persistence, Gmail label mutation, or external delivery was attempted.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def _deadline_action_line(item: Any) -> str:
@@ -430,15 +527,17 @@ def render_daily_report(
     applications: Iterable[Any] = (),
     application_submissions: int = 0,
     report_date: date | None = None,
+    configuration_provenance: Mapping[str, Any] | None = None,
+    label_mutation_enabled: bool = False,
 ) -> str:
     """Render the required daily report without claiming unconfirmed delivery."""
 
     all_jobs = list(jobs)
     snapshot_supplied = current_active_jobs is not None
-    snapshot_jobs = (
+    snapshot_jobs = _dedupe_jobs(
         list(current_active_jobs) if current_active_jobs is not None else all_jobs
     )
-    new = list(new_jobs)
+    new = _dedupe_jobs(new_jobs)
     tier1_new = [job for job in new if _tier(job) == "Tier 1" and _active(job)]
     tier2_new = [job for job in new if _tier(job) == "Tier 2" and _active(job)]
     active1 = [job for job in snapshot_jobs if _tier(job) == "Tier 1" and _active(job)]
@@ -460,6 +559,15 @@ def render_daily_report(
         "Scientific Fit, QOL Fit, Eligibility, opportunity quality, and confidence are reported separately.",
         "",
     ]
+    lines.extend(_configuration_provenance_lines(configuration_provenance))
+    lines.extend(
+        [
+            "label_mutation: enabled"
+            if label_mutation_enabled
+            else "label_mutation: disabled (shadow mode)",
+            "",
+        ]
+    )
     lines.extend(_section("Action Required", action_lines))
     if not tier1_new and not tier2_new:
         lines.extend(["[NO MATCH] No new verified Tier 1 or Tier 2 roles today.", ""])
@@ -583,13 +691,15 @@ def render_weekly_report(
     blind_spots: Iterable[str] = (),
     metrics: Mapping[str, Any] | None = None,
     report_date: date | None = None,
+    configuration_provenance: Mapping[str, Any] | None = None,
+    label_mutation_enabled: bool = False,
 ) -> str:
     """Render a decision-oriented weekly audit with explicit blind spots."""
 
     today = report_date or datetime.now(timezone.utc).date()
     all_jobs = list(jobs)
     snapshot_supplied = current_active_jobs is not None
-    snapshot_jobs = (
+    snapshot_jobs = _dedupe_jobs(
         list(current_active_jobs) if current_active_jobs is not None else all_jobs
     )
     source_rows = list(source_coverage)
@@ -624,6 +734,15 @@ def render_weekly_report(
         "Scientific Fit, QOL Fit, Eligibility, opportunity quality, and confidence are reported separately.",
         "",
     ]
+    lines.extend(_configuration_provenance_lines(configuration_provenance))
+    lines.extend(
+        [
+            "label_mutation: enabled"
+            if label_mutation_enabled
+            else "label_mutation: disabled (shadow mode)",
+            "",
+        ]
+    )
     lines.extend(_section("Top roles to act on this week", _render_jobs(sorted(active, key=_job_sort)[:5], weekly=True)))
     lines.extend(_section("CURRENT ACTIVE TIER 1", _render_jobs(active1, weekly=True)))
     lines.extend(_section("CURRENT ACTIVE TIER 2", _render_jobs(active2, weekly=True)))

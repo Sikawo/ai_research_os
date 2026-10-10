@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/career-job-agent/academic-pi/source-health.schema.json",
+  "title": "Academic Source Health Evidence",
+  "anyOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "last_checked", "source_health", "items_seen", "failure_reason"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "last_checked": {"type": "string", "format": "date-time"},
+        "source_health": {"enum": ["healthy", "degraded"]},
+        "items_seen": {"type": "integer", "minimum": 0},
+        "failure_reason": {"type": ["string", "null"]}
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "last_checked", "source_health", "items_seen", "failure_reason"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "last_checked": {"type": "string", "format": "date-time"},
+        "source_health": {"const": "failed"},
+        "items_seen": {"type": "null"},
+        "failure_reason": {"type": "string", "minLength": 1}
+      }
+    }
+  ]
+}

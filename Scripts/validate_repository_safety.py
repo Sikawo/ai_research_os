@@ -75,6 +75,7 @@ GOVERNANCE_PATHS = {
 }
 
 EXPECTED_ORIGIN = "https://github.com/Sikawo/ai_research_os.git"
+EXPECTED_GITHUB_REPOSITORY = "Sikawo/ai_research_os"
 EXPECTED_ROOT_COMMIT = "89c16ee682ea8aec910e982130e236a281df924e"
 EXPECTED_TRANSFER_COUNT = 171
 EXPECTED_PORTED_COUNT = 40
@@ -133,6 +134,47 @@ PHASE13_EXPECTED_INTEGRATION_PATHS = {
     "tests/test_phase13_research_workflows.py",
     "tests/test_repository_safety.py",
 }
+PHASE11_MANIFEST_PATH = "manifests/phase11_academic_pi_allowlist.yaml"
+PHASE11_MANIFEST_ID = "phase11-academic-pi-production-contract"
+PHASE11_EXPECTED_TARGET_COUNT = 19
+PHASE11_EXPECTED_TARGET_PATHS = {
+    "Career_Job_Agent_Framework/deployments/academic_pi/README.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/cli.py",
+    "Career_Job_Agent_Framework/deployments/academic_pi/config/report_defaults.yaml",
+    "Career_Job_Agent_Framework/deployments/academic_pi/contracts/daily_run.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/contracts/runtime.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/docs/GMAIL_ALERTS.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/prompts/daily_scan.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/reports.py",
+    "Career_Job_Agent_Framework/deployments/academic_pi/service.py",
+    "HANDOFF.md",
+    "Scripts/validate_repository_safety.py",
+    PHASE11_MANIFEST_PATH,
+    "tests/test_academic_pi_daily_contract.py",
+    "tests/test_academic_pi_job_agent.py",
+    "tests/test_academic_pi_production_upgrade.py",
+    "tests/test_academic_pi_rss.py",
+    "tests/test_academic_pi_service_correctness.py",
+    "tests/test_academic_pi_service_hardening.py",
+    "tests/test_repository_safety.py",
+}
+PHASE11A_MANIFEST_PATH = "manifests/phase11a_academic_multisource_allowlist.yaml"
+PHASE11A_MANIFEST_ID = "phase11a-academic-multisource-offline-design"
+PHASE11A_EXPECTED_TARGET_PATHS = {
+    "Career_Job_Agent_Framework/deployments/academic_pi/README.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/config/platform_adapters.yaml",
+    "Career_Job_Agent_Framework/deployments/academic_pi/docs/MULTISOURCE_EXPANSION.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/docs/SOURCES.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/schemas/institution_source_registry.schema.json",
+    "Career_Job_Agent_Framework/deployments/academic_pi/schemas/source_health.schema.json",
+    "Career_Job_Agent_Framework/deployments/academic_pi/source_registry.py",
+    "Career_Job_Agent_Framework/deployments/academic_pi/templates/institution_source_registry.example.yaml",
+    "Scripts/validate_repository_safety.py",
+    PHASE11A_MANIFEST_PATH,
+    "tests/test_academic_pi_source_registry.py",
+    "tests/test_repository_safety.py",
+}
+PHASE11A_EXPECTED_TARGET_COUNT = len(PHASE11A_EXPECTED_TARGET_PATHS)
 MAX_FILE_BYTES = 200_000
 
 FORBIDDEN_SUFFIXES = {
@@ -185,6 +227,29 @@ def effective_branch_name(git_branch: str, environment: Mapping[str, str]) -> st
     return ""
 
 
+def is_approved_branch_name(
+    branch_name: str,
+    environment: Mapping[str, str],
+) -> bool:
+    """Return whether the branch is allowed in the current trusted context."""
+
+    if (
+        branch_name == "main"
+        or branch_name.startswith("agent/")
+        or branch_name.startswith("codex/")
+    ):
+        return True
+    if not branch_name.startswith("dependabot/"):
+        return False
+    return (
+        environment.get("GITHUB_ACTIONS") == "true"
+        and environment.get("GITHUB_EVENT_NAME") == "pull_request"
+        and environment.get("GITHUB_REPOSITORY") == EXPECTED_GITHUB_REPOSITORY
+        and environment.get("GITHUB_ACTOR") == "dependabot[bot]"
+        and environment.get("GITHUB_HEAD_REF", "").strip() == branch_name
+    )
+
+
 def normalize_origin_url(value: str) -> str:
     """Normalize the optional .git suffix used by GitHub checkout remotes."""
 
@@ -226,6 +291,14 @@ def load_phase12b_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]
 
 def load_phase13_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
     return load_json_manifest(root, PHASE13_MANIFEST_PATH, "Phase 13 transfer manifest")
+
+
+def load_phase11_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
+    return load_json_manifest(root, PHASE11_MANIFEST_PATH, "Phase 11 allowlist manifest")
+
+
+def load_phase11a_manifest(root: Path) -> tuple[dict[str, Any] | None, list[str]]:
+    return load_json_manifest(root, PHASE11A_MANIFEST_PATH, "Phase 11A allowlist manifest")
 
 
 def phase12b_classification_sha256(
@@ -898,12 +971,32 @@ def validate_tree(root: Path) -> list[str]:
         )
         errors.extend(phase13_errors)
 
+    phase11_manifest, phase11_load_errors = load_phase11_manifest(root)
+    errors.extend(phase11_load_errors)
+    phase11_allowed: set[str] = set()
+    if phase11_manifest is not None:
+        phase11_errors, phase11_allowed = validate_phase11_manifest(
+            phase11_manifest
+        )
+        errors.extend(phase11_errors)
+
+    phase11a_manifest, phase11a_load_errors = load_phase11a_manifest(root)
+    errors.extend(phase11a_load_errors)
+    phase11a_allowed: set[str] = set()
+    if phase11a_manifest is not None:
+        phase11a_errors, phase11a_allowed = validate_phase11a_manifest(
+            phase11a_manifest
+        )
+        errors.extend(phase11a_errors)
+
     required = (
         BASELINE_PATHS
         | GOVERNANCE_PATHS
         | phase12_allowed
         | phase12b_allowed
         | phase13_allowed
+        | phase11_allowed
+        | phase11a_allowed
     )
     missing = sorted(required - files)
     extra = sorted(
@@ -914,6 +1007,8 @@ def validate_tree(root: Path) -> list[str]:
             | phase12_allowed
             | phase12b_allowed
             | phase13_allowed
+            | phase11_allowed
+            | phase11a_allowed
         )
     )
     missing_ported = sorted(
@@ -948,6 +1043,110 @@ def validate_tree(root: Path) -> list[str]:
     return errors
 
 
+def validate_phase11_manifest(
+    manifest: dict[str, Any],
+) -> tuple[list[str], set[str]]:
+    """Validate the deny-by-default native Phase 11 development boundary."""
+
+    errors: list[str] = []
+    if manifest.get("schema_version") != 1:
+        errors.append("Phase 11 manifest schema_version must be 1")
+    if manifest.get("manifest_id") != PHASE11_MANIFEST_ID:
+        errors.append("unexpected Phase 11 manifest id")
+    if manifest.get("status") != "approved_for_offline_development":
+        errors.append("Phase 11 manifest must be approved_for_offline_development")
+    if manifest.get("deny_by_default") is not True:
+        errors.append("Phase 11 manifest must deny by default")
+    if manifest.get("license") != "Apache-2.0":
+        errors.append("Phase 11 manifest license must be Apache-2.0")
+    if manifest.get("expected_target_path_count") != PHASE11_EXPECTED_TARGET_COUNT:
+        errors.append(
+            f"Phase 11 expected_target_path_count must be {PHASE11_EXPECTED_TARGET_COUNT}"
+        )
+
+    rules = manifest.get("rules")
+    expected_rules = {
+        "exact_paths_only": True,
+        "synthetic_tests_only": True,
+        "private_values": False,
+        "resource_bindings": False,
+        "runtime_changes": False,
+        "scheduled_task_changes": False,
+        "live_cutover": False,
+    }
+    if not isinstance(rules, dict):
+        errors.append("Phase 11 manifest rules must be an object")
+    else:
+        for name, expected in expected_rules.items():
+            if rules.get(name) is not expected:
+                errors.append(f"Phase 11 rule {name} must be {expected!r}")
+
+    raw_paths = manifest.get("allowed_target_paths")
+    if not isinstance(raw_paths, list):
+        return errors + ["Phase 11 allowed_target_paths must be a list"], set()
+    allowed = {str(path) for path in raw_paths if isinstance(path, str)}
+    if len(allowed) != len(raw_paths):
+        errors.append("Phase 11 allowed_target_paths must be unique strings")
+    if any(not is_safe_relative_path(path) for path in allowed):
+        errors.append("Phase 11 allowed_target_paths contains an unsafe path")
+    if allowed != PHASE11_EXPECTED_TARGET_PATHS:
+        errors.append("Phase 11 allowed targets do not match the reviewed scope")
+    return errors, allowed
+
+
+def validate_phase11a_manifest(
+    manifest: dict[str, Any],
+) -> tuple[list[str], set[str]]:
+    """Validate the deny-by-default Phase 11A offline design boundary."""
+
+    errors: list[str] = []
+    if manifest.get("schema_version") != 1:
+        errors.append("Phase 11A manifest schema_version must be 1")
+    if manifest.get("manifest_id") != PHASE11A_MANIFEST_ID:
+        errors.append("unexpected Phase 11A manifest id")
+    if manifest.get("status") != "approved_for_offline_development":
+        errors.append("Phase 11A manifest must be approved_for_offline_development")
+    if manifest.get("deny_by_default") is not True:
+        errors.append("Phase 11A manifest must deny by default")
+    if manifest.get("license") != "Apache-2.0":
+        errors.append("Phase 11A manifest license must be Apache-2.0")
+    if manifest.get("expected_target_path_count") != PHASE11A_EXPECTED_TARGET_COUNT:
+        errors.append(
+            f"Phase 11A expected_target_path_count must be {PHASE11A_EXPECTED_TARGET_COUNT}"
+        )
+
+    expected_rules = {
+        "exact_paths_only": True,
+        "synthetic_tests_only": True,
+        "private_values": False,
+        "resource_bindings": False,
+        "network_fetches": False,
+        "gmail_reads": False,
+        "runtime_changes": False,
+        "scheduled_task_changes": False,
+        "live_cutover": False,
+    }
+    rules = manifest.get("rules")
+    if not isinstance(rules, dict):
+        errors.append("Phase 11A manifest rules must be an object")
+    else:
+        for name, expected in expected_rules.items():
+            if rules.get(name) is not expected:
+                errors.append(f"Phase 11A rule {name} must be {expected!r}")
+
+    raw_paths = manifest.get("allowed_target_paths")
+    if not isinstance(raw_paths, list):
+        return errors + ["Phase 11A allowed_target_paths must be a list"], set()
+    allowed = {str(path) for path in raw_paths if isinstance(path, str)}
+    if len(allowed) != len(raw_paths):
+        errors.append("Phase 11A allowed_target_paths must be unique strings")
+    if any(not is_safe_relative_path(path) for path in allowed):
+        errors.append("Phase 11A allowed_target_paths contains an unsafe path")
+    if allowed != PHASE11A_EXPECTED_TARGET_PATHS:
+        errors.append("Phase 11A allowed targets do not match the reviewed scope")
+    return errors, allowed
+
+
 def validate_repository(
     root: Path,
     *,
@@ -958,10 +1157,8 @@ def validate_repository(
     environment = os.environ if environment is None else environment
     branch = git(root, "branch", "--show-current")
     branch_name = effective_branch_name(branch.stdout, environment)
-    if branch.returncode or not (
-        branch_name == "main" or branch_name.startswith("agent/") or branch_name.startswith("codex/")
-    ):
-        errors.append("branch must be main or use an approved feature prefix")
+    if branch.returncode or not is_approved_branch_name(branch_name, environment):
+        errors.append("branch must be main or use an approved trusted prefix")
     origin = git(root, "remote", "get-url", "origin")
     if origin.returncode or normalize_origin_url(origin.stdout) != normalize_origin_url(EXPECTED_ORIGIN):
         errors.append("origin does not match the public repository")

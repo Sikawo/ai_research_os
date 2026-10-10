@@ -4,35 +4,26 @@ This is the current resumable-work snapshot for `ai_research_os`.
 
 ## Current Snapshot
 
-- Updated at: `2026-10-08T16:50:23`
+- Updated at: `2026-10-09T10:42:48`
 - Event: Generated final review packet
-- Current branch: `codex/public-ci-security-hardening`
+- Current branch: `codex/phase-9b-external-binding-contract`
 
 ## Git Status Summary
 
 ```text
- M .github/workflows/gated-sprint-tests.yml
- M .github/workflows/industry-career-agent-tests.yml
- M .github/workflows/research-workflows-tests.yml
- M .github/workflows/review-tools-tests.yml
- M Scripts/autonomous_delivery.py
- M Scripts/finish_change.py
- M Scripts/validate_repository_safety.py
- M tests/test_autonomous_delivery.py
- M tests/test_final_review_workflow.py
- M tests/test_repository_safety.py
-?? .github/dependabot.yml
-?? .github/workflows/codeql.yml
-?? HANDOFF.md
-?? tests/test_workflow_security.py
+ M Career_Job_Agent_Framework/contracts/daily_run.md
+ M Career_Job_Agent_Framework/deployments/industry/contracts/daily_run.md
+ M Career_Job_Agent_Framework/deployments/industry/contracts/runtime.md
+ M HANDOFF.md
+ M tests/test_career_job_agent_current_active_contract.py
 ```
 
 ## Latest Relevant Packets
 
 - Latest change-spec packet: `exports/change_start/20261007_165734/CHANGE_SPEC_PACKET.md`
 - Latest imported change spec: `(none found)`
-- Latest final review packet: `exports/final_review/20261008_165023/FINAL_REVIEW_PACKET.md`
-- Current event packet: `exports/final_review/20261008_165023/FINAL_REVIEW_PACKET.md`
+- Latest final review packet: `exports/final_review/20261009_104248/FINAL_REVIEW_PACKET.md`
+- Current event packet: `exports/final_review/20261009_104248/FINAL_REVIEW_PACKET.md`
 
 ## Safe Stopping Point
 

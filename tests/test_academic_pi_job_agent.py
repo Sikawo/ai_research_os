@@ -121,6 +121,13 @@ def service_config(*, institutions: list[dict[str, object]] | None = None) -> di
         "academic_pi": {"automation": {"auto_apply": False}, "query_budget": 8},
         "candidate_profile": profile(),
         "target_institutions": {"institutions": institutions or []},
+        "configuration_provenance": {
+            "framework_source": "synthetic/public-framework",
+            "framework_resolution": "PASS",
+            "deployment_config_source": "synthetic/private-overlay",
+            "deployment_config_resolution": "PASS",
+            "fallback_used": "no",
+        },
     }
 
 

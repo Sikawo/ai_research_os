@@ -23,16 +23,27 @@ from Scripts.validate_repository_safety import (
     PHASE13_EXPECTED_TARGET_COUNT,
     PHASE13_EXPECTED_TRANSFER_COUNT,
     PHASE13_MANIFEST_PATH,
+    PHASE11_EXPECTED_TARGET_COUNT,
+    PHASE11_EXPECTED_TARGET_PATHS,
+    PHASE11_MANIFEST_PATH,
+    PHASE11A_EXPECTED_TARGET_COUNT,
+    PHASE11A_EXPECTED_TARGET_PATHS,
+    PHASE11A_MANIFEST_PATH,
     effective_branch_name,
+    is_approved_branch_name,
     load_manifest,
     load_phase12_manifest,
     load_phase12b_manifest,
     load_phase13_manifest,
+    load_phase11_manifest,
+    load_phase11a_manifest,
     normalize_origin_url,
     validate_manifest,
     validate_phase12_manifest,
     validate_phase12b_manifest,
     validate_phase13_manifest,
+    validate_phase11_manifest,
+    validate_phase11a_manifest,
     validate_tree,
 )
 
@@ -85,6 +96,52 @@ class RepositorySafetyTests(unittest.TestCase):
                     ),
                     "",
                 )
+
+    def test_approved_branch_name_accepts_trusted_dependabot_pull_request(self) -> None:
+        branch = "dependabot/github_actions/actions/checkout-7"
+        environment = {
+            "GITHUB_ACTIONS": "true",
+            "GITHUB_EVENT_NAME": "pull_request",
+            "GITHUB_REPOSITORY": "Sikawo/ai_research_os",
+            "GITHUB_ACTOR": "dependabot[bot]",
+            "GITHUB_HEAD_REF": branch,
+        }
+
+        self.assertTrue(is_approved_branch_name(branch, environment))
+
+    def test_approved_branch_name_rejects_untrusted_dependabot_contexts(self) -> None:
+        branch = "dependabot/github_actions/actions/checkout-7"
+        trusted = {
+            "GITHUB_ACTIONS": "true",
+            "GITHUB_EVENT_NAME": "pull_request",
+            "GITHUB_REPOSITORY": "Sikawo/ai_research_os",
+            "GITHUB_ACTOR": "dependabot[bot]",
+            "GITHUB_HEAD_REF": branch,
+        }
+        mutations = {
+            "local": {"GITHUB_ACTIONS": "false"},
+            "push": {"GITHUB_EVENT_NAME": "push"},
+            "fork": {"GITHUB_REPOSITORY": "other/ai_research_os"},
+            "actor": {"GITHUB_ACTOR": "other-user"},
+            "head": {"GITHUB_HEAD_REF": "dependabot/pip/other-1"},
+            "missing_head": {"GITHUB_HEAD_REF": ""},
+        }
+
+        for label, mutation in mutations.items():
+            with self.subTest(label=label):
+                environment = {**trusted, **mutation}
+                self.assertFalse(is_approved_branch_name(branch, environment))
+
+    def test_approved_branch_name_preserves_standard_prefixes(self) -> None:
+        for branch in (
+            "main",
+            "agent/repository-safety",
+            "codex/repository-safety",
+        ):
+            with self.subTest(branch=branch):
+                self.assertTrue(is_approved_branch_name(branch, {}))
+
+        self.assertFalse(is_approved_branch_name("feature/untrusted", {}))
 
     def test_origin_normalization_allows_only_optional_dot_git_suffix(self) -> None:
         self.assertEqual(
@@ -231,12 +288,16 @@ class RepositorySafetyTests(unittest.TestCase):
         phase12_paths = set(phase12["allowed_target_paths"])
         phase12b_paths = set(phase12b["allowed_target_paths"])
         phase13_paths = set(phase13["allowed_target_paths"])
+        phase11_paths = set(PHASE11_EXPECTED_TARGET_PATHS)
+        phase11a_paths = set(PHASE11A_EXPECTED_TARGET_PATHS)
         for relative in (
             BASELINE_PATHS
             | GOVERNANCE_PATHS
             | phase12_paths
             | phase12b_paths
             | phase13_paths
+            | phase11_paths
+            | phase11a_paths
         ):
             path = root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -252,6 +313,54 @@ class RepositorySafetyTests(unittest.TestCase):
         )
         (root / PHASE13_MANIFEST_PATH).write_text(
             json.dumps(phase13), encoding="utf-8"
+        )
+        (root / PHASE11_MANIFEST_PATH).write_text(
+            json.dumps(
+                {
+                    "schema_version": 1,
+                    "manifest_id": "phase11-academic-pi-production-contract",
+                    "status": "approved_for_offline_development",
+                    "deny_by_default": True,
+                    "license": "Apache-2.0",
+                    "rules": {
+                        "exact_paths_only": True,
+                        "synthetic_tests_only": True,
+                        "private_values": False,
+                        "resource_bindings": False,
+                        "runtime_changes": False,
+                        "scheduled_task_changes": False,
+                        "live_cutover": False,
+                    },
+                    "expected_target_path_count": PHASE11_EXPECTED_TARGET_COUNT,
+                    "allowed_target_paths": sorted(PHASE11_EXPECTED_TARGET_PATHS),
+                }
+            ),
+            encoding="utf-8",
+        )
+        (root / PHASE11A_MANIFEST_PATH).write_text(
+            json.dumps(
+                {
+                    "schema_version": 1,
+                    "manifest_id": "phase11a-academic-multisource-offline-design",
+                    "status": "approved_for_offline_development",
+                    "deny_by_default": True,
+                    "license": "Apache-2.0",
+                    "rules": {
+                        "exact_paths_only": True,
+                        "synthetic_tests_only": True,
+                        "private_values": False,
+                        "resource_bindings": False,
+                        "network_fetches": False,
+                        "gmail_reads": False,
+                        "runtime_changes": False,
+                        "scheduled_task_changes": False,
+                        "live_cutover": False,
+                    },
+                    "expected_target_path_count": PHASE11A_EXPECTED_TARGET_COUNT,
+                    "allowed_target_paths": sorted(PHASE11A_EXPECTED_TARGET_PATHS),
+                }
+            ),
+            encoding="utf-8",
         )
         package_manifest = (
             root
@@ -305,6 +414,54 @@ class RepositorySafetyTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(len(allowed), PHASE13_EXPECTED_TARGET_COUNT)
         self.assertEqual(len(destinations), PHASE13_EXPECTED_TRANSFER_COUNT)
+
+        phase11, phase11_errors = load_phase11_manifest(root)
+        self.assertEqual(phase11_errors, [])
+        self.assertIsNotNone(phase11)
+        errors, allowed = validate_phase11_manifest(phase11 or {})
+        self.assertEqual(errors, [])
+        self.assertEqual(len(allowed), PHASE11_EXPECTED_TARGET_COUNT)
+
+        phase11a, phase11a_errors = load_phase11a_manifest(root)
+        self.assertEqual(phase11a_errors, [])
+        self.assertIsNotNone(phase11a)
+        errors, allowed = validate_phase11a_manifest(phase11a or {})
+        self.assertEqual(errors, [])
+        self.assertEqual(len(allowed), PHASE11A_EXPECTED_TARGET_COUNT)
+
+    def test_phase11_scope_is_exact_and_deny_by_default(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        manifest, load_errors = load_phase11_manifest(root)
+        self.assertEqual(load_errors, [])
+        self.assertIsNotNone(manifest)
+        errors, allowed = validate_phase11_manifest(manifest or {})
+        self.assertEqual(errors, [])
+        self.assertEqual(allowed, PHASE11_EXPECTED_TARGET_PATHS)
+
+        mutated = dict(manifest or {})
+        mutated["allowed_target_paths"] = [
+            *mutated["allowed_target_paths"],
+            "unexpected.txt",
+        ]
+        errors, _ = validate_phase11_manifest(mutated)
+        self.assertTrue(any("reviewed scope" in error for error in errors))
+
+    def test_phase11a_scope_is_exact_and_deny_by_default(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        manifest, load_errors = load_phase11a_manifest(root)
+        self.assertEqual(load_errors, [])
+        self.assertIsNotNone(manifest)
+        errors, allowed = validate_phase11a_manifest(manifest or {})
+        self.assertEqual(errors, [])
+        self.assertEqual(allowed, PHASE11A_EXPECTED_TARGET_PATHS)
+
+        mutated = dict(manifest or {})
+        mutated["allowed_target_paths"] = [
+            *mutated["allowed_target_paths"],
+            "unexpected.txt",
+        ]
+        errors, _ = validate_phase11a_manifest(mutated)
+        self.assertTrue(any("reviewed scope" in error for error in errors))
 
     def test_exact_synthetic_tree_passes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

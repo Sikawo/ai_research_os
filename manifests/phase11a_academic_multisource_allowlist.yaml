@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "manifest_id": "phase11a-academic-multisource-offline-design",
+  "status": "approved_for_offline_development",
+  "deny_by_default": true,
+  "license": "Apache-2.0",
+  "rules": {
+    "exact_paths_only": true, "synthetic_tests_only": true,
+    "private_values": false, "resource_bindings": false,
+    "network_fetches": false, "gmail_reads": false,
+    "runtime_changes": false, "scheduled_task_changes": false,
+    "live_cutover": false
+  },
+  "expected_target_path_count": 12,
+  "allowed_target_paths": [
+    "Career_Job_Agent_Framework/deployments/academic_pi/README.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/config/platform_adapters.yaml",
+    "Career_Job_Agent_Framework/deployments/academic_pi/docs/MULTISOURCE_EXPANSION.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/docs/SOURCES.md",
+    "Career_Job_Agent_Framework/deployments/academic_pi/schemas/institution_source_registry.schema.json",
+    "Career_Job_Agent_Framework/deployments/academic_pi/schemas/source_health.schema.json",
+    "Career_Job_Agent_Framework/deployments/academic_pi/source_registry.py",
+    "Career_Job_Agent_Framework/deployments/academic_pi/templates/institution_source_registry.example.yaml",
+    "Scripts/validate_repository_safety.py",
+    "manifests/phase11a_academic_multisource_allowlist.yaml",
+    "tests/test_academic_pi_source_registry.py",
+    "tests/test_repository_safety.py"
+  ]
+}
