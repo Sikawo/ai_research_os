@@ -75,6 +75,7 @@ GOVERNANCE_PATHS = {
 }
 
 EXPECTED_ORIGIN = "https://github.com/Sikawo/ai_research_os.git"
+EXPECTED_GITHUB_REPOSITORY = "Sikawo/ai_research_os"
 EXPECTED_ROOT_COMMIT = "89c16ee682ea8aec910e982130e236a281df924e"
 EXPECTED_TRANSFER_COUNT = 171
 EXPECTED_PORTED_COUNT = 40
@@ -224,6 +225,29 @@ def effective_branch_name(git_branch: str, environment: Mapping[str, str]) -> st
     if environment.get("GITHUB_EVENT_NAME") == "pull_request":
         return environment.get("GITHUB_HEAD_REF", "").strip()
     return ""
+
+
+def is_approved_branch_name(
+    branch_name: str,
+    environment: Mapping[str, str],
+) -> bool:
+    """Return whether the branch is allowed in the current trusted context."""
+
+    if (
+        branch_name == "main"
+        or branch_name.startswith("agent/")
+        or branch_name.startswith("codex/")
+    ):
+        return True
+    if not branch_name.startswith("dependabot/"):
+        return False
+    return (
+        environment.get("GITHUB_ACTIONS") == "true"
+        and environment.get("GITHUB_EVENT_NAME") == "pull_request"
+        and environment.get("GITHUB_REPOSITORY") == EXPECTED_GITHUB_REPOSITORY
+        and environment.get("GITHUB_ACTOR") == "dependabot[bot]"
+        and environment.get("GITHUB_HEAD_REF", "").strip() == branch_name
+    )
 
 
 def normalize_origin_url(value: str) -> str:
@@ -1133,10 +1157,8 @@ def validate_repository(
     environment = os.environ if environment is None else environment
     branch = git(root, "branch", "--show-current")
     branch_name = effective_branch_name(branch.stdout, environment)
-    if branch.returncode or not (
-        branch_name == "main" or branch_name.startswith("agent/") or branch_name.startswith("codex/")
-    ):
-        errors.append("branch must be main or use an approved feature prefix")
+    if branch.returncode or not is_approved_branch_name(branch_name, environment):
+        errors.append("branch must be main or use an approved trusted prefix")
     origin = git(root, "remote", "get-url", "origin")
     if origin.returncode or normalize_origin_url(origin.stdout) != normalize_origin_url(EXPECTED_ORIGIN):
         errors.append("origin does not match the public repository")
