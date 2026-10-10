@@ -227,6 +227,50 @@ def effective_branch_name(git_branch: str, environment: Mapping[str, str]) -> st
     return ""
 
 
+def has_trusted_dependabot_update_payload(
+    branch_name: str,
+    environment: Mapping[str, str],
+) -> bool:
+    """Validate a human-triggered update of a genuine Dependabot pull request."""
+
+    event_path = environment.get("GITHUB_EVENT_PATH", "").strip()
+    actor = environment.get("GITHUB_ACTOR", "").strip()
+    if not event_path or not actor:
+        return False
+    try:
+        payload = json.loads(Path(event_path).read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return False
+    if not isinstance(payload, dict) or payload.get("action") != "synchronize":
+        return False
+
+    repository = payload.get("repository")
+    pull_request = payload.get("pull_request")
+    sender = payload.get("sender")
+    if not all(isinstance(value, dict) for value in (repository, pull_request, sender)):
+        return False
+
+    base = pull_request.get("base")
+    head = pull_request.get("head")
+    author = pull_request.get("user")
+    if not all(isinstance(value, dict) for value in (base, head, author)):
+        return False
+    base_repository = base.get("repo")
+    head_repository = head.get("repo")
+    if not all(isinstance(value, dict) for value in (base_repository, head_repository)):
+        return False
+
+    return (
+        repository.get("full_name") == EXPECTED_GITHUB_REPOSITORY
+        and base_repository.get("full_name") == EXPECTED_GITHUB_REPOSITORY
+        and head_repository.get("full_name") == EXPECTED_GITHUB_REPOSITORY
+        and head.get("ref") == branch_name
+        and author.get("login") == "dependabot[bot]"
+        and sender.get("login") == actor
+        and sender.get("type") == "User"
+    )
+
+
 def is_approved_branch_name(
     branch_name: str,
     environment: Mapping[str, str],
@@ -241,13 +285,17 @@ def is_approved_branch_name(
         return True
     if not branch_name.startswith("dependabot/"):
         return False
-    return (
+    trusted_pull_request = (
         environment.get("GITHUB_ACTIONS") == "true"
         and environment.get("GITHUB_EVENT_NAME") == "pull_request"
         and environment.get("GITHUB_REPOSITORY") == EXPECTED_GITHUB_REPOSITORY
-        and environment.get("GITHUB_ACTOR") == "dependabot[bot]"
         and environment.get("GITHUB_HEAD_REF", "").strip() == branch_name
     )
+    if not trusted_pull_request:
+        return False
+    if environment.get("GITHUB_ACTOR") == "dependabot[bot]":
+        return True
+    return has_trusted_dependabot_update_payload(branch_name, environment)
 
 
 def normalize_origin_url(value: str) -> str:
